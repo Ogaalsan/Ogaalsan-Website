@@ -22,7 +22,7 @@ export default async function handler(req, res) {
   }
 
   // Email configuration
-  const recipientEmail = "consultancyogaalsan@gmail.com";
+  const recipientEmail = "ogaalsancon@gmail.com";
 
   // Email content
   const emailSubject = `Contact Form: ${subject}`;

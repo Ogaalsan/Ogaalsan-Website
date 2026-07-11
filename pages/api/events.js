@@ -17,7 +17,7 @@ export default async function handler(req, res) {
     trainingMode === "offline" ? "Offline (In-person)" : "Online";
   const trainingName = training || "General Interest";
 
-  const recipientEmail = "consultancyogaalsan@gmail.com";
+  const recipientEmail = "ogaalsancon@gmail.com";
 
   const emailSubject = `Training Registration: ${trainingName} - ${name}`;
   const emailBody = `

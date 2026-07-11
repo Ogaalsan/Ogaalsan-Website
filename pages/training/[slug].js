@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { getTrainingBySlug, trainings } from "@/util/trainingsData";
+import { submitTrainingRegistration } from "@/util/trainingApi";
 
 export default function TrainingDetail() {
   const router = useRouter();
@@ -32,41 +33,35 @@ export default function TrainingDetail() {
     setSubmitStatus(null);
 
     try {
-      const response = await fetch("/api/events", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...formData,
-          training: training?.title || "General Training",
-        }),
+      await submitTrainingRegistration({
+        name: formData.name,
+        email: formData.email,
+        location: formData.location,
+        background: formData.background,
+        skills: formData.skills,
+        training_mode: formData.trainingMode,
+        training_slug: training?.slug || null,
+        training_title: training?.title || "General Training",
       });
 
-      const data = await response.json();
-
-      if (response.ok) {
-        setSubmitStatus({
-          type: "success",
-          message:
-            "Thank you! Your training registration has been received. We'll be in touch soon.",
-        });
-        setFormData({
-          name: "",
-          location: "",
-          background: "",
-          email: "",
-          skills: "",
-          trainingMode: "online",
-        });
-      } else {
-        setSubmitStatus({
-          type: "error",
-          message: data.message || "Failed to submit. Please try again.",
-        });
-      }
+      setSubmitStatus({
+        type: "success",
+        message:
+          "Thank you! Your training registration has been received. Check your email for confirmation.",
+      });
+      setFormData({
+        name: "",
+        location: "",
+        background: "",
+        email: "",
+        skills: "",
+        trainingMode: "online",
+      });
     } catch (error) {
       setSubmitStatus({
         type: "error",
-        message: "An error occurred. Please try again later.",
+        message:
+          error.message || "An error occurred. Please try again later.",
       });
     } finally {
       setIsSubmitting(false);

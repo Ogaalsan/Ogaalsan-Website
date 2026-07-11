@@ -38,8 +38,8 @@ export default function Header1({
                     </li>
                     <li>
                       <i className="flaticon-mail" />
-                      <Link href="mailto:consultancyogaalsan@gmail.com">
-                        consultancyogaalsan@gmail.com
+                      <Link href="mailto:ogaalsancon@gmail.com">
+                        ogaalsancon@gmail.com
                       </Link>
                     </li>
                   </ul>

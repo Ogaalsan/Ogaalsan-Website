@@ -21,7 +21,7 @@ export default function OffcanvusMenu({ isOffcanvus, handleOffcanvus }) {
                     </div>
                     <div className="contact-list mb-30">
                         <h4>Email Address</h4>
-                        <p>consultancyogaalsan@gmail.com</p>
+                        <p>ogaalsancon@gmail.com</p>
                     </div>
                 </div>
              
