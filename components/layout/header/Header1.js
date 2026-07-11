@@ -151,7 +151,7 @@ export default function Header1({
                           <Link href="/courses">Courses</Link>
                         </li>
                         <li>
-                          <Link href="/events">Events</Link>
+                          <Link href="/training">Training</Link>
                         </li>
                         <li>
                           <Link href="/blog">Blog</Link>

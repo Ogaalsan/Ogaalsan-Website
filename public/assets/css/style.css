@@ -9934,3 +9934,17 @@ label {
     margin-right: 8px;
     vertical-align: middle;
 }
+
+/* Fix radio buttons and checkboxes inside form groups styling */
+.form-grp input[type="radio"],
+.form-grp input[type="checkbox"],
+.contact-form .form-grp input[type="radio"],
+.contact-form .form-grp input[type="checkbox"] {
+    width: 18px !important;
+    height: 18px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: inline-block !important;
+    cursor: pointer;
+    accent-color: #22428F;
+}

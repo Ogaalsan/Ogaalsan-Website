@@ -25,7 +25,7 @@ export default function MobileMenu() {
                 <li><Link href="/about">About Us</Link></li>
                 <li><Link href="/services">Services</Link></li>
                 <li><Link href="/courses">Courses</Link></li>
-                <li><Link href="/events">Events</Link></li>
+                <li><Link href="/training">Training</Link></li>
                 <li><Link href="/blog">Blog</Link></li>
                 <li className="menu-item-has-children"><Link href="#">Resources</Link>
                     <ul className="sub-menu" style={{ display: `${isActive.key == 1 ? "block" : "none"}` }}>

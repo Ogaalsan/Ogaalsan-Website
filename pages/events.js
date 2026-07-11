@@ -9,6 +9,7 @@ export default function Events() {
     background: "",
     email: "",
     skills: "",
+    trainingMode: "online",
   })
 
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -49,6 +50,7 @@ export default function Events() {
           background: "",
           email: "",
           skills: "",
+          trainingMode: "online",
         })
       } else {
         setSubmitStatus({
@@ -146,6 +148,64 @@ export default function Events() {
                                 onChange={handleChange}
                                 required
                               />
+                            </div>
+                          </div>
+                          <div className="col-md-12">
+                            <div className="form-grp">
+                              <label
+                                style={{
+                                  display: "block",
+                                  marginBottom: "10px",
+                                  fontWeight: 600,
+                                  color: "#22428F",
+                                }}
+                              >
+                                How would you like to attend the training? *
+                              </label>
+                              <div
+                                style={{
+                                  display: "flex",
+                                  gap: "24px",
+                                  flexWrap: "wrap",
+                                }}
+                              >
+                                <label
+                                  style={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                    gap: "8px",
+                                    cursor: "pointer",
+                                    fontWeight: 500,
+                                  }}
+                                >
+                                  <input
+                                    type="radio"
+                                    name="trainingMode"
+                                    value="online"
+                                    checked={formData.trainingMode === "online"}
+                                    onChange={handleChange}
+                                  />
+                                  Online
+                                </label>
+                                <label
+                                  style={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                    gap: "8px",
+                                    cursor: "pointer",
+                                    fontWeight: 500,
+                                  }}
+                                >
+                                  <input
+                                    type="radio"
+                                    name="trainingMode"
+                                    value="offline"
+                                    checked={formData.trainingMode === "offline"}
+                                    onChange={handleChange}
+                                  />
+                                  Offline (In-person)
+                                </label>
+                              </div>
                             </div>
                           </div>
                           <div className="col-md-12">

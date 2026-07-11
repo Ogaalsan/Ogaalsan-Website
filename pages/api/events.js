@@ -6,23 +6,31 @@ export default async function handler(req, res) {
     return res.status(405).json({ message: "Method not allowed" });
   }
 
-  const { name, location, background, email, skills } = req.body;
+  const { name, location, background, email, skills, trainingMode, training } =
+    req.body;
 
   if (!name || !location || !background || !email || !skills) {
     return res.status(400).json({ message: "All fields are required" });
   }
 
+  const trainingModeLabel =
+    trainingMode === "offline" ? "Offline (In-person)" : "Online";
+  const trainingName = training || "General Interest";
+
   const recipientEmail = "consultancyogaalsan@gmail.com";
 
-  const emailSubject = `Events/Training Interest: ${name}`;
+  const emailSubject = `Training Registration: ${trainingName} - ${name}`;
   const emailBody = `
-New Events / Training Interest Submission from OgaalSan Website
+New Training Registration from OgaalSan Website
+
+Training: ${trainingName}
 
 Participant Details:
 Name: ${name}
 Location: ${location}
 Background / Education Level: ${background}
 Email: ${email}
+Preferred Training Mode: ${trainingModeLabel}
 
 Skills:
 ${skills}
@@ -55,12 +63,14 @@ Submitted on: ${new Date().toLocaleString()}
           text: emailBody,
           html: `
             <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
-              <h2 style="color: #3FA9F5;">New Events / Training Interest</h2>
+              <h2 style="color: #3FA9F5;">New Training Registration</h2>
               <div style="background-color: #f5f5f5; padding: 20px; border-radius: 5px; margin: 20px 0;">
+                <p><strong>Training:</strong> ${trainingName}</p>
                 <p><strong>Name:</strong> ${name}</p>
                 <p><strong>Location:</strong> ${location}</p>
                 <p><strong>Background / Education Level:</strong> ${background}</p>
                 <p><strong>Email:</strong> ${email}</p>
+                <p><strong>Preferred Training Mode:</strong> ${trainingModeLabel}</p>
               </div>
               <div style="margin: 20px 0;">
                 <h3>Skills:</h3>
