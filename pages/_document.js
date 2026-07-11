@@ -26,6 +26,7 @@ export default function Document() {
                 <link rel="stylesheet" href="/assets/css/courses.css" />
                 <link rel="stylesheet" href="/assets/css/auth.css" />
                 <link rel="stylesheet" href="/assets/css/whatsapp-widget.css" />
+                <link rel="stylesheet" href="/assets/css/resources.css" />
             </Head>
             <body>
                 <Main />

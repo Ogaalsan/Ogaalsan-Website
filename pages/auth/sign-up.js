@@ -9,7 +9,11 @@ export default function SignUp() {
   const { register, isAuthenticated, loading: authLoading } = useAuth();
   const [form, setForm] = useState({
     name: "",
+    country: "",
+    city: "",
+    district: "",
     email: "",
+    whatsapp_phone: "",
     password: "",
     password_confirmation: "",
   });
@@ -82,6 +86,52 @@ export default function SignUp() {
           </div>
           <div className="form-grp">
             <input
+              type="text"
+              name="country"
+              placeholder="Country *"
+              value={form.country}
+              onChange={handleChange}
+              required
+              autoComplete="country-name"
+            />
+            {fieldMessage("country") && (
+              <span className="auth-field-error">
+                {fieldMessage("country")}
+              </span>
+            )}
+          </div>
+          <div className="form-grp">
+            <input
+              type="text"
+              name="city"
+              placeholder="City *"
+              value={form.city}
+              onChange={handleChange}
+              required
+              autoComplete="address-level2"
+            />
+            {fieldMessage("city") && (
+              <span className="auth-field-error">{fieldMessage("city")}</span>
+            )}
+          </div>
+          <div className="form-grp">
+            <input
+              type="text"
+              name="district"
+              placeholder="District *"
+              value={form.district}
+              onChange={handleChange}
+              required
+              autoComplete="address-level3"
+            />
+            {fieldMessage("district") && (
+              <span className="auth-field-error">
+                {fieldMessage("district")}
+              </span>
+            )}
+          </div>
+          <div className="form-grp">
+            <input
               type="email"
               name="email"
               placeholder="Email address *"
@@ -92,6 +142,22 @@ export default function SignUp() {
             />
             {fieldMessage("email") && (
               <span className="auth-field-error">{fieldMessage("email")}</span>
+            )}
+          </div>
+          <div className="form-grp">
+            <input
+              type="tel"
+              name="whatsapp_phone"
+              placeholder="WhatsApp phone *"
+              value={form.whatsapp_phone}
+              onChange={handleChange}
+              required
+              autoComplete="tel"
+            />
+            {fieldMessage("whatsapp_phone") && (
+              <span className="auth-field-error">
+                {fieldMessage("whatsapp_phone")}
+              </span>
             )}
           </div>
           <div className="form-grp">

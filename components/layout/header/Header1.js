@@ -156,19 +156,24 @@ export default function Header1({
                         <li>
                           <Link href="/blog">Blog</Link>
                         </li>
+                        <li className="menu-item-has-children">
+                          <Link href="#">Resources</Link>
+                          <ul className="sub-menu">
+                            <li>
+                              <Link href="/resources/annual-reports">
+                                Annual Reports
+                              </Link>
+                            </li>
+                            <li>
+                              <Link href="/resources/course-resources">
+                                Course Resources
+                              </Link>
+                            </li>
+                          </ul>
+                        </li>
                         <li>
                           <Link href="/contact">Contact</Link>
                         </li>
-                        {!isAuthenticated && (
-                          <>
-                            <li>
-                              <Link href="/auth/sign-in">Sign In</Link>
-                            </li>
-                            <li>
-                              <Link href="/auth/sign-up">Sign Up</Link>
-                            </li>
-                          </>
-                        )}
                       </ul>
                     </div>
                     <div className="header-action">

@@ -79,10 +79,23 @@ export async function registerUser({
   email,
   password,
   password_confirmation,
+  country,
+  city,
+  district,
+  whatsapp_phone,
 }) {
   const payload = await authRequest("/register", {
     method: "POST",
-    body: { name, email, password, password_confirmation },
+    body: {
+      name,
+      email,
+      password,
+      password_confirmation,
+      country,
+      city,
+      district,
+      whatsapp_phone,
+    },
   });
 
   const { user, token } = payload.data;
