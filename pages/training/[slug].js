@@ -1,16 +1,10 @@
 import Layout from "@/components/layout/Layout";
-import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import { useState } from "react";
-import { getTrainingBySlug, trainings } from "@/util/trainingsData";
+import { fetchTrainingBySlug } from "@/util/trainingsApi";
 import { submitTrainingRegistration } from "@/util/trainingApi";
 
-export default function TrainingDetail() {
-  const router = useRouter();
-  const { slug } = router.query;
-  const training = typeof slug === "string" ? getTrainingBySlug(slug) : null;
-
+export default function TrainingDetail({ training }) {
   const [formData, setFormData] = useState({
     name: "",
     location: "",
@@ -92,11 +86,9 @@ export default function TrainingDetail() {
             <div className="col-lg-6">
               <div className="training-detail">
                 <div className="training-detail__thumb">
-                  <Image
+                  <img
                     src={training.image}
                     alt={training.title}
-                    width={600}
-                    height={400}
                     style={{
                       width: "100%",
                       height: "auto",
@@ -119,7 +111,7 @@ export default function TrainingDetail() {
                 <p>{training.description}</p>
                 <h5 className="mt-20">What you will learn</h5>
                 <ul className="training-topics">
-                  {training.topics.map((topic) => (
+                  {(training.topics || []).map((topic) => (
                     <li key={topic}>
                       <i className="fas fa-check" /> {topic}
                     </li>
@@ -276,13 +268,7 @@ export default function TrainingDetail() {
   );
 }
 
-export async function getStaticPaths() {
-  return {
-    paths: trainings.map((training) => ({ params: { slug: training.slug } })),
-    fallback: false,
-  };
-}
-
-export async function getStaticProps() {
-  return { props: {} };
+export async function getServerSideProps({ params }) {
+  const training = await fetchTrainingBySlug(params.slug);
+  return { props: { training: training || null } };
 }
