@@ -1,6 +1,9 @@
 import Link from "next/link"
+import { useOrganization } from "@/context/OrganizationContext"
 
 export default function Footer2() {
+    const { phoneLabel, phoneHref, email, fullAddress, organization } = useOrganization()
+
     return (
         <>
             <footer>
@@ -22,9 +25,21 @@ export default function Footer2() {
                                                             <i className="flaticon-phone-call" />
                                                         </div>
                                                         <div className="content">
-                                                            <Link href="tel:770904044">770904044</Link>
-                                                            <br />
-                                                            <Link href="tel:770904045">770904045</Link>
+                                                            <Link href={phoneHref}>{phoneLabel}</Link>
+                                                            {email ? (
+                                                                <>
+                                                                    <br />
+                                                                    <Link href={`mailto:${email}`}>{email}</Link>
+                                                                </>
+                                                            ) : null}
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div className="icon">
+                                                            <i className="flaticon-location" />
+                                                        </div>
+                                                        <div className="content">
+                                                            <p>{fullAddress}</p>
                                                         </div>
                                                     </li>
                                                     <li>
@@ -72,7 +87,7 @@ export default function Footer2() {
                                     <div className="footer-widget">
                                         <h4 className="fw-title">Our Newsletter</h4>
                                         <div className="footer-newsletter">
-                                            <p>Sign up to OgaalSan's newsletter to get the latest updates on ICT solutions, digital innovation, and technology trends.</p>
+                                            <p>Sign up to {organization.name}&apos;s newsletter to get the latest updates on ICT solutions, digital innovation, and technology trends.</p>
                                             <form action="#">
                                                 <input type="email" placeholder="enter your e-mail" />
                                                 <button type="submit">Subscribe</button>
@@ -96,7 +111,7 @@ export default function Footer2() {
                             <div className="row">
                                 <div className="col-lg-12">
                                     <div className="copyright-text-two text-center">
-                                        <p>Copyright © OgaalSan Consultancy | All Right Reserved</p>
+                                        <p>Copyright © {organization.name} | All Right Reserved</p>
                                     </div>
                                 </div>
                             </div>

@@ -1,3 +1,5 @@
+import { fetchOrganization } from "@/util/organizationApi";
+
 // API route to handle contact form submissions
 // To enable email sending, you'll need to install nodemailer:
 // npm install nodemailer
@@ -16,15 +18,13 @@ export default async function handler(req, res) {
 
   const { name, email, phone, subject, message } = req.body;
 
-  // Validate required fields
   if (!name || !email || !phone || !subject || !message) {
     return res.status(400).json({ message: "All fields are required" });
   }
 
-  // Email configuration
-  const recipientEmail = "ogaalsancon@gmail.com";
+  const organization = await fetchOrganization();
+  const recipientEmail = organization.email || "ogaalsancon@gmail.com";
 
-  // Email content
   const emailSubject = `Contact Form: ${subject}`;
   const emailBody = `
 New Contact Form Submission from OgaalSan Website
@@ -44,7 +44,6 @@ Submitted on: ${new Date().toLocaleString()}
   `;
 
   try {
-    // Try to use nodemailer if available, otherwise use mailto fallback
     let emailSent = false;
 
     try {
@@ -95,7 +94,6 @@ Submitted on: ${new Date().toLocaleString()}
     }
 
     if (!emailSent) {
-      // Fallback: Return success but log that email service needs configuration
       console.log(
         "Email service not configured. Please set up nodemailer or add environment variables."
       );

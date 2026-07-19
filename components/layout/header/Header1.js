@@ -2,6 +2,7 @@ import Link from "next/link";
 import MobileMenu from "../MobileMenu";
 import SearchPopup from "../SearchPopup";
 import { useAuth } from "@/context/AuthContext";
+import { useOrganization } from "@/context/OrganizationContext";
 
 export default function Header1({
   scroll,
@@ -13,6 +14,7 @@ export default function Header1({
   handleOffcanvus,
 }) {
   const { user, isAuthenticated, logout } = useAuth();
+  const { locationLabel, email, phoneLabel, phoneHref } = useOrganization();
 
   const handleLogout = async () => {
     await logout();
@@ -34,13 +36,11 @@ export default function Header1({
                   <ul className="list-wrap">
                     <li>
                       <i className="flaticon-location" />
-                      Mogadishu, Somalia
+                      {locationLabel}
                     </li>
                     <li>
                       <i className="flaticon-mail" />
-                      <Link href="mailto:ogaalsancon@gmail.com">
-                        ogaalsancon@gmail.com
-                      </Link>
+                      <Link href={`mailto:${email}`}>{email}</Link>
                     </li>
                   </ul>
                 </div>
@@ -185,8 +185,7 @@ export default function Header1({
                           <div className="content">
                             <span>Hotline</span>
                             <span className="d-block">
-                              <Link href="tel:770904044">770904044</Link>{" "}
-                              <Link href="tel:770904045">770904045</Link>
+                              <Link href={phoneHref}>{phoneLabel}</Link>
                             </span>
                           </div>
                         </li>

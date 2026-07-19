@@ -1,9 +1,8 @@
 import { useState } from "react";
+import { useOrganization } from "@/context/OrganizationContext";
 
-const WHATSAPP_NUMBER = "252770904045";
 const WHATSAPP_MESSAGE =
   "Hello! I would like to know more about Ogaalsan services and courses.";
-const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`;
 
 function WhatsAppIcon({ className = "" }) {
   return (
@@ -38,6 +37,8 @@ function CloseIcon({ className = "" }) {
 
 export default function WhatsAppWidget() {
   const [open, setOpen] = useState(false);
+  const { organization, whatsappUrl } = useOrganization();
+  const chatUrl = whatsappUrl(WHATSAPP_MESSAGE);
 
   return (
     <div className={`whatsapp-widget ${open ? "is-open" : ""}`}>
@@ -49,7 +50,7 @@ export default function WhatsAppWidget() {
                 <WhatsAppIcon className="whatsapp-widget__icon whatsapp-widget__icon--avatar" />
               </span>
               <div>
-                <strong>Ogaalsan Support</strong>
+                <strong>{organization.name} Support</strong>
                 <span>Typically replies instantly</span>
               </div>
             </div>
@@ -68,12 +69,12 @@ export default function WhatsAppWidget() {
               <p className="whatsapp-widget__greeting">Assalamu Alaikum! 👋</p>
               <p>
                 Ready to start your journey? Have questions about our programs?
-                We&apos;re here to help you grow with Ogaalsan Consultancy.
+                We&apos;re here to help you grow with {organization.name}.
               </p>
             </div>
 
             <a
-              href={WHATSAPP_URL}
+              href={chatUrl}
               className="whatsapp-widget__cta"
               target="_blank"
               rel="noopener noreferrer"

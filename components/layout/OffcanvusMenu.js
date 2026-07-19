@@ -1,6 +1,9 @@
 import Link from "next/link"
+import { useOrganization } from "@/context/OrganizationContext"
 
 export default function OffcanvusMenu({ isOffcanvus, handleOffcanvus }) {
+    const { fullAddress, phoneLabel, phoneHref, email } = useOrganization()
+
     return (
         <>
             <div className={`extra-info ${isOffcanvus ? "active" : ""}`}>
@@ -13,15 +16,19 @@ export default function OffcanvusMenu({ isOffcanvus, handleOffcanvus }) {
                 <div className="side-info mb-30">
                     <div className="contact-list mb-30">
                         <h4>Office Address</h4>
-                        <p>Mogadishu, Somalia</p>
+                        <p>{fullAddress}</p>
                     </div>
                     <div className="contact-list mb-30">
                         <h4>Phone Number</h4>
-                        <p>+252 61 5280901</p>
+                        <p>
+                            <Link href={phoneHref}>{phoneLabel}</Link>
+                        </p>
                     </div>
                     <div className="contact-list mb-30">
                         <h4>Email Address</h4>
-                        <p>ogaalsancon@gmail.com</p>
+                        <p>
+                            <Link href={`mailto:${email}`}>{email}</Link>
+                        </p>
                     </div>
                 </div>
              

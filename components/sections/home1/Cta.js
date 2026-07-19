@@ -1,8 +1,10 @@
 import Link from "next/link"
 import { useEffect, useRef } from "react"
+import { useOrganization } from "@/context/OrganizationContext"
 
 export default function Cta() {
     const ctaRef = useRef(null)
+    const { phoneLabel, phoneHref } = useOrganization()
 
     useEffect(() => {
         // Initialize background image for dynamically loaded component
@@ -42,7 +44,7 @@ export default function Cta() {
                                         </div>
                                         <div className="content">
                                             <span>Call For More Info</span>
-                                            <Link href="tel:+252615280901">+252 61 5280901</Link>
+                                            <Link href={phoneHref}>{phoneLabel}</Link>
                                         </div>
                                     </div>
                                     <h2 className="title">Let's Discuss Your ICT & Digital Innovation Needs</h2>

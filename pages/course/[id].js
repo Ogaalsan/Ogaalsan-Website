@@ -3,15 +3,15 @@ import ContentLoader from "@/components/common/ContentLoader";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useOrganization } from "@/context/OrganizationContext";
 import { fetchPublishedCourse } from "@/util/coursesApi";
 import { useClientFetch } from "@/util/useClientFetch";
-
-const WHATSAPP_NUMBER = "252770904045";
 
 export default function CourseDetails() {
   const router = useRouter();
   const identifier = router.query.id;
   const ready = router.isReady && Boolean(identifier);
+  const { whatsappUrl: buildWhatsAppUrl } = useOrganization();
 
   const { data: course, loading } = useClientFetch(
     () => fetchPublishedCourse(identifier),
@@ -20,10 +20,8 @@ export default function CourseDetails() {
   );
 
   const whatsappUrl = course
-    ? `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-        `Hello! I have a question about the course: ${course.title}`
-      )}`
-    : `https://wa.me/${WHATSAPP_NUMBER}`;
+    ? buildWhatsAppUrl(`Hello! I have a question about the course: ${course.title}`)
+    : buildWhatsAppUrl();
 
   if (!ready || loading) {
     return (

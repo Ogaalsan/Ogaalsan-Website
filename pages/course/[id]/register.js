@@ -4,11 +4,10 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useAuth } from "@/context/AuthContext";
+import { useOrganization } from "@/context/OrganizationContext";
 import { fetchPublishedCourse } from "@/util/coursesApi";
 import { submitTrainingRegistration } from "@/util/trainingApi";
 import { useClientFetch } from "@/util/useClientFetch";
-
-const WHATSAPP_NUMBER = "252770904045";
 
 function buildFormFromUser(user) {
   return {
@@ -26,6 +25,7 @@ export default function CourseRegister() {
   const identifier = router.query.id;
   const ready = router.isReady && Boolean(identifier);
   const { user, isAuthenticated, loading: authLoading } = useAuth();
+  const { whatsappUrl: buildWhatsAppUrl } = useOrganization();
 
   const { data: course, loading } = useClientFetch(
     () => fetchPublishedCourse(identifier),
@@ -67,10 +67,8 @@ export default function CourseRegister() {
   }, [user, prefilled]);
 
   const whatsappUrl = course
-    ? `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-        `Hello! I have a question about the course: ${course.title}`
-      )}`
-    : `https://wa.me/${WHATSAPP_NUMBER}`;
+    ? buildWhatsAppUrl(`Hello! I have a question about the course: ${course.title}`)
+    : buildWhatsAppUrl();
 
   const handleChange = (e) => {
     const { name, value } = e.target;

@@ -1,5 +1,6 @@
 import Preloader from "@/components/elements/Preloader"
 import { AuthProvider } from "@/context/AuthContext"
+import { OrganizationProvider } from "@/context/OrganizationContext"
 import { useEffect, useState } from "react"
 import AOS from 'aos'
 
@@ -31,11 +32,13 @@ function MyApp({ Component, pageProps }) {
     }, [])
     return (
         <AuthProvider>
-            {!loading ? (
-                <Component {...pageProps} />
-            ) : (
-                <Preloader />
-            )}
+            <OrganizationProvider>
+                {!loading ? (
+                    <Component {...pageProps} />
+                ) : (
+                    <Preloader />
+                )}
+            </OrganizationProvider>
         </AuthProvider>
     )
 }

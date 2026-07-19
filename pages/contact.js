@@ -1,8 +1,11 @@
 import Layout from "@/components/layout/Layout";
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
+import { useOrganization } from "@/context/OrganizationContext";
 
 export default function Contact() {
+  const { email, phoneLabel, phoneHref, fullAddress } = useOrganization();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -82,6 +85,21 @@ export default function Contact() {
                       height={600}
                       loading="lazy"
                     />
+                  </div>
+                  <div className="mt-40">
+                    <ul className="list-wrap">
+                      <li className="mb-3">
+                        <strong>Address:</strong> {fullAddress}
+                      </li>
+                      <li className="mb-3">
+                        <strong>Email:</strong>{" "}
+                        <Link href={`mailto:${email}`}>{email}</Link>
+                      </li>
+                      <li className="mb-3">
+                        <strong>Phone:</strong>{" "}
+                        <Link href={phoneHref}>{phoneLabel}</Link>
+                      </li>
+                    </ul>
                   </div>
                 </div>
                 <div className="col-lg-6">
