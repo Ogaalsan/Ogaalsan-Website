@@ -47,7 +47,13 @@ export default function SignIn() {
         subtitle="Sign in to access your Ogaalsan account, courses, and updates."
         footer={
           <>
-            <AuthFooterLink href="/auth/sign-up">
+            <AuthFooterLink
+              href={`/auth/sign-up${
+                typeof router.query.redirect === "string"
+                  ? `?redirect=${encodeURIComponent(router.query.redirect)}`
+                  : ""
+              }`}
+            >
               Don&apos;t have an account? Create one
             </AuthFooterLink>
           </>

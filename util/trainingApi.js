@@ -1,7 +1,7 @@
 import { getApiBaseUrlCandidates } from "./api";
 
 /**
- * Submits a training registration to the Laravel admin backend.
+ * Submits a training or course registration to the Laravel admin backend.
  * The backend saves it, emails the participant, and notifies the admin.
  */
 export async function submitTrainingRegistration(data) {

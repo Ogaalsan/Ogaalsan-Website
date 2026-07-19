@@ -6,6 +6,8 @@ import { useRouter } from "next/router";
 import { fetchPublishedCourse } from "@/util/coursesApi";
 import { useClientFetch } from "@/util/useClientFetch";
 
+const WHATSAPP_NUMBER = "252770904045";
+
 export default function CourseDetails() {
   const router = useRouter();
   const identifier = router.query.id;
@@ -16,6 +18,12 @@ export default function CourseDetails() {
     [identifier],
     { enabled: ready, initialData: null }
   );
+
+  const whatsappUrl = course
+    ? `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+        `Hello! I have a question about the course: ${course.title}`
+      )}`
+    : `https://wa.me/${WHATSAPP_NUMBER}`;
 
   if (!ready || loading) {
     return (
@@ -66,7 +74,11 @@ export default function CourseDetails() {
                       alt={course.title}
                       width={800}
                       height={400}
-                      style={{ width: "100%", height: "auto", objectFit: "cover" }}
+                      style={{
+                        width: "100%",
+                        height: "auto",
+                        objectFit: "cover",
+                      }}
                     />
                   </div>
 
@@ -192,29 +204,83 @@ export default function CourseDetails() {
                     >
                       Where to Watch / Take:
                     </strong>
-                    <span style={{ color: "#334770" }}>{course.whereToWatch}</span>
+                    <span style={{ color: "#334770" }}>
+                      {course.whereToWatch}
+                    </span>
                   </div>
 
-                  <Link
-                    href={`/course/watch/${course.slug || course.id}`}
-                    className="btn btn-three w-100 text-center"
+                  <div
                     style={{
-                      backgroundColor: "#3FA9F5",
-                      color: "#fff",
-                      padding: "15px 25px",
-                      borderRadius: "5px",
-                      fontWeight: "600",
-                      textDecoration: "none",
                       display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      gap: "10px",
-                      transition: "all 0.3s ease",
+                      flexDirection: "column",
+                      gap: "14px",
+                      marginTop: "8px",
                     }}
                   >
-                    <i className="fas fa-play-circle" style={{ fontSize: "18px" }} />
-                    Go to Course Player
-                  </Link>
+                    <Link
+                      href={`/course/${course.slug || course.id}/register`}
+                      style={{
+                        backgroundColor: "#3FA9F5",
+                        color: "#fff",
+                        padding: "14px 18px",
+                        borderRadius: "8px",
+                        fontWeight: "600",
+                        fontSize: "15px",
+                        textDecoration: "none",
+                        display: "inline-flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        gap: "10px",
+                        width: "100%",
+                        lineHeight: 1.3,
+                        boxShadow: "0 4px 12px rgba(63, 169, 245, 0.25)",
+                      }}
+                    >
+                      <i className="fas fa-user-plus" aria-hidden="true" />
+                      Register for Course
+                    </Link>
+
+                    <a
+                      href={whatsappUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        backgroundColor: "#25D366",
+                        color: "#fff",
+                        padding: "14px 18px",
+                        borderRadius: "8px",
+                        fontWeight: "600",
+                        fontSize: "15px",
+                        textDecoration: "none",
+                        display: "inline-flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        gap: "10px",
+                        width: "100%",
+                        lineHeight: 1.3,
+                        boxShadow: "0 4px 12px rgba(37, 211, 102, 0.25)",
+                      }}
+                    >
+                      <i
+                        className="fab fa-whatsapp"
+                        style={{ fontSize: "18px" }}
+                        aria-hidden="true"
+                      />
+                      Chat on WhatsApp
+                    </a>
+
+                    <p
+                      style={{
+                        fontSize: "12px",
+                        color: "#667085",
+                        textAlign: "center",
+                        margin: "0",
+                        lineHeight: 1.5,
+                      }}
+                    >
+                      For questions only — this does not replace registration.
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>

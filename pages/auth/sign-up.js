@@ -21,11 +21,14 @@ export default function SignUp() {
   const [fieldErrors, setFieldErrors] = useState({});
   const [submitting, setSubmitting] = useState(false);
 
+  const redirectTo =
+    typeof router.query.redirect === "string" ? router.query.redirect : "/";
+
   useEffect(() => {
     if (!authLoading && isAuthenticated) {
-      router.replace("/");
+      router.replace(redirectTo);
     }
-  }, [authLoading, isAuthenticated, router]);
+  }, [authLoading, isAuthenticated, redirectTo, router]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -40,7 +43,7 @@ export default function SignUp() {
 
     try {
       await register(form);
-      router.push("/");
+      router.push(redirectTo);
     } catch (err) {
       setError(err.message || "Unable to create account. Please try again.");
       if (err.errors) setFieldErrors(err.errors);
@@ -61,7 +64,13 @@ export default function SignUp() {
         title="Create your account"
         subtitle="Join Ogaalsan to explore courses, services, and learning resources."
         footer={
-          <AuthFooterLink href="/auth/sign-in">
+          <AuthFooterLink
+            href={`/auth/sign-in${
+              typeof router.query.redirect === "string"
+                ? `?redirect=${encodeURIComponent(router.query.redirect)}`
+                : ""
+            }`}
+          >
             Already have an account? Sign in
           </AuthFooterLink>
         }
