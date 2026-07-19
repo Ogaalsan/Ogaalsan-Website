@@ -28,6 +28,7 @@ export default function TrainingDetail({ training }) {
 
     try {
       await submitTrainingRegistration({
+        registration_type: "training",
         name: formData.name,
         email: formData.email,
         location: formData.location,
