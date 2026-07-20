@@ -4,8 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useOrganization } from "@/context/OrganizationContext";
-import { fetchPublishedCourse } from "@/util/coursesApi";
-import { useClientFetch } from "@/util/useClientFetch";
+import { fetchPublishedCourse } from "@/lib/courses";
+import { useClientFetch } from "@/hooks/useClientFetch";
 
 export default function CourseDetails() {
   const router = useRouter();
@@ -25,14 +25,14 @@ export default function CourseDetails() {
 
   if (!ready || loading) {
     return (
-      <Layout headerStyle={1} footerStyle={2} breadcrumbTitle="Course Details">
+      <Layout breadcrumbTitle="Course Details">
         <ContentLoader message="Loading course..." />
       </Layout>
     );
   }
 
   return (
-    <Layout headerStyle={1} footerStyle={2} breadcrumbTitle="Course Details">
+    <Layout breadcrumbTitle="Course Details">
       {course ? (
         <section className="course-details-area pt-120 pb-120">
           <div className="container">

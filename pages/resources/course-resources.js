@@ -34,7 +34,7 @@ const RESOURCES = [
 
 export default function CourseResources() {
   return (
-    <Layout headerStyle={1} footerStyle={2} breadcrumbTitle="Course Resources">
+    <Layout breadcrumbTitle="Course Resources">
       <section className="blog-area pt-120 pb-120">
         <div className="container">
           <div className="row justify-content-center">

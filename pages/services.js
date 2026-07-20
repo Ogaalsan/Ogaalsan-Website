@@ -1,8 +1,8 @@
 import Layout from "@/components/layout/Layout";
 import ServiceCard from "@/components/services/ServiceCard";
 import ContentLoader from "@/components/common/ContentLoader";
-import { fetchActiveServices } from "@/util/servicesApi";
-import { useClientFetch } from "@/util/useClientFetch";
+import { fetchActiveServices } from "@/lib/services";
+import { useClientFetch } from "@/hooks/useClientFetch";
 
 export default function Services() {
   const { data: services = [], loading } = useClientFetch(
@@ -11,7 +11,7 @@ export default function Services() {
   );
 
   return (
-    <Layout headerStyle={1} footerStyle={2} breadcrumbTitle="Our Services">
+    <Layout breadcrumbTitle="Our Services">
       <section
         className="services-area-five inner-services-bg"
         data-background="/assets/img/bg/inner_services_bg.jpg"

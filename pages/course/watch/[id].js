@@ -6,8 +6,8 @@ import { useState } from "react";
 import {
   extractYouTubeId,
   fetchPublishedCourse,
-} from "@/util/coursesApi";
-import { useClientFetch } from "@/util/useClientFetch";
+} from "@/lib/courses";
+import { useClientFetch } from "@/hooks/useClientFetch";
 
 export default function CourseWatch() {
   const router = useRouter();
@@ -23,7 +23,7 @@ export default function CourseWatch() {
 
   if (!ready || loading) {
     return (
-      <Layout headerStyle={1} footerStyle={2}>
+      <Layout>
         <ContentLoader message="Loading course..." />
       </Layout>
     );
@@ -31,7 +31,7 @@ export default function CourseWatch() {
 
   if (!course) {
     return (
-      <Layout headerStyle={1} footerStyle={2}>
+      <Layout>
         <div className="container pt-120 pb-120 text-center">
           <h2>Course not found.</h2>
           <Link href="/courses" className="btn mt-30">
@@ -55,7 +55,7 @@ export default function CourseWatch() {
     extractYouTubeId(activeLesson?.video_url) || course.videoId;
 
   return (
-    <Layout headerStyle={1} footerStyle={2} breadcrumbTitle={course.title}>
+    <Layout breadcrumbTitle={course.title}>
       <section className="course-watch-area pt-60 pb-120">
         <div className="container-fluid" style={{ maxWidth: "1600px" }}>
           <div className="row">

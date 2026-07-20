@@ -1,8 +1,8 @@
 import Layout from "@/components/layout/Layout";
 import CourseCard from "@/components/courses/CourseCard";
 import ContentLoader from "@/components/common/ContentLoader";
-import { fetchPublishedCourses } from "@/util/coursesApi";
-import { useClientFetch } from "@/util/useClientFetch";
+import { fetchPublishedCourses } from "@/lib/courses";
+import { useClientFetch } from "@/hooks/useClientFetch";
 
 export default function Courses() {
   const { data: courses = [], loading } = useClientFetch(
@@ -11,7 +11,7 @@ export default function Courses() {
   );
 
   return (
-    <Layout headerStyle={1} footerStyle={2} breadcrumbTitle="Our Courses">
+    <Layout breadcrumbTitle="Our Courses">
       <section
         className="services-area-five inner-services-bg"
         data-background="/assets/img/bg/inner_services_bg.jpg"

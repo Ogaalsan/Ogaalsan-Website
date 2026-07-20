@@ -1,4 +1,4 @@
-import { fetchOrganization } from "@/util/organizationApi";
+import { fetchOrganization } from "@/lib/organization";
 
 // API route to handle contact form submissions
 // To enable email sending, you'll need to install nodemailer:

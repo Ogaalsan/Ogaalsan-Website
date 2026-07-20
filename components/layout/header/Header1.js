@@ -167,11 +167,6 @@ export default function Header1({
                           <Link href="#">Resources</Link>
                           <ul className="sub-menu">
                             <li>
-                              <Link href="/resources/annual-reports">
-                                Annual Reports
-                              </Link>
-                            </li>
-                            <li>
                               <Link href="/resources/course-resources">
                                 Course Resources
                               </Link>

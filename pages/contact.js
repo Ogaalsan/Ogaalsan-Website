@@ -71,7 +71,7 @@ export default function Contact() {
   };
   return (
     <>
-      <Layout headerStyle={1} footerStyle={2} breadcrumbTitle="Contact Us">
+      <Layout breadcrumbTitle="Contact Us">
         <div>
           <section className="inner-contact-area pt-120 pb-120">
             <div className="container">

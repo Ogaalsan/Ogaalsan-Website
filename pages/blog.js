@@ -3,8 +3,8 @@ import Layout from "@/components/layout/Layout";
 import ContentLoader from "@/components/common/ContentLoader";
 import Image from "next/image";
 import Link from "next/link";
-import { fetchPublishedPosts } from "@/util/postsApi";
-import { useClientFetch } from "@/util/useClientFetch";
+import { fetchPublishedPosts } from "@/lib/posts";
+import { useClientFetch } from "@/hooks/useClientFetch";
 
 export default function Blog() {
   const { data: posts = [], loading } = useClientFetch(fetchPublishedPosts, []);
@@ -12,7 +12,7 @@ export default function Blog() {
 
   return (
     <>
-      <Layout headerStyle={1} footerStyle={2} breadcrumbTitle="Latest Blog">
+      <Layout breadcrumbTitle="Latest Blog">
         <section className="blog-area pt-120 pb-120">
           <div className="container">
             <div className="inner-blog-wrap">

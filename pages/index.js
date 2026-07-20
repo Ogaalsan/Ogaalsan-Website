@@ -1,33 +1,33 @@
 import dynamic from "next/dynamic";
 import Layout from "@/components/layout/Layout";
-import Banner from "@/components/sections/home1/Banner";
-import Features from "@/components/sections/home1/Features";
-import About from "@/components/sections/home1/About";
-import Services from "@/components/sections/home1/Services";
-import { fetchActiveServices } from "@/util/servicesApi";
-import { fetchPublishedPosts } from "@/util/postsApi";
-import { useClientFetch } from "@/util/useClientFetch";
+import Banner from "@/components/sections/home/Banner";
+import Features from "@/components/sections/home/Features";
+import About from "@/components/sections/home/About";
+import Services from "@/components/sections/home/Services";
+import { fetchActiveServices } from "@/lib/services";
+import { fetchPublishedPosts } from "@/lib/posts";
+import { useClientFetch } from "@/hooks/useClientFetch";
 
-const Overview = dynamic(() => import("@/components/sections/home1/Overview"), {
+const Overview = dynamic(() => import("@/components/sections/home/Overview"), {
   loading: () => <div style={{ minHeight: "200px" }} />,
 });
-const Choose = dynamic(() => import("@/components/sections/home1/Choose"), {
+const Choose = dynamic(() => import("@/components/sections/home/Choose"), {
   loading: () => <div style={{ minHeight: "200px" }} />,
 });
-const Project = dynamic(() => import("@/components/sections/home1/Project"), {
+const Project = dynamic(() => import("@/components/sections/home/Project"), {
   loading: () => <div style={{ minHeight: "200px" }} />,
 });
-const Cta = dynamic(() => import("@/components/sections/home1/Cta"), {
+const Cta = dynamic(() => import("@/components/sections/home/Cta"), {
   loading: () => <div style={{ minHeight: "200px" }} />,
 });
-const Testimonial = dynamic(() => import("@/components/sections/home1/Testimonial"), {
+const Testimonial = dynamic(() => import("@/components/sections/home/Testimonial"), {
   loading: () => <div style={{ minHeight: "200px" }} />,
 });
-const Blog = dynamic(() => import("@/components/sections/home1/Blog"), {
+const Blog = dynamic(() => import("@/components/sections/home/Blog"), {
   loading: () => <div style={{ minHeight: "200px" }} />,
 });
 
-export default function Home1() {
+export default function Home() {
   const { data: services = [], loading: servicesLoading } = useClientFetch(
     fetchActiveServices,
     []
@@ -38,7 +38,7 @@ export default function Home1() {
   );
 
   return (
-    <Layout headerStyle={1} footerStyle={2}>
+    <Layout>
       <Banner />
       <Features />
       <About />

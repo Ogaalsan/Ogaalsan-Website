@@ -7,8 +7,8 @@ import { useRouter } from "next/router";
 import {
   fetchActiveService,
   fetchActiveServices,
-} from "@/util/servicesApi";
-import { useClientFetch } from "@/util/useClientFetch";
+} from "@/lib/services";
+import { useClientFetch } from "@/hooks/useClientFetch";
 
 export default function ServiceDetails() {
   const router = useRouter();
@@ -27,7 +27,7 @@ export default function ServiceDetails() {
 
   if (!ready || serviceLoading || listLoading) {
     return (
-      <Layout headerStyle={1} footerStyle={2} breadcrumbTitle="Service Details">
+      <Layout breadcrumbTitle="Service Details">
         <ContentLoader message="Loading service..." />
       </Layout>
     );
@@ -35,7 +35,7 @@ export default function ServiceDetails() {
 
   if (!service) {
     return (
-      <Layout headerStyle={1} footerStyle={2} breadcrumbTitle="Service Details">
+      <Layout breadcrumbTitle="Service Details">
         <section className="pt-120 pb-120 text-center">
           <div className="container">
             <h2>Service not found.</h2>
@@ -49,7 +49,7 @@ export default function ServiceDetails() {
   }
 
   return (
-    <Layout headerStyle={1} footerStyle={2} breadcrumbTitle="Service Details">
+    <Layout breadcrumbTitle="Service Details">
       <section className="services-details-area pt-120 pb-120">
         <div className="container">
           <div className="row justify-content-center">

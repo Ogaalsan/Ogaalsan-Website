@@ -58,7 +58,7 @@ export default function VerifyEmail() {
   };
 
   return (
-    <Layout headerStyle={1} footerStyle={2} breadcrumbTitle="Verify Email">
+    <Layout breadcrumbTitle="Verify Email">
       <AuthCard
         title="Verify your email"
         subtitle="Enter the 4-digit code we sent to your email address."

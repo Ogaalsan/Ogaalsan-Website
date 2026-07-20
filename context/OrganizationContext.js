@@ -13,7 +13,7 @@ import {
   phoneDisplay,
   phoneTelHref,
   phoneWhatsAppNumber,
-} from "@/util/organizationApi";
+} from "@/lib/organization";
 
 const OrganizationContext = createContext({
   organization: DEFAULT_ORGANIZATION,

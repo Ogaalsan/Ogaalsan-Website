@@ -16,7 +16,7 @@ import {
   registerUser,
   resendVerification,
   verifyEmail,
-} from "@/util/authApi";
+} from "@/lib/auth";
 
 const AuthContext = createContext(null);
 

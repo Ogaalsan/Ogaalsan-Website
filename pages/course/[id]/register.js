@@ -5,9 +5,9 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { useOrganization } from "@/context/OrganizationContext";
-import { fetchPublishedCourse } from "@/util/coursesApi";
-import { submitTrainingRegistration } from "@/util/trainingApi";
-import { useClientFetch } from "@/util/useClientFetch";
+import { fetchPublishedCourse } from "@/lib/courses";
+import { submitTrainingRegistration } from "@/lib/trainings";
+import { useClientFetch } from "@/hooks/useClientFetch";
 
 function buildFormFromUser(user) {
   return {
@@ -114,11 +114,7 @@ export default function CourseRegister() {
 
   if (authLoading || !isAuthenticated) {
     return (
-      <Layout
-        headerStyle={1}
-        footerStyle={2}
-        breadcrumbTitle="Course Registration"
-      >
+      <Layout breadcrumbTitle="Course Registration">
         <ContentLoader message="Checking your account..." />
       </Layout>
     );
@@ -126,11 +122,7 @@ export default function CourseRegister() {
 
   if (!ready || loading) {
     return (
-      <Layout
-        headerStyle={1}
-        footerStyle={2}
-        breadcrumbTitle="Course Registration"
-      >
+      <Layout breadcrumbTitle="Course Registration">
         <ContentLoader message="Loading course..." />
       </Layout>
     );
@@ -138,11 +130,7 @@ export default function CourseRegister() {
 
   if (!course) {
     return (
-      <Layout
-        headerStyle={1}
-        footerStyle={2}
-        breadcrumbTitle="Course Registration"
-      >
+      <Layout breadcrumbTitle="Course Registration">
         <section className="pt-120 pb-120 text-center">
           <div className="container">
             <h2>Course not found.</h2>
@@ -165,11 +153,7 @@ export default function CourseRegister() {
   }
 
   return (
-    <Layout
-      headerStyle={1}
-      footerStyle={2}
-      breadcrumbTitle="Course Registration"
-    >
+    <Layout breadcrumbTitle="Course Registration">
       <section className="inner-contact-area pt-120 pb-120">
         <div className="container">
           <div className="row justify-content-center">

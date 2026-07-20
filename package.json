@@ -1,8 +1,8 @@
 {
-  "name": "name",
+  "name": "ogaalsan-website",
   "version": "1.0.0",
   "private": true,
-  "author": "author",
+  "description": "OgaalSan Consultancy public website",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

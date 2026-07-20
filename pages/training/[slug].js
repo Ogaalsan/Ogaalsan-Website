@@ -1,8 +1,7 @@
 import Layout from "@/components/layout/Layout";
 import Link from "next/link";
 import { useState } from "react";
-import { fetchTrainingBySlug } from "@/util/trainingsApi";
-import { submitTrainingRegistration } from "@/util/trainingApi";
+import { fetchTrainingBySlug, submitTrainingRegistration } from "@/lib/trainings";
 
 export default function TrainingDetail({ training }) {
   const [formData, setFormData] = useState({
@@ -65,7 +64,7 @@ export default function TrainingDetail({ training }) {
 
   if (!training) {
     return (
-      <Layout headerStyle={1} footerStyle={2} breadcrumbTitle="Training">
+      <Layout breadcrumbTitle="Training">
         <section className="blog-area pt-120 pb-120">
           <div className="container text-center">
             <h3>Training not found</h3>
@@ -80,7 +79,7 @@ export default function TrainingDetail({ training }) {
   }
 
   return (
-    <Layout headerStyle={1} footerStyle={2} breadcrumbTitle={training.title}>
+    <Layout breadcrumbTitle={training.title}>
       <section className="inner-contact-area pt-120 pb-120">
         <div className="container">
           <div className="row">

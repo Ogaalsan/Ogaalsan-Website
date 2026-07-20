@@ -59,7 +59,7 @@ export default function SignUp() {
   };
 
   return (
-    <Layout headerStyle={1} footerStyle={2} breadcrumbTitle="Sign Up">
+    <Layout breadcrumbTitle="Sign Up">
       <AuthCard
         title="Create your account"
         subtitle="Join Ogaalsan to explore courses, services, and learning resources."

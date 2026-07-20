@@ -4,8 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useMemo } from "react";
-import { fetchPublishedPost, fetchPublishedPosts } from "@/util/postsApi";
-import { useClientFetch } from "@/util/useClientFetch";
+import { fetchPublishedPost, fetchPublishedPosts } from "@/lib/posts";
+import { useClientFetch } from "@/hooks/useClientFetch";
 
 export default function BlogDetails() {
   const router = useRouter();
@@ -30,7 +30,7 @@ export default function BlogDetails() {
 
   if (!ready || postLoading) {
     return (
-      <Layout headerStyle={1} footerStyle={2} breadcrumbTitle="Blog Details">
+      <Layout breadcrumbTitle="Blog Details">
         <ContentLoader message="Loading blog post..." />
       </Layout>
     );
@@ -38,7 +38,7 @@ export default function BlogDetails() {
 
   if (!blogPost) {
     return (
-      <Layout headerStyle={1} footerStyle={2} breadcrumbTitle="Blog Details">
+      <Layout breadcrumbTitle="Blog Details">
         <section className="pt-120 pb-120 text-center">
           <div className="container">
             <h2>Post not found.</h2>
@@ -53,7 +53,7 @@ export default function BlogDetails() {
 
   return (
     <>
-      <Layout headerStyle={1} footerStyle={2} breadcrumbTitle="Blog Details">
+      <Layout breadcrumbTitle="Blog Details">
         <section className="blog-details-area pt-120 pb-120">
               <div className="container">
                 <div className="blog-details-wrap">

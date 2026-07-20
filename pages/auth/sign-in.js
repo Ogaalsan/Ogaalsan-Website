@@ -41,7 +41,7 @@ export default function SignIn() {
   };
 
   return (
-    <Layout headerStyle={1} footerStyle={2} breadcrumbTitle="Sign In">
+    <Layout breadcrumbTitle="Sign In">
       <AuthCard
         title="Welcome back"
         subtitle="Sign in to access your Ogaalsan account, courses, and updates."

@@ -7,7 +7,7 @@ import Image from "next/image";
 export default function About() {
   return (
     <>
-      <Layout headerStyle={1} footerStyle={2} breadcrumbTitle="About Us">
+      <Layout breadcrumbTitle="About Us">
         <div>
           <section className="about-area-seven pt-120 pb-120">
             <div className="container">

@@ -71,7 +71,7 @@ export default function Events() {
 
   return (
     <>
-      <Layout headerStyle={1} footerStyle={2} breadcrumbTitle="Events & Opportunities">
+      <Layout breadcrumbTitle="Events & Opportunities">
         <div>
           <section className="inner-contact-area pt-120 pb-120">
             <div className="container">
