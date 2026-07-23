@@ -3,9 +3,9 @@ import Image from "next/image";
 
 export default function CourseCard({ course }) {
   const hasDiscount =
-    course.discountPrice !== null &&
-    course.discountPrice !== undefined &&
-    course.discountPrice < course.price;
+    course.discountPrice != null &&
+    Number(course.discountPrice) > 0 &&
+    Number(course.discountPrice) < Number(course.price);
   const courseHref = `/course/${course.slug || course.id}`;
 
   return (
