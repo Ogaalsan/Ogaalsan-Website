@@ -1,6 +1,5 @@
 import CounterUp from "@/components/elements/CounterUp";
 import Layout from "@/components/layout/Layout";
-import TestimonialSlider1 from "@/components/slider/TestimonialSlider1";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -190,48 +189,6 @@ export default function About() {
             </div>
           </section>
           {/* features-area-end */}
-          {/* testimonial-area */}
-          <section
-            className="testimonial-area testimonial-bg"
-            data-background="/assets/img/bg/testimonial_bg.jpg"
-          >
-            <div className="container">
-              <div className="row align-items-center justify-content-center">
-                <div className="col-lg-5 col-md-8">
-                  <div className="testimonial-img">
-                    <Image
-                      src="/assets/img/images/testimonial_img.jpg"
-                      alt=""
-                      width={500}
-                      height={600}
-                      loading="lazy"
-                    />
-                    <div className="review-wrap">
-                      <Image
-                        src="/assets/img/icons/rating.svg"
-                        alt=""
-                        width={100}
-                        height={20}
-                        loading="lazy"
-                      />
-                      <div className="content">
-                        <h2 className="title">15k</h2>
-                        <p>
-                          Positive <br /> Review
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-lg-7">
-                  <div className="testimonial-item-wrap">
-                    <TestimonialSlider1 />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-          {/* testimonial-area-end */}
         </div>
       </Layout>
     </>

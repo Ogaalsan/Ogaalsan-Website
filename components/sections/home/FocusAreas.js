@@ -42,7 +42,7 @@ const settings = {
     ]
 }
 
-export default function Testimonial() {
+export default function FocusAreas() {
     const sliderRef = useRef(null)
     const sectionRef = useRef(null)
 

@@ -20,7 +20,7 @@ const Project = dynamic(() => import("@/components/sections/home/Project"), {
 const Cta = dynamic(() => import("@/components/sections/home/Cta"), {
   loading: () => <div style={{ minHeight: "200px" }} />,
 });
-const Testimonial = dynamic(() => import("@/components/sections/home/Testimonial"), {
+const FocusAreas = dynamic(() => import("@/components/sections/home/FocusAreas"), {
   loading: () => <div style={{ minHeight: "200px" }} />,
 });
 const Blog = dynamic(() => import("@/components/sections/home/Blog"), {
@@ -47,7 +47,7 @@ export default function Home() {
       <Choose />
       <Project />
       <Cta />
-      <Testimonial />
+      <FocusAreas />
       <Blog posts={posts} loading={postsLoading} />
     </Layout>
   );
