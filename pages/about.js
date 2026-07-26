@@ -75,9 +75,9 @@ export default function About() {
                           </div>
                           <div className="content">
                             <h2 className="count">
-                              <CounterUp count={152} />K
+                              <CounterUp count={500} />+
                             </h2>
-                            <p>Total revenue</p>
+                            <p>Professionals trained</p>
                           </div>
                         </li>
                         <li>
@@ -86,9 +86,9 @@ export default function About() {
                           </div>
                           <div className="content">
                             <h2 className="count">
-                              <CounterUp count={95} />%
+                              <CounterUp count={98} />%
                             </h2>
-                            <p>Increase in sales</p>
+                            <p>Client satisfaction</p>
                           </div>
                         </li>
                       </ul>

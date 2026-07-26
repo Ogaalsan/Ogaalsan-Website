@@ -167,8 +167,8 @@ export default function Header1({
                           <Link href="#">Resources</Link>
                           <ul className="sub-menu">
                             <li>
-                              <Link href="/resources/full-reports">
-                                Full Reports
+                              <Link href="/resources/reports">
+                                Reports
                               </Link>
                             </li>
                             <li>

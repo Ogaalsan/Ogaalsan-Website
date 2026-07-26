@@ -3,18 +3,18 @@ import Link from "next/link";
 import { fetchActiveReports } from "@/lib/reports";
 import { useClientFetch } from "@/hooks/useClientFetch";
 
-export default function FullReports() {
+export default function Reports() {
   const { data: reports = [], loading } = useClientFetch(fetchActiveReports, []);
 
   return (
-    <Layout breadcrumbTitle="Full Reports">
+    <Layout breadcrumbTitle="Reports">
       <section className="blog-area pt-120 pb-120">
         <div className="container">
           <div className="row justify-content-center">
             <div className="col-lg-8">
               <div className="section-title text-center mb-50">
                 <span className="sub-title">Transparency & Impact</span>
-                <h2 className="title">Full Reports</h2>
+                <h2 className="title">Reports</h2>
                 <p>
                   Explore our published reports to see how Ogaalsan is empowering
                   communities through education, technology, and opportunity.
