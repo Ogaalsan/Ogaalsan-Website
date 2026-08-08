@@ -71,6 +71,11 @@ const nextConfig = {
         destination: '/services/digital-marketing-growth',
         permanent: true,
       },
+      {
+        source: '/resources/full-reports',
+        destination: '/resources/reports',
+        permanent: true,
+      },
     ];
   },
 }
