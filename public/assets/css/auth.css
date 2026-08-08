@@ -50,6 +50,15 @@
   margin-top: 15px;
 }
 
+/* Auth pages: centered card (contact layout uses padding-left for a sidebar) */
+.inner-contact-area .inner-contact-info {
+  padding-left: 0;
+  padding: 40px 36px;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: none;
+}
+
 .inner-contact-area .contact-form-inner {
   display: flex;
   flex-direction: column;
