@@ -675,3 +675,73 @@ html[data-theme="dark"] [style*="color: #334770"],
 html[data-theme="dark"] [style*="color:#334770"] {
   color: #d7e0ef !important;
 }
+
+/* Auth sign-in / sign-up — clearer card + fields */
+html[data-theme="dark"] .inner-contact-area .inner-contact-info {
+  background: #1a2538 !important;
+  border: 1px solid #334766 !important;
+  border-radius: 16px;
+  padding: 40px 36px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+}
+
+html[data-theme="dark"] .inner-contact-area .inner-contact-info > p {
+  color: #b7c4d8 !important;
+}
+
+html[data-theme="dark"] .inner-contact-area .contact-form,
+html[data-theme="dark"] .inner-contact-area .contact-form-inner {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+html[data-theme="dark"] .inner-contact-area .form-grp input,
+html[data-theme="dark"] .inner-contact-area .form-grp textarea,
+html[data-theme="dark"] .inner-contact-area .form-grp select {
+  background: #0f1828 !important;
+  border: 1.5px solid #4a5f7d !important;
+  border-radius: 8px !important;
+  color: #f0f5ff !important;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.25);
+}
+
+html[data-theme="dark"] .inner-contact-area .form-grp input::placeholder,
+html[data-theme="dark"] .inner-contact-area .form-grp textarea::placeholder {
+  color: #9aabc3 !important;
+  opacity: 1;
+}
+
+html[data-theme="dark"] .inner-contact-area .form-grp input:hover,
+html[data-theme="dark"] .inner-contact-area .form-grp textarea:hover {
+  border-color: #6b82a3 !important;
+}
+
+html[data-theme="dark"] .inner-contact-area .form-grp input:focus,
+html[data-theme="dark"] .inner-contact-area .form-grp textarea:focus,
+html[data-theme="dark"] .inner-contact-area .form-grp select:focus {
+  border-color: #3fa9f5 !important;
+  outline: none !important;
+  box-shadow: 0 0 0 3px rgba(63, 169, 245, 0.25) !important;
+}
+
+html[data-theme="dark"] .auth-alert--error {
+  background: rgba(192, 57, 43, 0.18) !important;
+  color: #f5b4ae !important;
+  border-color: rgba(220, 100, 90, 0.45) !important;
+}
+
+html[data-theme="dark"] .auth-alert--success {
+  background: rgba(31, 107, 63, 0.22) !important;
+  color: #a8e0bf !important;
+  border-color: rgba(100, 180, 130, 0.4) !important;
+}
+
+html[data-theme="dark"] .auth-field-error {
+  color: #f08080 !important;
+}
+
+html[data-theme="dark"] .auth-card-footer,
+html[data-theme="dark"] .auth-card-footer p {
+  color: #c5d0e0 !important;
+}
