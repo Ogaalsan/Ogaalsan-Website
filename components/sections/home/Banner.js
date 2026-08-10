@@ -11,13 +11,6 @@ export default function Banner() {
         <div className="row align-items-center ogaalsan-hero__row">
           <div className="col-lg-6 col-md-6">
             <div className="banner-content-two ogaalsan-hero__content">
-              <p
-                className="ogaalsan-hero__brand"
-                data-aos="fade-up"
-                data-aos-delay={50}
-              >
-                OgaalSan Consultancy
-              </p>
               <span
                 className="sub-title"
                 data-aos="fade-up"
