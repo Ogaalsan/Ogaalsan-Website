@@ -198,3 +198,252 @@
     animation: none;
   }
 }
+
+/* Choose — primary blue + geometric shape pattern */
+.ogaalsan-choose {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  background: #3fa9f5 !important;
+}
+
+.ogaalsan-choose .choose-shape {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 0;
+  pointer-events: none;
+  line-height: 0;
+}
+
+.ogaalsan-choose .choose-shape img {
+  max-width: min(520px, 70vw);
+  height: auto;
+  opacity: 0.4;
+  /* Force pattern lines to white */
+  filter: brightness(0) invert(1);
+}
+
+.ogaalsan-choose > .container {
+  position: relative;
+  z-index: 1;
+}
+
+.ogaalsan-choose .choose-content {
+  width: 100%;
+  max-width: 540px;
+}
+
+.ogaalsan-choose .section-title-two .title,
+.ogaalsan-choose .tg-element-title {
+  color: #ffffff !important;
+}
+
+.ogaalsan-choose .choose-content p {
+  margin-bottom: 0;
+  color: rgba(255, 255, 255, 0.92) !important;
+  line-height: 1.75;
+}
+
+.ogaalsan-choose .skill-wrap {
+  margin-left: 0;
+  padding: 40px 36px;
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 10px 36px rgba(34, 66, 143, 0.16);
+}
+
+.ogaalsan-choose .skill-wrap > p {
+  margin-bottom: 28px;
+  color: var(--tg-paragraph-color, #5d657b);
+  line-height: 1.75;
+}
+
+.ogaalsan-choose .progress-item .title {
+  color: var(--tg-heading-font-color, #22428f);
+}
+
+.ogaalsan-choose .progress-item .progress-bar {
+  background-color: #3fa9f5 !important;
+}
+
+@media (max-width: 991px) {
+  .ogaalsan-choose .choose-content {
+    max-width: 100%;
+    margin-bottom: 40px;
+  }
+
+  .ogaalsan-choose .skill-wrap {
+    padding: 32px 24px;
+  }
+
+  .ogaalsan-choose .choose-shape img {
+    max-width: 280px;
+    opacity: 0.3;
+  }
+}
+
+/* Focus Areas — exact same blue as Choose */
+.ogaalsan-focus {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  margin-top: 48px;
+  background: #3fa9f5 !important;
+  background-image: none !important;
+}
+
+/* World-map dots: screen blend drops the dark fill, keeps lighter dots */
+.ogaalsan-focus__map {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  mix-blend-mode: screen;
+  opacity: 0.85;
+  filter: contrast(1.8) brightness(1.35);
+}
+
+/* Same white wireframe as Choose */
+.ogaalsan-focus__shape {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 0;
+  pointer-events: none;
+  line-height: 0;
+}
+
+.ogaalsan-focus__shape img {
+  max-width: min(480px, 65vw);
+  height: auto;
+  opacity: 0.4;
+  filter: brightness(0) invert(1);
+}
+
+.ogaalsan-focus > .container {
+  position: relative;
+  z-index: 1;
+}
+
+.ogaalsan-focus .section-title-two .sub-title {
+  color: #22428f !important;
+  background: #ffffff !important;
+}
+
+.ogaalsan-focus .section-title-two .title,
+.ogaalsan-focus .tg-element-title {
+  color: #ffffff !important;
+}
+
+.ogaalsan-focus__card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 25px;
+  min-height: 140px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 8px;
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+.ogaalsan-focus__card:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.45);
+}
+
+.ogaalsan-focus__card h4 {
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 500;
+  margin: 0;
+  text-align: center;
+}
+
+/* CTA — exact same blue as Choose */
+.cta-inner-wrap.ogaalsan-cta,
+.ogaalsan-cta {
+  position: relative;
+  overflow: hidden;
+  background: #3fa9f5 !important;
+  background-image: none !important;
+}
+
+.ogaalsan-cta__map {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  mix-blend-mode: screen;
+  opacity: 0.9;
+  filter: contrast(1.7) brightness(1.4);
+}
+
+.ogaalsan-cta__shape {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 0;
+  pointer-events: none;
+  line-height: 0;
+}
+
+.ogaalsan-cta__shape img {
+  max-width: min(360px, 50vw);
+  height: auto;
+  opacity: 0.35;
+  filter: brightness(0) invert(1);
+}
+
+.ogaalsan-cta__row {
+  position: relative;
+  z-index: 1;
+}
+
+.ogaalsan-cta .cta-content .title,
+.ogaalsan-cta .cta-info-wrap .content span,
+.ogaalsan-cta .cta-info-wrap .content a,
+.ogaalsan-cta .cta-info-wrap .icon {
+  color: #ffffff !important;
+}
+
+.ogaalsan-cta .cta-info-wrap::before {
+  background: rgba(255, 255, 255, 0.45) !important;
+}
+
+.ogaalsan-cta .btn {
+  background: #ffffff !important;
+  color: #22428f !important;
+}
+
+.ogaalsan-cta .btn::before {
+  background: #3fa9f5 !important;
+}
+
+.ogaalsan-cta .btn::after {
+  background: none !important;
+  color: #ffffff !important;
+}
+
+.ogaalsan-cta .btn:hover {
+  color: #ffffff !important;
+}
+
+.ogaalsan-cta .btn:hover::after {
+  color: #ffffff !important;
+}
+
+@media (max-width: 991px) {
+  .ogaalsan-focus__shape img,
+  .ogaalsan-cta__shape img {
+    max-width: 240px;
+    opacity: 0.28;
+  }
+}

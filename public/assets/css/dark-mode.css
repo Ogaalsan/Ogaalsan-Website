@@ -179,7 +179,7 @@ html[data-theme="dark"] [data-background]:not(.choose-area):not(.choose-bg):not(
 }
 
 /* Sections */
-html[data-theme="dark"] section:not(.choose-area):not(.choose-bg),
+html[data-theme="dark"] section:not(.choose-area):not(.choose-bg):not(.ogaalsan-choose):not(.ogaalsan-focus),
 html[data-theme="dark"] .features-area-two,
 html[data-theme="dark"] .about-area-three,
 html[data-theme="dark"] .overview-area,
@@ -193,6 +193,21 @@ html[data-theme="dark"] .blog-area,
 html[data-theme="dark"] .courses-area,
 html[data-theme="dark"] .training-area {
   background-color: #0d1421 !important;
+}
+
+/* Choose / Focus / CTA — exact same brand blue */
+html[data-theme="dark"] .ogaalsan-choose,
+html[data-theme="dark"] .ogaalsan-focus,
+html[data-theme="dark"] .ogaalsan-cta,
+html[data-theme="dark"] .cta-inner-wrap.ogaalsan-cta {
+  background: #3fa9f5 !important;
+  background-image: none !important;
+}
+
+html[data-theme="dark"] .ogaalsan-choose .section-title-two .title,
+html[data-theme="dark"] .ogaalsan-choose .tg-element-title,
+html[data-theme="dark"] .ogaalsan-choose .choose-content p {
+  color: #ffffff !important;
 }
 
 /* Choose section — solid dark like other sections (no photo) */
@@ -264,8 +279,7 @@ html[data-theme="dark"] .course-details-wrap,
 html[data-theme="dark"] .sidebar-widget,
 html[data-theme="dark"] .panel,
 html[data-theme="dark"] .auth-card,
-html[data-theme="dark"] .auth-page,
-html[data-theme="dark"] .cta-inner-wrap {
+html[data-theme="dark"] .auth-page {
   background: #152033 !important;
   border-color: var(--tg-border-color) !important;
   color: var(--tg-body-font-color);
