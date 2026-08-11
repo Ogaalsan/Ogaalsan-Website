@@ -149,9 +149,10 @@ export default function Header1({
                           <Link href="/">Home</Link>
                         </li>
                         <li>
-                          <Link href="/about">About Us</Link>
+                          <Link href="/about">Who We Are</Link>
                         </li>
-                       <Link href="/services">Services</Link>
+                        <li className="menu-item-has-children">
+                          <Link href="/services">Services</Link>
                           <ul className="sub-menu">
                             <li>
                               <Link href="/services?category=ict">
@@ -181,14 +182,7 @@ export default function Header1({
                           </ul>
                         </li>
                         <li>
-                        <li>
-                          <Link href="/courses">Courses</Link>
-                        </li>
-                        <li>
-                          <Link href="/training">Training</Link>
-                        </li>
-                        <li>
-                          <Link href="/blog">Blog</Link>
+                          <Link href="/courses">Portfolio</Link>
                         </li>
                         <li className="menu-item-has-children">
                           <Link href="#">Resources</Link>
@@ -206,7 +200,10 @@ export default function Header1({
                           </ul>
                         </li>
                         <li>
-                          <Link href="/contact">Contact</Link>
+                          <Link href="/faq">FAQ</Link>
+                        </li>
+                        <li>
+                          <Link href="/contact">Contact Us</Link>
                         </li>
                       </ul>
                     </div>
