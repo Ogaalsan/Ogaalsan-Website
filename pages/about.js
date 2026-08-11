@@ -58,14 +58,19 @@ export default function About() {
                     <div className="section-title mb-30">
                       <span className="sub-title">Who We Are</span>
                       <h2 className="title">
-                        ICT &amp; Digital Innovation Partner For Your
-                        Organization
+                        Transforming Ideas Into Sustainable Solutions
                       </h2>
                     </div>
                     <p>
-                      We are an ICT and digital innovation company helping
-                      organizations plan, build, and scale modern technology
-                      solutions that drive real business results.
+                      OgaalSan Consultancy is a multidisciplinary consulting
+                      firm providing integrated Business Development,
+                      Information and Communication Technology (ICT),
+                      Professional Training, Research &amp; Consultancy, and
+                      Legal Advisory services — empowering entrepreneurs,
+                      businesses, government institutions, development
+                      partners, educational institutions, and communities to
+                      thrive in an increasingly digital and
+                      knowledge-driven economy.
                     </p>
                     <div className="success-wrap-two">
                       <ul className="list-wrap">
@@ -94,9 +99,11 @@ export default function About() {
                       </ul>
                     </div>
                     <p className="info-two">
-                      From infrastructure and cloud to applications, data, and
-                      digital marketing, we combine strategy, engineering, and
-                      training to accelerate your digital transformation.
+                      The name "OgaalSan", derived from the Somali word{" "}
+                      <em>Ogaal</em> — knowledge, wisdom, and awareness —
+                      reflects our commitment to delivering evidence-based
+                      solutions that create measurable impact, combining
+                      international best practices with local expertise.
                     </p>
                     <Link href="/contact" className="btn btn-three">
                       Contact With Us
@@ -116,9 +123,9 @@ export default function About() {
               <div className="row justify-content-center">
                 <div className="col-xl-5 col-lg-6">
                   <div className="section-title text-center mb-50">
-                    <span className="sub-title">Core Features</span>
+                    <span className="sub-title">Vision, Mission &amp; Values</span>
                     <h2 className="title">
-                      Amazing Features For Business Solutions
+                      What Drives Our Work Every Day
                     </h2>
                   </div>
                 </div>
@@ -129,12 +136,15 @@ export default function About() {
                     <div className="features-content">
                       <div className="content-top">
                         <div className="icon">
-                          <i className="flaticon-puzzle-piece" />
+                          <i className="flaticon-inspiration" />
                         </div>
-                        <h2 className="title">Quality Services</h2>
+                        <h2 className="title">Our Vision</h2>
                       </div>
                       <p>
-                        eiusmod temporincididunt ut labore magna aliqua Quisery.
+                        To be the leading multidisciplinary consultancy in
+                        Africa, empowering individuals, businesses, and
+                        institutions through innovation, knowledge,
+                        technology, and sustainable development.
                       </p>
                     </div>
                   </div>
@@ -144,12 +154,16 @@ export default function About() {
                     <div className="features-content">
                       <div className="content-top">
                         <div className="icon">
-                          <i className="flaticon-inspiration" />
+                          <i className="flaticon-puzzle-piece" />
                         </div>
-                        <h2 className="title">Innovation Ideas</h2>
+                        <h2 className="title">Our Mission</h2>
                       </div>
                       <p>
-                        eiusmod temporincididunt ut labore magna aliqua Quisery.
+                        To provide high-quality consultancy, technology,
+                        research, legal, and capacity-building services that
+                        strengthen organizations, promote entrepreneurship,
+                        accelerate digital transformation, and contribute to
+                        inclusive economic growth.
                       </p>
                     </div>
                   </div>
@@ -161,10 +175,12 @@ export default function About() {
                         <div className="icon">
                           <i className="flaticon-profit" />
                         </div>
-                        <h2 className="title">Business Growth</h2>
+                        <h2 className="title">Our Core Values</h2>
                       </div>
                       <p>
-                        eiusmod temporincididunt ut labore magna aliqua Quisery.
+                        Integrity, Innovation, Excellence, Professionalism,
+                        Collaboration, Accountability, Sustainability, and
+                        Knowledge — the principles behind every engagement.
                       </p>
                     </div>
                   </div>
