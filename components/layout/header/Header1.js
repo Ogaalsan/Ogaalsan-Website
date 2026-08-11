@@ -151,9 +151,36 @@ export default function Header1({
                         <li>
                           <Link href="/about">About Us</Link>
                         </li>
-                        <li>
-                          <Link href="/services">Services</Link>
+                       <Link href="/services">Services</Link>
+                          <ul className="sub-menu">
+                            <li>
+                              <Link href="/services?category=ict">
+                                ICT Solutions
+                              </Link>
+                            </li>
+                            <li>
+                              <Link href="/services?category=business-development">
+                                Business Development
+                              </Link>
+                            </li>
+                            <li>
+                              <Link href="/services?category=training">
+                                Training &amp; Capacity Building
+                              </Link>
+                            </li>
+                            <li>
+                              <Link href="/services?category=research">
+                                Research
+                              </Link>
+                            </li>
+                            <li>
+                              <Link href="/services?category=legal-advisory">
+                                Legal Advisory
+                              </Link>
+                            </li>
+                          </ul>
                         </li>
+                        <li>
                         <li>
                           <Link href="/courses">Courses</Link>
                         </li>
