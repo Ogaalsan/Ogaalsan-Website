@@ -10,16 +10,16 @@ export default function Project() {
               <div className="section-title-two mb-40 tg-heading-subheading animation-style3">
                 <span className="sub-title">Our Expertise</span>
                 <h2 className="title tg-element-title">
-                  Comprehensive ICT & Digital <br /> Innovation Services
+                  Comprehensive Multidisciplinary <br /> Consultancy Services
                 </h2>
               </div>
             </div>
             <div className="col-lg-6 col-md-10">
               <div className="project-content-top">
                 <p>
-                  We provide end-to-end ICT solutions, comprehensive training programs, 
-                  and strategic digital marketing services to help your organization 
-                  thrive in the digital age.
+                  We provide integrated ICT, Business Development, Training,
+                  Research, and Legal Advisory services to help your
+                  organization thrive in the digital age.
                 </p>
               </div>
             </div>
@@ -74,16 +74,16 @@ export default function Project() {
                 <div className="project-thumb-two">
                   <img
                     src="/assets/img/ogalsan/marketing.jpg"
-                    alt="Digital Marketing"
+                    alt="Business Development"
                   />
                 </div>
                 <div className="project-content-two">
                   <h2 className="title">
                     <Link href="/services">
-                      Digital Marketing
+                      Business Development
                     </Link>
                   </h2>
-                  <span>Online Presence & Growth</span>
+                  <span>From Idea to Expansion (GYB&ndash;SYB&ndash;IYB&ndash;EYB)</span>
                   <Link href="/services" className="link-btn">
                     <i className="fas fa-chevron-right" />
                   </Link>
