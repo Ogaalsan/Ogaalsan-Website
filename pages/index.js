@@ -1,7 +1,7 @@
 import Layout from "@/components/layout/Layout";
 import Banner from "@/components/sections/home/Banner";
 import Features from "@/components/sections/home/Features";
-import About from "@/components/sections/home/About";
+// import About from "@/components/sections/home/About";
 import Services from "@/components/sections/home/Services";
 import Overview from "@/components/sections/home/Overview";
 import Choose from "@/components/sections/home/Choose";
