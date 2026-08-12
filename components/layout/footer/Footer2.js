@@ -1,8 +1,22 @@
+import { useState } from "react"
 import Link from "next/link"
 import { useOrganization } from "@/context/OrganizationContext"
 
 export default function Footer2() {
     const { phoneLabel, phoneHref, email, fullAddress, organization } = useOrganization()
+    const [newsletterEmail, setNewsletterEmail] = useState("")
+    const [newsletterStatus, setNewsletterStatus] = useState(null) // null | "success" | "error"
+
+    const handleNewsletterSubmit = (e) => {
+        e.preventDefault()
+        const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(newsletterEmail)
+        if (!isValidEmail) {
+            setNewsletterStatus("error")
+            return
+        }
+        setNewsletterStatus("success")
+        setNewsletterEmail("")
+    }
 
     return (
         <>
@@ -88,10 +102,29 @@ export default function Footer2() {
                                         <h4 className="fw-title">Our Newsletter</h4>
                                         <div className="footer-newsletter">
                                             <p>Sign up to {organization.name}&apos;s newsletter to get the latest updates on ICT solutions, digital innovation, and technology trends.</p>
-                                            <form action="#">
-                                                <input type="email" placeholder="enter your e-mail" />
+                                            <form onSubmit={handleNewsletterSubmit} noValidate>
+                                                <input
+                                                    type="email"
+                                                    placeholder="enter your e-mail"
+                                                    value={newsletterEmail}
+                                                    onChange={(e) => {
+                                                        setNewsletterEmail(e.target.value)
+                                                        if (newsletterStatus) setNewsletterStatus(null)
+                                                    }}
+                                                    required
+                                                />
                                                 <button type="submit">Subscribe</button>
                                             </form>
+                                            {newsletterStatus === "success" && (
+                                                <p style={{ marginTop: "10px", marginBottom: 0, color: "#3fa9f5", fontSize: "14px" }}>
+                                                    Thank you for subscribing!
+                                                </p>
+                                            )}
+                                            {newsletterStatus === "error" && (
+                                                <p style={{ marginTop: "10px", marginBottom: 0, color: "#ff6161", fontSize: "14px" }}>
+                                                    Please enter a valid e-mail address.
+                                                </p>
+                                            )}
                                             <div className="footer-social footer-social-two">
                                                 <ul className="list-wrap">
                                                     <li><Link href="https://www.facebook.com/profile.php?id=61552529542233" target="_blank" rel="noopener noreferrer"><i className="fab fa-facebook-f" /></Link></li>
