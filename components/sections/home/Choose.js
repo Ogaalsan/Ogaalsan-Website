@@ -15,14 +15,15 @@ export default function Choose() {
             <div className="choose-content">
               <div className="section-title-two mb-20 tg-heading-subheading animation-style3">
                 <h2 className="title tg-element-title">
-                  We&apos;ll Ensure You Always Get the Best ICT Solutions &amp;
-                  Digital Innovation Support.
+                  We&apos;ll Ensure You Always Get the Best Multidisciplinary
+                  Consultancy Support.
                 </h2>
               </div>
               <p>
-                OgaalSan Consultancy delivers cutting-edge ICT strategies,
-                comprehensive training programs, and digital transformation
-                solutions that drive business growth and innovation.
+                OgaalSan Consultancy delivers integrated Business
+                Development, ICT, Training, Research, and Legal Advisory
+                services that strengthen organizations and drive
+                sustainable growth.
               </p>
             </div>
           </div>
@@ -36,9 +37,10 @@ export default function Choose() {
                 <span className="sub-title">Why Choose OgaalSan</span>
               </div>
               <p>
-                We combine deep technical expertise with practical business
-                insights to deliver ICT solutions that transform organizations
-                and drive digital innovation.
+                We combine international best practices with local
+                expertise to help clients improve performance, embrace
+                innovation, strengthen governance, and achieve sustainable
+                growth.
               </p>
               <div className="progress-wrap">
                 <div className="progress-item">
@@ -80,11 +82,11 @@ export default function Choose() {
                   </div>
                 </div>
                 <div className="progress-item">
-                  <h6 className="title">Digital Marketing</h6>
+                  <h6 className="title">Business Development</h6>
                   <div
                     className="progress"
                     role="progressbar"
-                    aria-label="Digital marketing"
+                    aria-label="Business development"
                     aria-valuenow={92}
                     aria-valuemin={0}
                     aria-valuemax={100}
