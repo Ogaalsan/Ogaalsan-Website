@@ -81,8 +81,9 @@ export default function Contact() {
                     <Image
                       src="/assets/img/ogalsan/contact.png"
                       alt="Contact OgaalSan Consultancy"
-                      width={600}
-                      height={600}
+                      width={433}
+                      height={577}
+                      style={{ maxWidth: "100%", height: "auto" }}
                       loading="lazy"
                     />
                   </div>
