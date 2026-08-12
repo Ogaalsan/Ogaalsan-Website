@@ -20,10 +20,11 @@ export default function Courses() {
           <div className="row justify-content-center">
             <div className="col-xl-6 col-lg-8 col-md-10">
               <div className="section-title-two text-center mb-50">
-                <h2 className="title">ICT &amp; Digital Skills Training Courses</h2>
+                <h2 className="title">Training &amp; Capacity Building Programmes</h2>
                 <p>
-                  Practical, hands-on training programs designed to build digital
-                  capabilities and empower your team with essential ICT skills.
+                  Practical, hands-on training in entrepreneurship,
+                  professional development, and ICT skills — building the
+                  human capital organizations need for sustainable growth.
                 </p>
               </div>
             </div>
