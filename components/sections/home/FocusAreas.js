@@ -43,11 +43,11 @@ const settings = {
 };
 
 const focusAreas = [
-  "ICT Strategy",
-  "Digital Innovation",
-  "Training & Development",
-  "Business Growth",
-  "Technology Solutions",
+  "ICT Solutions",
+  "Business Development",
+  "Training & Capacity Building",
+  "Research & Consultancy",
+  "Legal Advisory",
   "Digital Transformation",
 ];
 
