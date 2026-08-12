@@ -82,7 +82,8 @@ export default function Events() {
                       src="/assets/img/ogalsan/creative.jpg"
                       alt="OgaalSan Events & Opportunities"
                       width={600}
-                      height={800}
+                      height={400}
+                      style={{ maxWidth: "100%", height: "auto" }}
                       loading="lazy"
                     />
                   </div>
@@ -251,5 +252,3 @@ export default function Events() {
     </>
   )
 }
-
-
