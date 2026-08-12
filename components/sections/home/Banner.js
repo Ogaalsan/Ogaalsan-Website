@@ -16,21 +16,20 @@ export default function Banner() {
                 data-aos="fade-up"
                 data-aos-delay={100}
               >
-                ICT &amp; Digital Innovation Experts
+                Consultancy &bull; ICT &bull; Business &bull; Research &bull; Legal
               </span>
               <h1 className="title" data-aos="fade-up" data-aos-delay={200}>
-                Smart Digital <span>Solutions</span>
-                <br />
-                For Your Business
+                Transforming Ideas Into <span>Sustainable Solutions</span>
               </h1>
               <p
                 className="ogaalsan-hero__lead"
                 data-aos="fade-up"
                 data-aos-delay={350}
               >
-                We plan, design, and implement modern ICT systems, digital
-                products, and data-driven strategies that help organisations
-                work smarter and grow faster.
+                OgaalSan Consultancy brings together expertise in ICT,
+                Business Development, Research, and Legal Advisory —
+                helping institutions across Somalia and East Africa build
+                stronger systems, better policies, and lasting impact.
               </p>
               <ul
                 className="list-wrap ogaalsan-hero__features"
@@ -39,15 +38,15 @@ export default function Banner() {
               >
                 <li>
                   <i className="fas fa-check" aria-hidden="true" />
-                  End-to-end ICT &amp; infrastructure support
+                  Five integrated divisions, one standard
                 </li>
                 <li>
                   <i className="fas fa-check" aria-hidden="true" />
-                  Hands-on training &amp; capacity building
+                  ILO GYB&ndash;SYB&ndash;IYB&ndash;EYB business lifecycle
                 </li>
                 <li>
                   <i className="fas fa-check" aria-hidden="true" />
-                  Digital marketing &amp; growth strategies
+                  International best practice, local expertise
                 </li>
               </ul>
               <div
@@ -74,7 +73,7 @@ export default function Banner() {
                 src="/assets/img/ogalsan/hero-4.png"
                 alt="OgaalSan digital innovation solutions"
                 width={600}
-                height={480}
+                height={561}
                 priority
                 className="ogaalsan-hero__image"
               />
