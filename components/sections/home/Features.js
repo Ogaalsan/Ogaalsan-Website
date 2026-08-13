@@ -38,6 +38,28 @@ export default function Features() {
                                     </div>
                                 </div>
                             </div>
+                            <div className="col-lg-4 col-md-6 col-sm-6">
+                                <div className="features-item-two">
+                                    <div className="features-icon-two">
+                                        <i className="flaticon-search" />
+                                    </div>
+                                    <div className="features-content-two">
+                                        <h4 className="title">Research &amp; Consultancy</h4>
+                                        <p>We conduct evidence-based research and provide expert consultancy that helps organizations make informed, sustainable decisions.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-lg-4 col-md-6 col-sm-6">
+                                <div className="features-item-two">
+                                    <div className="features-icon-two">
+                                        <i className="flaticon-protection" />
+                                    </div>
+                                    <div className="features-content-two">
+                                        <h4 className="title">Legal Advisory</h4>
+                                        <p>We offer professional legal advisory services that help businesses and institutions navigate regulations with confidence.</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
