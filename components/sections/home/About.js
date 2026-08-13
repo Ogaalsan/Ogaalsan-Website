@@ -52,7 +52,9 @@ export default function About() {
           <div className="col-lg-6">
             <div className="about-content-seven">
               <div className="section-title mb-30">
-                <span className="sub-title">Who We Are</span>
+                <Link href="/about" className="sub-title">
+                  About
+                </Link>
                 <h2 className="title">
                   Transforming Ideas Into Sustainable Solutions
                 </h2>
