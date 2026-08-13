@@ -149,7 +149,7 @@ export default function Header1({
                           <Link href="/">Home</Link>
                         </li>
                         <li>
-                          <Link href="/about">Who We Are</Link>
+                          <Link href="/about">About</Link>
                         </li>
                         <li className="menu-item-has-children">
                           <Link href="/services">Services</Link>
