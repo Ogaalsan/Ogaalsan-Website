@@ -100,6 +100,44 @@ export default function Choose() {
                     </div>
                   </div>
                 </div>
+                <div className="progress-item">
+                  <h6 className="title">Research &amp; Consultancy</h6>
+                  <div
+                    className="progress"
+                    role="progressbar"
+                    aria-label="Research and consultancy"
+                    aria-valuenow={90}
+                    aria-valuemin={0}
+                    aria-valuemax={100}
+                  >
+                    <div
+                      className="progress-bar wow slideInLeft"
+                      data-wow-delay=".4s"
+                      style={{ width: "90%" }}
+                    >
+                      <span>90%</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="progress-item">
+                  <h6 className="title">Legal Advisory</h6>
+                  <div
+                    className="progress"
+                    role="progressbar"
+                    aria-label="Legal advisory"
+                    aria-valuenow={87}
+                    aria-valuemin={0}
+                    aria-valuemax={100}
+                  >
+                    <div
+                      className="progress-bar wow slideInLeft"
+                      data-wow-delay=".5s"
+                      style={{ width: "87%" }}
+                    >
+                      <span>87%</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
