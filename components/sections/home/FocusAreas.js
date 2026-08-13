@@ -48,7 +48,6 @@ const focusAreas = [
   "Training & Capacity Building",
   "Research & Consultancy",
   "Legal Advisory",
-  "Digital Transformation",
 ];
 
 export default function FocusAreas() {
