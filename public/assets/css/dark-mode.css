@@ -163,13 +163,13 @@ html[data-theme="dark"] .extra-info .contact-list a {
 }
 
 /* Dark overlays for light photo/bg sections — keep behind content */
-html[data-theme="dark"] [data-background]:not(.choose-area):not(.choose-bg):not(.ogaalsan-hero):not(.banner-bg-two) {
+html[data-theme="dark"] [data-background]:not(.choose-area):not(.choose-bg):not(.ogaalsan-hero):not(.banner-bg-two):not(.ogaalsan-vmv) {
   background-color: #0f1828 !important;
   position: relative;
   isolation: isolate;
 }
 
-html[data-theme="dark"] [data-background]:not(.choose-area):not(.choose-bg):not(.ogaalsan-hero):not(.banner-bg-two)::before {
+html[data-theme="dark"] [data-background]:not(.choose-area):not(.choose-bg):not(.ogaalsan-hero):not(.banner-bg-two):not(.ogaalsan-vmv)::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -440,6 +440,20 @@ html[data-theme="dark"] .footer-bottom-two {
 
 html[data-theme="dark"] .footer-bottom-two {
   border-top: none !important;
+}
+
+html[data-theme="dark"] .footer-social .list-wrap li a,
+html[data-theme="dark"] .footer-social.footer-social-two .list-wrap li a {
+  background: #152033 !important;
+  color: #e8eef8 !important;
+  border: 1px solid rgba(63, 169, 245, 0.25);
+}
+
+html[data-theme="dark"] .footer-social .list-wrap li a:hover,
+html[data-theme="dark"] .footer-social.footer-social-two .list-wrap li a:hover {
+  background: #3fa9f5 !important;
+  color: #ffffff !important;
+  border-color: #3fa9f5;
 }
 
 html[data-theme="dark"] .footer-widget .fw-title,
@@ -758,4 +772,62 @@ html[data-theme="dark"] .auth-field-error {
 html[data-theme="dark"] .auth-card-footer,
 html[data-theme="dark"] .auth-card-footer p {
   color: #c5d0e0 !important;
+}
+
+/* About — Vision / Mission / Values (dark mode) */
+html[data-theme="dark"] .ogaalsan-vmv.features-bg,
+html[data-theme="dark"] section.ogaalsan-vmv {
+  background-image: none !important;
+  background-color: #0d1421 !important;
+}
+
+html[data-theme="dark"] .ogaalsan-vmv::before {
+  display: none !important;
+  content: none !important;
+}
+
+html[data-theme="dark"] .ogaalsan-vmv .features-shape-wrap {
+  opacity: 0.2;
+  filter: brightness(0.7) saturate(0.8);
+}
+
+html[data-theme="dark"] .ogaalsan-vmv .section-title .sub-title {
+  color: #3fa9f5 !important;
+}
+
+html[data-theme="dark"] .ogaalsan-vmv .section-title .title {
+  color: #f0f5ff !important;
+}
+
+html[data-theme="dark"] .ogaalsan-vmv .features-item {
+  background: #1a2740 !important;
+  border: 1px solid rgba(63, 169, 245, 0.28) !important;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45) !important;
+  color: #d7e0ef !important;
+}
+
+html[data-theme="dark"] .ogaalsan-vmv .features-item::before {
+  background: #152033 !important;
+  border-color: rgba(63, 169, 245, 0.18) !important;
+}
+
+html[data-theme="dark"] .ogaalsan-vmv .features-item::after {
+  background: #121a2a !important;
+  border-color: rgba(63, 169, 245, 0.12) !important;
+}
+
+html[data-theme="dark"] .ogaalsan-vmv .features-content .content-top .title {
+  color: #ffffff !important;
+}
+
+html[data-theme="dark"] .ogaalsan-vmv .features-content p {
+  color: #c5d0e0 !important;
+}
+
+html[data-theme="dark"] .ogaalsan-vmv .features-content .content-top .icon {
+  color: #3fa9f5 !important;
+}
+
+html[data-theme="dark"] .ogaalsan-vmv .features-content .content-top .icon::before {
+  background: rgba(63, 169, 245, 0.18) !important;
 }

@@ -116,7 +116,7 @@ export default function About() {
           {/* about-area-end */}
           {/* features-area */}
           <section
-            className="features-area-five features-bg"
+            className="features-area-five features-bg ogaalsan-vmv"
             data-background="/assets/img/bg/features_bg.jpg"
           >
             <div className="container">

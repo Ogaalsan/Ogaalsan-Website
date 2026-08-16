@@ -1,9 +1,15 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import MobileMenu from "../MobileMenu";
 import SearchPopup from "../SearchPopup";
 import ThemeToggle from "@/components/common/ThemeToggle";
 import { useAuth } from "@/context/AuthContext";
 import { useOrganization } from "@/context/OrganizationContext";
+
+function navActive(pathname, href) {
+  if (href === "/") return pathname === "/";
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
 
 export default function Header1({
   scroll,
@@ -14,6 +20,8 @@ export default function Header1({
   isOffcanvus,
   handleOffcanvus,
 }) {
+  const router = useRouter();
+  const pathname = router.pathname;
   const { user, isAuthenticated, logout } = useAuth();
   const { locationLabel, email, phoneLabel, phoneHref } = useOrganization();
 
@@ -145,13 +153,21 @@ export default function Header1({
                     </div>
                     <div className="navbar-wrap main-menu d-none d-lg-flex">
                       <ul className="navigation">
-                        <li className="active">
+                        <li className={navActive(pathname, "/") ? "active" : ""}>
                           <Link href="/">Home</Link>
                         </li>
-                        <li>
+                        <li
+                          className={
+                            navActive(pathname, "/about") ? "active" : ""
+                          }
+                        >
                           <Link href="/about">About</Link>
                         </li>
-                        <li className="menu-item-has-children">
+                        <li
+                          className={`menu-item-has-children${
+                            navActive(pathname, "/services") ? " active" : ""
+                          }`}
+                        >
                           <Link href="/services">Services</Link>
                           <ul className="sub-menu">
                             <li>
@@ -181,16 +197,39 @@ export default function Header1({
                             </li>
                           </ul>
                         </li>
-                        <li>
-                          <Link href="/courses">Portfolio</Link>
+                        <li
+                          className={
+                            navActive(pathname, "/courses") ||
+                            navActive(pathname, "/course")
+                              ? "active"
+                              : ""
+                          }
+                        >
+                          <Link href="/courses">Courses</Link>
                         </li>
-                        <li className="menu-item-has-children">
-                          <Link href="#">Resources</Link>
+                        <li
+                          className={
+                            navActive(pathname, "/training") ? "active" : ""
+                          }
+                        >
+                          <Link href="/training">Training</Link>
+                        </li>
+                        <li
+                          className={
+                            navActive(pathname, "/blog") ? "active" : ""
+                          }
+                        >
+                          <Link href="/blog">Blog</Link>
+                        </li>
+                        <li
+                          className={`menu-item-has-children${
+                            pathname.startsWith("/resources") ? " active" : ""
+                          }`}
+                        >
+                          <Link href="/resources/reports">Resources</Link>
                           <ul className="sub-menu">
                             <li>
-                              <Link href="/resources/reports">
-                                Reports
-                              </Link>
+                              <Link href="/resources/reports">Reports</Link>
                             </li>
                             <li>
                               <Link href="/resources/course-resources">
@@ -199,10 +238,11 @@ export default function Header1({
                             </li>
                           </ul>
                         </li>
-                        <li>
-                          <Link href="/faq">FAQ</Link>
-                        </li>
-                        <li>
+                        <li
+                          className={
+                            navActive(pathname, "/contact") ? "active" : ""
+                          }
+                        >
                           <Link href="/contact">Contact Us</Link>
                         </li>
                       </ul>
@@ -229,7 +269,6 @@ export default function Header1({
                     </div>
                   </nav>
                 </div>
-                {/* Mobile Menu  */}
                 <div className="mobile-menu">
                   <nav className="menu-box">
                     <div className="close-btn" onClick={handleMobileMenu}>
@@ -246,7 +285,7 @@ export default function Header1({
                     <div className="mobile-search">
                       <form action="#">
                         <input type="text" placeholder="Search here..." />
-                        <button>
+                        <button type="button">
                           <i className="flaticon-search" />
                         </button>
                       </form>
@@ -294,11 +333,6 @@ export default function Header1({
                             rel="noopener noreferrer"
                           >
                             <i className="fab fa-tiktok" />
-                          </Link>
-                        </li>
-                        <li>
-                          <Link href="#">
-                            <i className="fab fa-linkedin-in" />
                           </Link>
                         </li>
                       </ul>
