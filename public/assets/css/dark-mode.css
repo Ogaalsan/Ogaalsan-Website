@@ -806,14 +806,10 @@ html[data-theme="dark"] .ogaalsan-vmv .features-item {
   color: #d7e0ef !important;
 }
 
-html[data-theme="dark"] .ogaalsan-vmv .features-item::before {
-  background: #152033 !important;
-  border-color: rgba(63, 169, 245, 0.18) !important;
-}
-
+html[data-theme="dark"] .ogaalsan-vmv .features-item::before,
 html[data-theme="dark"] .ogaalsan-vmv .features-item::after {
-  background: #121a2a !important;
-  border-color: rgba(63, 169, 245, 0.12) !important;
+  display: none !important;
+  content: none !important;
 }
 
 html[data-theme="dark"] .ogaalsan-vmv .features-content .content-top .title {

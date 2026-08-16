@@ -130,8 +130,8 @@ export default function About() {
                   </div>
                 </div>
               </div>
-              <div className="row justify-content-center">
-                <div className="col-lg-4 col-md-6">
+              <div className="row justify-content-center ogaalsan-vmv__row">
+                <div className="col-lg-4 col-md-6 d-flex">
                   <div className="features-item">
                     <div className="features-content">
                       <div className="content-top">
@@ -149,7 +149,7 @@ export default function About() {
                     </div>
                   </div>
                 </div>
-                <div className="col-lg-4 col-md-6">
+                <div className="col-lg-4 col-md-6 d-flex">
                   <div className="features-item">
                     <div className="features-content">
                       <div className="content-top">
@@ -168,7 +168,7 @@ export default function About() {
                     </div>
                   </div>
                 </div>
-                <div className="col-lg-4 col-md-6">
+                <div className="col-lg-4 col-md-6 d-flex">
                   <div className="features-item">
                     <div className="features-content">
                       <div className="content-top">
