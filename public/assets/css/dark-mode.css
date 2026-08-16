@@ -687,6 +687,86 @@ html[data-theme="dark"] .course-card__level {
   background: rgba(15, 24, 40, 0.92) !important;
 }
 
+/* Course detail — dark mode only (keeps original light design) */
+html[data-theme="dark"] .course-details-area {
+  background-color: #0d1421 !important;
+}
+
+html[data-theme="dark"] .course-details-content {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+html[data-theme="dark"] .course-details-content .title,
+html[data-theme="dark"] .course-details-content h2,
+html[data-theme="dark"] .course-details-content h3 {
+  color: #f0f5ff !important;
+}
+
+html[data-theme="dark"] .course-details-content p,
+html[data-theme="dark"] .course-details-content li {
+  color: #c5d0e0 !important;
+}
+
+html[data-theme="dark"] .course-sidebar {
+  background: #1a2740 !important;
+  border-color: rgba(63, 169, 245, 0.28) !important;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45) !important;
+}
+
+html[data-theme="dark"] .course-sidebar .course-sidebar__title,
+html[data-theme="dark"] .course-sidebar h4 {
+  color: #ffffff !important;
+  border-bottom-color: rgba(63, 169, 245, 0.25) !important;
+}
+
+html[data-theme="dark"] .course-sidebar .info-item strong {
+  color: #7ec8f8 !important;
+}
+
+html[data-theme="dark"] .course-sidebar .info-item span {
+  color: #d7e0ef !important;
+}
+
+html[data-theme="dark"] .course-sidebar .course-sidebar__note {
+  color: #9aa8bd !important;
+}
+
+/* Course registration — dark mode only */
+html[data-theme="dark"] .course-register-card {
+  background: #1a2740 !important;
+  border-color: rgba(63, 169, 245, 0.28) !important;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45) !important;
+}
+
+html[data-theme="dark"] .course-register-card .title,
+html[data-theme="dark"] .course-register-card h2,
+html[data-theme="dark"] .course-register-card h4 {
+  color: #ffffff !important;
+}
+
+html[data-theme="dark"] .course-register-card p {
+  color: #c5d0e0 !important;
+}
+
+html[data-theme="dark"] .course-register-card label {
+  color: #d7e0ef !important;
+}
+
+html[data-theme="dark"] .course-register-card .contact-form,
+html[data-theme="dark"] .course-register-card .contact-form-inner {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+html[data-theme="dark"] .course-register-card input[type="radio"] {
+  background: transparent !important;
+  border-color: rgba(63, 169, 245, 0.55) !important;
+  accent-color: #3fa9f5;
+}
+
 html[data-theme="dark"] .resource-card__link {
   color: #4eb6f7 !important;
 }

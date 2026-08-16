@@ -20,7 +20,9 @@ export default function CourseDetails() {
   );
 
   const whatsappUrl = course
-    ? buildWhatsAppUrl(`Hello! I have a question about the course: ${course.title}`)
+    ? buildWhatsAppUrl(
+        `Hello! I have a question about the course: ${course.title}`
+      )
     : buildWhatsAppUrl();
 
   if (!ready || loading) {
@@ -128,7 +130,7 @@ export default function CourseDetails() {
                   }}
                 >
                   <h4
-                    className="mb-30"
+                    className="mb-30 course-sidebar__title"
                     style={{
                       color: "#22428F",
                       borderBottom: "2px solid #eef2f6",
@@ -268,6 +270,7 @@ export default function CourseDetails() {
                     </a>
 
                     <p
+                      className="course-sidebar__note"
                       style={{
                         fontSize: "12px",
                         color: "#667085",

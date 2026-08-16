@@ -159,6 +159,7 @@ export default function CourseRegister() {
           <div className="row justify-content-center">
             <div className="col-lg-8">
               <div
+                className="course-register-card"
                 style={{
                   backgroundColor: "#f9fbff",
                   padding: "36px",
