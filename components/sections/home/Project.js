@@ -37,12 +37,12 @@ export default function Project() {
                 </div>
                 <div className="project-content-two">
                   <h2 className="title">
-                    <Link href="/services">
+                    <Link href="/services/ict">
                       ICT Solutions
                     </Link>
                   </h2>
                   <span>Technology Infrastructure & Systems</span>
-                  <Link href="/services" className="link-btn">
+                  <Link href="/services/ict" className="link-btn">
                     <i className="fas fa-chevron-right" />
                   </Link>
                 </div>
@@ -58,12 +58,12 @@ export default function Project() {
                 </div>
                 <div className="project-content-two">
                   <h2 className="title">
-                    <Link href="/services">
+                    <Link href="/services/training">
                       Training & Capacity Building
                     </Link>
                   </h2>
                   <span>Professional Development Programs</span>
-                  <Link href="/services" className="link-btn">
+                  <Link href="/services/training" className="link-btn">
                     <i className="fas fa-chevron-right" />
                   </Link>
                 </div>
@@ -79,12 +79,12 @@ export default function Project() {
                 </div>
                 <div className="project-content-two">
                   <h2 className="title">
-                    <Link href="/services">
+                    <Link href="/services/business-development">
                       Business Development
                     </Link>
                   </h2>
                   <span>From Idea to Expansion (GYB&ndash;SYB&ndash;IYB&ndash;EYB)</span>
-                  <Link href="/services" className="link-btn">
+                  <Link href="/services/business-development" className="link-btn">
                     <i className="fas fa-chevron-right" />
                   </Link>
                 </div>

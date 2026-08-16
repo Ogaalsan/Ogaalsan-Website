@@ -74,9 +74,9 @@ export default function Footer2() {
                                         <h4 className="fw-title">Services</h4>
                                         <div className="footer-link">
                                             <ul className="list-wrap">
-                                                <li><Link href="/services">ICT Solutions</Link></li>
-                                                <li><Link href="/services">Training & Capacity Building</Link></li>
-                                                <li><Link href="/services">Business Development</Link></li>
+                                                <li><Link href="/services/ict">ICT Solutions</Link></li>
+                                                <li><Link href="/services/training">Training & Capacity Building</Link></li>
+                                                <li><Link href="/services/business-development">Business Development</Link></li>
                                                 <li><Link href="/contact">Contact Us</Link></li>
                                             </ul>
                                         </div>

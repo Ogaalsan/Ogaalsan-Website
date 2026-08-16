@@ -42,15 +42,15 @@ export default function MobileMenu() {
           style={{ display: isActive.key === 1 ? "block" : "none" }}
         >
           <li>
-            <Link href="/services?category=ict">ICT Solutions</Link>
+            <Link href="/services/ict">ICT Solutions</Link>
           </li>
           <li>
-            <Link href="/services?category=business-development">
+            <Link href="/services/business-development">
               Business Development
             </Link>
           </li>
           <li>
-            <Link href="/services?category=training">
+            <Link href="/services/training">
               Training &amp; Capacity Building
             </Link>
           </li>

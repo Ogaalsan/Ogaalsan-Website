@@ -1,7 +1,9 @@
 import Layout from "@/components/layout/Layout";
+import Link from "next/link";
 import ServiceCard from "@/components/services/ServiceCard";
 import ContentLoader from "@/components/common/ContentLoader";
 import { fetchActiveServices } from "@/lib/services";
+import { SERVICE_DIVISIONS } from "@/lib/serviceDivisions";
 import { useClientFetch } from "@/hooks/useClientFetch";
 
 export default function Services() {
@@ -20,32 +22,61 @@ export default function Services() {
           <div className="row justify-content-center">
             <div className="col-xl-6 col-lg-8 col-md-10">
               <div className="section-title-two text-center mb-50">
-                <h2 className="title">Our ICT &amp; Digital Consultancy Services</h2>
+                <h2 className="title">
+                  Our ICT &amp; Digital Consultancy Services
+                </h2>
                 <p>
-                  OgaalSan focuses on three core areas — ICT Solutions,
-                  Business Development, and Training &amp; Capacity Building —
-                  combining international best practices with local expertise.
+                  Explore our three core service areas — ICT Solutions,
+                  Business Development, and Training &amp; Capacity Building.
                 </p>
               </div>
             </div>
           </div>
 
+          <div className="row justify-content-center mb-50">
+            {SERVICE_DIVISIONS.map((division) => (
+              <div key={division.slug} className="col-lg-4 col-md-6 mb-30">
+                <div className="services-item" style={{ height: "100%" }}>
+                  <div className="services-content">
+                    <div className="content-top">
+                      <div className="icon">
+                        <i className={division.icon} />
+                      </div>
+                      <h2 className="title">
+                        <Link href={`/services/${division.slug}`}>
+                          {division.title}
+                        </Link>
+                      </h2>
+                    </div>
+                    <p>{division.summary}</p>
+                    <Link
+                      href={`/services/${division.slug}`}
+                      className="btn transparent-btn"
+                    >
+                      Learn More
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
           {loading ? (
             <ContentLoader message="Loading services..." />
           ) : services.length > 0 ? (
-            <div className="row justify-content-center">
-              {services.map((service) => (
-                <ServiceCard key={service.id} service={service} />
-              ))}
-            </div>
-          ) : (
-            <div className="row justify-content-center">
-              <div className="col-lg-8 text-center">
-                <h3>No services available yet</h3>
-                <p>Add services in the Ogaalsan admin panel to display them here.</p>
+            <>
+              <div className="row justify-content-center">
+                <div className="col-lg-8 text-center mb-40">
+                  <h3 className="title">More from our service catalog</h3>
+                </div>
               </div>
-            </div>
-          )}
+              <div className="row justify-content-center">
+                {services.map((service) => (
+                  <ServiceCard key={service.id} service={service} />
+                ))}
+              </div>
+            </>
+          ) : null}
         </div>
       </section>
     </Layout>
