@@ -20,13 +20,11 @@ export default function Services() {
           <div className="row justify-content-center">
             <div className="col-xl-6 col-lg-8 col-md-10">
               <div className="section-title-two text-center mb-50">
-                <h2 className="title">Our Integrated Consultancy Services</h2>
+                <h2 className="title">Our ICT &amp; Digital Consultancy Services</h2>
                 <p>
-                  OgaalSan operates through five integrated service
-                  divisions — ICT Solutions, Business Development, Training
-                  &amp; Capacity Building, Research &amp; Consultancy, and
-                  Legal Advisory — combining international best practices
-                  with local expertise.
+                  OgaalSan focuses on three core areas — ICT Solutions,
+                  Business Development, and Training &amp; Capacity Building —
+                  combining international best practices with local expertise.
                 </p>
               </div>
             </div>

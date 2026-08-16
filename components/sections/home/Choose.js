@@ -15,15 +15,14 @@ export default function Choose() {
             <div className="choose-content">
               <div className="section-title-two mb-20 tg-heading-subheading animation-style3">
                 <h2 className="title tg-element-title">
-                  We&apos;ll Ensure You Always Get the Best Multidisciplinary
+                  We&apos;ll Ensure You Always Get the Best ICT &amp; Digital
                   Consultancy Support.
                 </h2>
               </div>
               <p>
-                OgaalSan Consultancy delivers integrated Business
-                Development, ICT, Training, Research, and Legal Advisory
-                services that strengthen organizations and drive
-                sustainable growth.
+                OgaalSan Consultancy delivers ICT solutions, training, and
+                business development support that help organizations work
+                smarter and grow with confidence.
               </p>
             </div>
           </div>
@@ -97,44 +96,6 @@ export default function Choose() {
                       style={{ width: "92%" }}
                     >
                       <span>92%</span>
-                    </div>
-                  </div>
-                </div>
-                <div className="progress-item">
-                  <h6 className="title">Research &amp; Consultancy</h6>
-                  <div
-                    className="progress"
-                    role="progressbar"
-                    aria-label="Research and consultancy"
-                    aria-valuenow={90}
-                    aria-valuemin={0}
-                    aria-valuemax={100}
-                  >
-                    <div
-                      className="progress-bar wow slideInLeft"
-                      data-wow-delay=".4s"
-                      style={{ width: "90%" }}
-                    >
-                      <span>90%</span>
-                    </div>
-                  </div>
-                </div>
-                <div className="progress-item">
-                  <h6 className="title">Legal Advisory</h6>
-                  <div
-                    className="progress"
-                    role="progressbar"
-                    aria-label="Legal advisory"
-                    aria-valuenow={87}
-                    aria-valuemin={0}
-                    aria-valuemax={100}
-                  >
-                    <div
-                      className="progress-bar wow slideInLeft"
-                      data-wow-delay=".5s"
-                      style={{ width: "87%" }}
-                    >
-                      <span>87%</span>
                     </div>
                   </div>
                 </div>

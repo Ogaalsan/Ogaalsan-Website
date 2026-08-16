@@ -107,9 +107,9 @@ export default function Contact() {
                   <div className="inner-contact-info">
                     <h2 className="title">Get in Touch With OgaalSan</h2>
                     <p>
-                      Share your Business Development, ICT, Training,
-                      Research, or Legal Advisory needs and our team will
-                      get back to you as soon as possible.
+                      Share your ICT, Training, or Business Development
+                      needs and our team will get back to you as soon as
+                      possible.
                     </p>
                     {submitStatus && (
                       <div

@@ -54,12 +54,6 @@ export default function MobileMenu() {
               Training &amp; Capacity Building
             </Link>
           </li>
-          <li>
-            <Link href="/services?category=research">Research</Link>
-          </li>
-          <li>
-            <Link href="/services?category=legal-advisory">Legal Advisory</Link>
-          </li>
         </ul>
         <div
           className={isActive.key === 1 ? "dropdown-btn open" : "dropdown-btn"}

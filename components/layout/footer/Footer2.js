@@ -77,7 +77,6 @@ export default function Footer2() {
                                                 <li><Link href="/services">ICT Solutions</Link></li>
                                                 <li><Link href="/services">Training & Capacity Building</Link></li>
                                                 <li><Link href="/services">Business Development</Link></li>
-                                                <li><Link href="/services">Digital Marketing</Link></li>
                                                 <li><Link href="/contact">Contact Us</Link></li>
                                             </ul>
                                         </div>

@@ -31,7 +31,7 @@ export default function Cta() {
                   </div>
                 </div>
                 <h2 className="title">
-                  Let&apos;s Discuss Your Business, ICT, Research &amp; Legal Needs
+                  Let&apos;s Discuss Your ICT &amp; Digital Innovation Needs
                 </h2>
               </div>
             </div>

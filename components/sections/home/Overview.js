@@ -21,10 +21,10 @@ export default function Overview() {
                             <div className="overview-content">
                                 <div className="section-title-two mb-20 tg-heading-subheading animation-style3">
                                     <span className="sub-title">Company Overview</span>
-                                    <h2 className="title tg-element-title">An integrated consultancy model, five divisions strong</h2>
+                                    <h2 className="title tg-element-title">Focused ICT &amp; digital consultancy</h2>
                                 </div>
-                                <p className="info-one">OgaalSan Consultancy operates through five integrated service divisions — ICT Solutions, Business Development, Training &amp; Capacity Building, Research &amp; Consultancy, and Legal Advisory — that work together to provide comprehensive solutions.</p>
-                                <p className="info-two">We serve as a trusted partner from business ideation and startup development to organizational transformation, digital innovation, research, policy development, and legal compliance.</p>
+                                <p className="info-one">OgaalSan Consultancy focuses on three core service areas — ICT Solutions, Business Development, and Training &amp; Capacity Building — that work together to help organizations grow digitally.</p>
+                                <p className="info-two">We partner with you from strategy and systems to skills and growth, combining international best practice with local expertise.</p>
                                 <div className="content-bottom">
                                     <ul className="list-wrap">
                                         <li>
@@ -32,8 +32,8 @@ export default function Overview() {
                                                 <i className="flaticon-trophy" />
                                             </div>
                                             <div className="content">
-                                                <h2 className="count"><CounterUp count={5} /></h2>
-                                                <p>Integrated Divisions</p>
+                                                <h2 className="count"><CounterUp count={3} /></h2>
+                                                <p>Core Service Areas</p>
                                             </div>
                                         </li>
                                         <li>

@@ -62,11 +62,10 @@ export default function About() {
                       </h2>
                     </div>
                     <p>
-                      OgaalSan Consultancy is a multidisciplinary consulting
-                      firm providing integrated Business Development,
-                      Information and Communication Technology (ICT),
-                      Professional Training, Research &amp; Consultancy, and
-                      Legal Advisory services — empowering entrepreneurs,
+                      OgaalSan Consultancy is an ICT and digital consulting
+                      firm providing Business Development, Information and
+                      Communication Technology (ICT), and Professional
+                      Training services — empowering entrepreneurs,
                       businesses, government institutions, development
                       partners, educational institutions, and communities to
                       thrive in an increasingly digital and

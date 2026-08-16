@@ -185,16 +185,6 @@ export default function Header1({
                                 Training &amp; Capacity Building
                               </Link>
                             </li>
-                            <li>
-                              <Link href="/services?category=research">
-                                Research
-                              </Link>
-                            </li>
-                            <li>
-                              <Link href="/services?category=legal-advisory">
-                                Legal Advisory
-                              </Link>
-                            </li>
                           </ul>
                         </li>
                         <li

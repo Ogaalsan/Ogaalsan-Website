@@ -10,16 +10,16 @@ export default function Project() {
               <div className="section-title-two mb-40 tg-heading-subheading animation-style3">
                 <span className="sub-title">Our Expertise</span>
                 <h2 className="title tg-element-title">
-                  Comprehensive Multidisciplinary <br /> Consultancy Services
+                  ICT &amp; Digital <br /> Consultancy Services
                 </h2>
               </div>
             </div>
             <div className="col-lg-6 col-md-10">
               <div className="project-content-top">
                 <p>
-                  We provide integrated ICT, Business Development, Training,
-                  Research, and Legal Advisory services to help your
-                  organization thrive in the digital age.
+                  We provide ICT solutions, training, and business
+                  development support to help your organization thrive in
+                  the digital age.
                 </p>
               </div>
             </div>

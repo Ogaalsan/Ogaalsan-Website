@@ -16,7 +16,7 @@ export default function Banner() {
                 data-aos="fade-up"
                 data-aos-delay={100}
               >
-                Consultancy &bull; ICT &bull; Business &bull; Research &bull; Legal
+                Consultancy &bull; ICT &bull; Training &bull; Business
               </span>
               <h1 className="title" data-aos="fade-up" data-aos-delay={200}>
                 Transforming Ideas Into <span>Sustainable Solutions</span>
@@ -26,10 +26,9 @@ export default function Banner() {
                 data-aos="fade-up"
                 data-aos-delay={350}
               >
-                OgaalSan Consultancy brings together expertise in ICT,
-                Business Development, Research, and Legal Advisory —
-                helping institutions across Somalia and East Africa build
-                stronger systems, better policies, and lasting impact.
+                OgaalSan Consultancy delivers ICT solutions, training, and
+                business development support — helping organisations across
+                Somalia and East Africa work smarter and grow with confidence.
               </p>
               <ul
                 className="list-wrap ogaalsan-hero__features"
@@ -38,15 +37,15 @@ export default function Banner() {
               >
                 <li>
                   <i className="fas fa-check" aria-hidden="true" />
-                  Five integrated divisions, one standard
+                  ICT systems, infrastructure &amp; digital tools
                 </li>
                 <li>
                   <i className="fas fa-check" aria-hidden="true" />
-                  ILO GYB&ndash;SYB&ndash;IYB&ndash;EYB business lifecycle
+                  Hands-on training &amp; capacity building
                 </li>
                 <li>
                   <i className="fas fa-check" aria-hidden="true" />
-                  International best practice, local expertise
+                  Business development &amp; digital growth
                 </li>
               </ul>
               <div
