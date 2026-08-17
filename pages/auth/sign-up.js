@@ -21,8 +21,15 @@ export default function SignUp() {
   const [fieldErrors, setFieldErrors] = useState({});
   const [submitting, setSubmitting] = useState(false);
 
-  const redirectTo =
-    typeof router.query.redirect === "string" ? router.query.redirect : "/";
+  const redirectTo = (() => {
+    const raw =
+      typeof router.query.redirect === "string" ? router.query.redirect : "/";
+    try {
+      return decodeURIComponent(raw);
+    } catch {
+      return raw;
+    }
+  })();
 
   useEffect(() => {
     if (!authLoading && isAuthenticated) {

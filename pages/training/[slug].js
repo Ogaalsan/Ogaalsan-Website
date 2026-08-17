@@ -1,19 +1,54 @@
 import Layout from "@/components/layout/Layout";
+import ContentLoader from "@/components/common/ContentLoader";
 import Link from "next/link";
-import { useState } from "react";
-import { fetchTrainingBySlug, submitTrainingRegistration } from "@/lib/trainings";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { useAuth } from "@/context/AuthContext";
+import {
+  fetchTrainingBySlug,
+  submitTrainingRegistration,
+} from "@/lib/trainings";
 
-export default function TrainingDetail({ training }) {
-  const [formData, setFormData] = useState({
-    name: "",
+function buildFormFromUser(user) {
+  return {
+    name: user?.name || "",
     location: "",
     background: "",
-    email: "",
+    email: user?.email || "",
+    phone: user?.whatsapp_phone || user?.phone || "",
+    organization: "",
     skills: "",
     trainingMode: "online",
-  });
+  };
+}
+
+export default function TrainingDetail({ training }) {
+  const router = useRouter();
+  const { user, isAuthenticated, loading: authLoading } = useAuth();
+  const [formData, setFormData] = useState(buildFormFromUser(null));
+  const [prefilled, setPrefilled] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null);
+
+  const returnPath = training?.slug
+    ? `/training/${training.slug}`
+    : "/training";
+
+  useEffect(() => {
+    if (user && !prefilled) {
+      setFormData(buildFormFromUser(user));
+      setPrefilled(true);
+    }
+  }, [user, prefilled]);
+
+  useEffect(() => {
+    if (authLoading) return;
+    if (!isAuthenticated) {
+      router.replace(
+        `/auth/sign-in?redirect=${encodeURIComponent(returnPath)}`
+      );
+    }
+  }, [authLoading, isAuthenticated, returnPath, router]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -22,6 +57,13 @@ export default function TrainingDetail({ training }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!isAuthenticated) {
+      router.push(
+        `/auth/sign-in?redirect=${encodeURIComponent(returnPath)}`
+      );
+      return;
+    }
+
     setIsSubmitting(true);
     setSubmitStatus(null);
 
@@ -30,6 +72,8 @@ export default function TrainingDetail({ training }) {
         registration_type: "training",
         name: formData.name,
         email: formData.email,
+        phone: formData.phone,
+        organization: formData.organization || null,
         location: formData.location,
         background: formData.background,
         skills: formData.skills,
@@ -43,14 +87,7 @@ export default function TrainingDetail({ training }) {
         message:
           "Thank you! Your training registration has been received. Check your email for confirmation.",
       });
-      setFormData({
-        name: "",
-        location: "",
-        background: "",
-        email: "",
-        skills: "",
-        trainingMode: "online",
-      });
+      setFormData(buildFormFromUser(user));
     } catch (error) {
       setSubmitStatus({
         type: "error",
@@ -128,137 +165,176 @@ export default function TrainingDetail({ training }) {
                   online or offline.
                 </p>
 
-                {submitStatus && (
-                  <div
-                    style={{
-                      padding: "15px",
-                      marginBottom: "20px",
-                      borderRadius: "5px",
-                      backgroundColor:
-                        submitStatus.type === "success" ? "#d4edda" : "#f8d7da",
-                      color:
-                        submitStatus.type === "success" ? "#155724" : "#721c24",
-                      border: `1px solid ${
-                        submitStatus.type === "success" ? "#c3e6cb" : "#f5c6cb"
-                      }`,
-                    }}
-                  >
-                    {submitStatus.message}
-                  </div>
-                )}
-
-                <div className="contact-form contact-form-inner">
-                  <form onSubmit={handleSubmit}>
-                    <div className="form-grp">
-                      <input
-                        type="text"
-                        name="name"
-                        placeholder="Full name *"
-                        value={formData.name}
-                        onChange={handleChange}
-                        required
-                      />
-                    </div>
-                    <div className="form-grp">
-                      <input
-                        type="text"
-                        name="location"
-                        placeholder="Location (Country & City) *"
-                        value={formData.location}
-                        onChange={handleChange}
-                        required
-                      />
-                    </div>
-                    <div className="form-grp">
-                      <input
-                        type="text"
-                        name="background"
-                        placeholder="Background / Education Level *"
-                        value={formData.background}
-                        onChange={handleChange}
-                        required
-                      />
-                    </div>
-                    <div className="form-grp">
-                      <input
-                        type="email"
-                        name="email"
-                        placeholder="E-mail *"
-                        value={formData.email}
-                        onChange={handleChange}
-                        required
-                      />
-                    </div>
-                    <div className="form-grp">
-                      <label
+                {authLoading ? (
+                  <ContentLoader message="Checking your account..." />
+                ) : !isAuthenticated ? (
+                  <ContentLoader message="Redirecting to sign in..." />
+                ) : (
+                  <>
+                    {submitStatus && (
+                      <div
                         style={{
-                          display: "block",
-                          marginBottom: "10px",
-                          fontWeight: 600,
-                          color: "#22428F",
+                          padding: "15px",
+                          marginBottom: "20px",
+                          borderRadius: "5px",
+                          backgroundColor:
+                            submitStatus.type === "success"
+                              ? "#d4edda"
+                              : "#f8d7da",
+                          color:
+                            submitStatus.type === "success"
+                              ? "#155724"
+                              : "#721c24",
+                          border: `1px solid ${
+                            submitStatus.type === "success"
+                              ? "#c3e6cb"
+                              : "#f5c6cb"
+                          }`,
                         }}
                       >
-                        How would you like to attend? *
-                      </label>
-                      <div
-                        style={{ display: "flex", gap: "24px", flexWrap: "wrap" }}
-                      >
-                        <label
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "8px",
-                            cursor: "pointer",
-                            fontWeight: 500,
-                          }}
-                        >
-                          <input
-                            type="radio"
-                            name="trainingMode"
-                            value="online"
-                            checked={formData.trainingMode === "online"}
-                            onChange={handleChange}
-                          />
-                          Online
-                        </label>
-                        <label
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "8px",
-                            cursor: "pointer",
-                            fontWeight: 500,
-                          }}
-                        >
-                          <input
-                            type="radio"
-                            name="trainingMode"
-                            value="offline"
-                            checked={formData.trainingMode === "offline"}
-                            onChange={handleChange}
-                          />
-                          Offline (In-person)
-                        </label>
+                        {submitStatus.message}
                       </div>
+                    )}
+
+                    <div className="contact-form contact-form-inner">
+                      <form onSubmit={handleSubmit}>
+                        <div className="form-grp">
+                          <input
+                            type="text"
+                            name="name"
+                            placeholder="Full name *"
+                            value={formData.name}
+                            onChange={handleChange}
+                            required
+                          />
+                        </div>
+                        <div className="form-grp">
+                          <input
+                            type="email"
+                            name="email"
+                            placeholder="E-mail *"
+                            value={formData.email}
+                            onChange={handleChange}
+                            required
+                          />
+                        </div>
+                        <div className="form-grp">
+                          <input
+                            type="tel"
+                            name="phone"
+                            placeholder="Phone number *"
+                            value={formData.phone}
+                            onChange={handleChange}
+                            required
+                          />
+                        </div>
+                        <div className="form-grp">
+                          <input
+                            type="text"
+                            name="organization"
+                            placeholder="Organization (optional)"
+                            value={formData.organization}
+                            onChange={handleChange}
+                          />
+                        </div>
+                        <div className="form-grp">
+                          <input
+                            type="text"
+                            name="location"
+                            placeholder="Location (Country & City) *"
+                            value={formData.location}
+                            onChange={handleChange}
+                            required
+                          />
+                        </div>
+                        <div className="form-grp">
+                          <input
+                            type="text"
+                            name="background"
+                            placeholder="Background / Education Level *"
+                            value={formData.background}
+                            onChange={handleChange}
+                            required
+                          />
+                        </div>
+                        <div className="form-grp">
+                          <label
+                            style={{
+                              display: "block",
+                              marginBottom: "10px",
+                              fontWeight: 600,
+                              color: "#22428F",
+                            }}
+                          >
+                            How would you like to attend? *
+                          </label>
+                          <div
+                            style={{
+                              display: "flex",
+                              gap: "24px",
+                              flexWrap: "wrap",
+                            }}
+                          >
+                            <label
+                              style={{
+                                display: "flex",
+                                alignItems: "center",
+                                gap: "8px",
+                                cursor: "pointer",
+                                fontWeight: 500,
+                              }}
+                            >
+                              <input
+                                type="radio"
+                                name="trainingMode"
+                                value="online"
+                                checked={formData.trainingMode === "online"}
+                                onChange={handleChange}
+                              />
+                              Online
+                            </label>
+                            <label
+                              style={{
+                                display: "flex",
+                                alignItems: "center",
+                                gap: "8px",
+                                cursor: "pointer",
+                                fontWeight: 500,
+                              }}
+                            >
+                              <input
+                                type="radio"
+                                name="trainingMode"
+                                value="offline"
+                                checked={formData.trainingMode === "offline"}
+                                onChange={handleChange}
+                              />
+                              Offline (In-person)
+                            </label>
+                          </div>
+                        </div>
+                        <div className="form-grp">
+                          <textarea
+                            name="skills"
+                            placeholder="Skills (ICT, digital, languages, etc.) *"
+                            value={formData.skills}
+                            onChange={handleChange}
+                            required
+                          />
+                        </div>
+                        <button
+                          type="submit"
+                          className="btn btn-three w-100"
+                          disabled={isSubmitting}
+                        >
+                          {isSubmitting
+                            ? "Submitting..."
+                            : "Submit Registration"}
+                        </button>
+                      </form>
                     </div>
-                    <div className="form-grp">
-                      <textarea
-                        name="skills"
-                        placeholder="Skills (ICT, digital, languages, etc.) *"
-                        value={formData.skills}
-                        onChange={handleChange}
-                        required
-                      />
-                    </div>
-                    <button
-                      type="submit"
-                      className="btn btn-three w-100"
-                      disabled={isSubmitting}
-                    >
-                      {isSubmitting ? "Submitting..." : "Submit Registration"}
-                    </button>
-                  </form>
-                </div>
+                  </>
+                )}
               </div>
             </div>
           </div>

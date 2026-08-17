@@ -23,7 +23,8 @@ export default async function handler(req, res) {
   }
 
   const organization = await fetchOrganization();
-  const recipientEmail = organization.email || "ogaalsancon@gmail.com";
+  const recipientEmail =
+    process.env.ADMIN_EMAIL || organization.email || "ogaalsancon@gmail.com";
 
   const emailSubject = `Contact Form: ${subject}`;
   const emailBody = `
