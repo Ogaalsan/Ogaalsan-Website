@@ -9637,7 +9637,7 @@ label {
 .footer-newsletter form button {
     border: none;
     background: var(--tg-primary-color);
-    color: var(--tg-white);
+    color: #ffffff;
     font-weight: 700;
     font-size: 14px;
     border-radius: 30px;
@@ -9650,6 +9650,7 @@ label {
 
 .footer-newsletter form button:hover {
     background: var(--tg-secondary-color);
+    color: #ffffff;
 }
 
 .footer-newsletter span {
@@ -9780,8 +9781,8 @@ label {
 }
 
 .footer-social.footer-social-two .list-wrap li a:hover {
-    background: var(--tg-paragraph-color);
-    color: var(--tg-white);
+    background: var(--tg-primary-color);
+    color: #ffffff;
 }
 
 .footer-bottom-two {

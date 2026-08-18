@@ -467,8 +467,19 @@ html[data-theme="dark"] .footer-newsletter p {
   color: #c5d0e0 !important;
 }
 
-html[data-theme="dark"] .footer-link .list-wrap li a:hover {
-  color: var(--tg-primary-color) !important;
+html[data-theme="dark"] .footer-link .list-wrap li a:hover,
+html[data-theme="dark"] .footer-info .content a:hover {
+  color: #3fa9f5 !important;
+}
+
+html[data-theme="dark"] .footer-newsletter form button {
+  background: #3fa9f5 !important;
+  color: #ffffff !important;
+}
+
+html[data-theme="dark"] .footer-newsletter form button:hover {
+  background: #22428f !important;
+  color: #ffffff !important;
 }
 
 /* Breadcrumb */
@@ -912,21 +923,32 @@ html[data-theme="dark"] .ogaalsan-contact {
   background: #0d1421 !important;
 }
 
+html[data-theme="dark"] .ogaalsan-contact__intro p,
+html[data-theme="dark"] .ogaalsan-contact__card p {
+  color: #b7c4d8 !important;
+}
+
+html[data-theme="dark"] .ogaalsan-contact__mark {
+  background: #1a2538 !important;
+  border-color: #334766 !important;
+}
+
+html[data-theme="dark"] .ogaalsan-contact__card {
+  background: #1a2538 !important;
+  border-color: #334766 !important;
+}
+
+html[data-theme="dark"] .ogaalsan-contact__label,
+html[data-theme="dark"] .ogaalsan-contact__form-title {
+  color: #f0f5ff !important;
+}
+
+html[data-theme="dark"] .ogaalsan-contact__card a {
+  color: #7ec8f8 !important;
+}
+
 html[data-theme="dark"] .ogaalsan-contact .ogaalsan-contact__form-card {
   background: #1a2538 !important;
   border: 1px solid #334766 !important;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
-}
-
-html[data-theme="dark"] .ogaalsan-contact .ogaalsan-contact__form-card > p {
-  color: #b7c4d8 !important;
-}
-
-html[data-theme="dark"] .ogaalsan-contact__logo-wrap {
-  background: #fff !important;
-}
-
-html[data-theme="dark"] .ogaalsan-contact__whatsapp {
-  background: #fff !important;
-  color: #22428f !important;
 }
