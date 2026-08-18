@@ -1,5 +1,7 @@
-// API route to handle events / opportunities form submissions
-// Uses the same email configuration approach as the main contact form.
+import {
+  brandedEmailAttachments,
+  brandedEmailHtml,
+} from "@/lib/mailTemplate";
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
@@ -21,6 +23,7 @@ export default async function handler(req, res) {
     process.env.ADMIN_EMAIL || process.env.GMAIL_USER || "ogaalsancon@gmail.com";
 
   const emailSubject = `Training Registration: ${trainingName} - ${name}`;
+  const submittedOn = new Date().toLocaleString();
   const emailBody = `
 New Training Registration from OgaalSan Website
 
@@ -38,7 +41,7 @@ ${skills}
 
 ---
 This email was sent from the OgaalSan Consultancy events & opportunities form.
-Submitted on: ${new Date().toLocaleString()}
+Submitted on: ${submittedOn}
   `;
 
   try {
@@ -56,37 +59,31 @@ Submitted on: ${new Date().toLocaleString()}
           },
         });
 
-        const mailOptions = {
-          from: process.env.GMAIL_USER,
+        await transporter.sendMail({
+          from: `"OgaalSan Consultancy" <${process.env.GMAIL_USER}>`,
           to: recipientEmail,
           replyTo: email,
           subject: emailSubject,
           text: emailBody,
-          html: `
-            <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
-              <h2 style="color: #3FA9F5;">New Training Registration</h2>
-              <div style="background-color: #f5f5f5; padding: 20px; border-radius: 5px; margin: 20px 0;">
-                <p><strong>Training:</strong> ${trainingName}</p>
-                <p><strong>Name:</strong> ${name}</p>
-                <p><strong>Location:</strong> ${location}</p>
-                <p><strong>Background / Education Level:</strong> ${background}</p>
-                <p><strong>Email:</strong> ${email}</p>
-                <p><strong>Preferred Training Mode:</strong> ${trainingModeLabel}</p>
-              </div>
-              <div style="margin: 20px 0;">
-                <h3>Skills:</h3>
-                <p style="white-space: pre-wrap;">${skills}</p>
-              </div>
-              <hr style="border: 1px solid #ddd; margin: 20px 0;">
-              <p style="color: #666; font-size: 12px;">
-                This email was sent from the OgaalSan Consultancy events & opportunities form.<br>
-                Submitted on: ${new Date().toLocaleString()}
-              </p>
-            </div>
-          `,
-        };
-
-        await transporter.sendMail(mailOptions);
+          html: brandedEmailHtml({
+            title: "New Training Registration",
+            intro: "A visitor registered interest from the events form.",
+            rows: [
+              ["Training", trainingName],
+              ["Name", name],
+              ["Location", location],
+              ["Background", background],
+              ["Email", email],
+              ["Training mode", trainingModeLabel],
+              ["Submitted", submittedOn],
+            ],
+            messageLabel: "Skills",
+            message: skills,
+            footerNote:
+              "This email was sent from the OgaalSan Consultancy events form.",
+          }),
+          attachments: brandedEmailAttachments(),
+        });
         emailSent = true;
       }
     } catch (error) {
@@ -115,5 +112,3 @@ Submitted on: ${new Date().toLocaleString()}
     });
   }
 }
-
-

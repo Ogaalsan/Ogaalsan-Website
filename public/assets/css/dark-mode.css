@@ -907,3 +907,26 @@ html[data-theme="dark"] .ogaalsan-vmv .features-content .content-top .icon {
 html[data-theme="dark"] .ogaalsan-vmv .features-content .content-top .icon::before {
   background: rgba(63, 169, 245, 0.18) !important;
 }
+
+html[data-theme="dark"] .ogaalsan-contact {
+  background: #0d1421 !important;
+}
+
+html[data-theme="dark"] .ogaalsan-contact .ogaalsan-contact__form-card {
+  background: #1a2538 !important;
+  border: 1px solid #334766 !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+}
+
+html[data-theme="dark"] .ogaalsan-contact .ogaalsan-contact__form-card > p {
+  color: #b7c4d8 !important;
+}
+
+html[data-theme="dark"] .ogaalsan-contact__logo-wrap {
+  background: #fff !important;
+}
+
+html[data-theme="dark"] .ogaalsan-contact__whatsapp {
+  background: #fff !important;
+  color: #22428f !important;
+}

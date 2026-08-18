@@ -1,15 +1,8 @@
 import { fetchOrganization } from "@/lib/organization";
-
-// API route to handle contact form submissions
-// To enable email sending, you'll need to install nodemailer:
-// npm install nodemailer
-//
-// For Gmail, you'll need to:
-// 1. Enable 2-factor authentication
-// 2. Create an App Password: https://myaccount.google.com/apppasswords
-// 3. Add environment variables to .env.local:
-//    GMAIL_USER=your-email@gmail.com
-//    GMAIL_APP_PASSWORD=your-app-password
+import {
+  brandedEmailAttachments,
+  brandedEmailHtml,
+} from "@/lib/mailTemplate";
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
@@ -27,6 +20,7 @@ export default async function handler(req, res) {
     process.env.ADMIN_EMAIL || organization.email || "ogaalsancon@gmail.com";
 
   const emailSubject = `Contact Form: ${subject}`;
+  const submittedOn = new Date().toLocaleString();
   const emailBody = `
 New Contact Form Submission from OgaalSan Website
 
@@ -41,7 +35,7 @@ ${message}
 
 ---
 This email was sent from the OgaalSan Consultancy contact form.
-Submitted on: ${new Date().toLocaleString()}
+Submitted on: ${submittedOn}
   `;
 
   try {
@@ -59,35 +53,29 @@ Submitted on: ${new Date().toLocaleString()}
           },
         });
 
-        const mailOptions = {
-          from: process.env.GMAIL_USER,
+        await transporter.sendMail({
+          from: `"OgaalSan Consultancy" <${process.env.GMAIL_USER}>`,
           to: recipientEmail,
           replyTo: email,
           subject: emailSubject,
           text: emailBody,
-          html: `
-            <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
-              <h2 style="color: #3FA9F5;">New Contact Form Submission</h2>
-              <div style="background-color: #f5f5f5; padding: 20px; border-radius: 5px; margin: 20px 0;">
-                <p><strong>Name:</strong> ${name}</p>
-                <p><strong>Email:</strong> ${email}</p>
-                <p><strong>Phone/WhatsApp:</strong> ${phone}</p>
-                <p><strong>Subject:</strong> ${subject}</p>
-              </div>
-              <div style="margin: 20px 0;">
-                <h3>Message:</h3>
-                <p style="white-space: pre-wrap;">${message}</p>
-              </div>
-              <hr style="border: 1px solid #ddd; margin: 20px 0;">
-              <p style="color: #666; font-size: 12px;">
-                This email was sent from the OgaalSan Consultancy contact form.<br>
-                Submitted on: ${new Date().toLocaleString()}
-              </p>
-            </div>
-          `,
-        };
-
-        await transporter.sendMail(mailOptions);
+          html: brandedEmailHtml({
+            title: "New Contact Form Submission",
+            intro: "A visitor sent a message from the OgaalSan website.",
+            rows: [
+              ["Name", name],
+              ["Email", email],
+              ["Phone / WhatsApp", phone],
+              ["Subject", subject],
+              ["Submitted", submittedOn],
+            ],
+            messageLabel: "Message",
+            message,
+            footerNote:
+              "This email was sent from the OgaalSan Consultancy contact form.",
+          }),
+          attachments: brandedEmailAttachments(),
+        });
         emailSent = true;
       }
     } catch (nodemailerError) {
