@@ -43,22 +43,16 @@ export default function Reports() {
                     <div className="resource-card__body">
                       <h4 className="resource-card__title">{report.title}</h4>
                       <p className="resource-card__desc">{report.description}</p>
-                      <Link
-                        href={report.file || "#"}
-                        className="btn btn-three"
-                        target={
-                          report.file && report.file !== "#"
-                            ? "_blank"
-                            : undefined
-                        }
-                        rel={
-                          report.file && report.file !== "#"
-                            ? "noopener noreferrer"
-                            : undefined
-                        }
-                      >
-                        <i className="fas fa-file-pdf" /> View Report
-                      </Link>
+                      {report.file && report.file !== "#" ? (
+                        <Link
+                          href={report.file}
+                          className="btn btn-three"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <i className="fas fa-file-pdf" /> View Report
+                        </Link>
+                      ) : null}
                     </div>
                   </div>
                 </div>

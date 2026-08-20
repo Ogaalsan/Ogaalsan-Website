@@ -1,21 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
 
 export default function Services({ services = [], loading = false }) {
-  const [isActive, setIsActive] = useState({
-    status: false,
-    key: "",
-  });
-
-  const handleToggle = (key) => {
-    if (isActive.key === key) {
-      setIsActive({ status: false });
-    } else {
-      setIsActive({ status: true, key });
-    }
-  };
-
   if (loading) {
     return (
       <section className="services-area-two services-bg-two py-80">
@@ -65,11 +51,7 @@ export default function Services({ services = [], loading = false }) {
               key={service.id}
               className="col-xl-3 col-lg-4 col-md-6 col-sm-8 d-flex"
             >
-              <div
-                className="services-item-two w-100"
-                onMouseEnter={() => handleToggle(index + 1)}
-                onMouseLeave={() => handleToggle(index + 1)}
-              >
+              <div className="services-item-two w-100">
                 <div className="services-thumb-two">
                   <Image
                     src={service.image}
@@ -83,12 +65,6 @@ export default function Services({ services = [], loading = false }) {
                       objectFit: "cover",
                     }}
                   />
-                  <div className="item-shape">
-                    <img
-                      src="/assets/img/services/services_item_shape.png"
-                      alt=""
-                    />
-                  </div>
                 </div>
                 <div className="services-content-two">
                   <div className="icon">
@@ -99,13 +75,7 @@ export default function Services({ services = [], loading = false }) {
                       {service.title}
                     </Link>
                   </h2>
-                  <p
-                    style={{
-                      display: `${isActive.key === index + 1 ? "block" : "none"}`,
-                    }}
-                  >
-                    {service.shortDescription}
-                  </p>
+                  <p>{service.shortDescription}</p>
                 </div>
               </div>
             </div>

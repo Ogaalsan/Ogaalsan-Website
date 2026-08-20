@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useState } from "react";
 import MobileMenu from "../MobileMenu";
-import SearchPopup from "../SearchPopup";
 import ThemeToggle from "@/components/common/ThemeToggle";
 import { useAuth } from "@/context/AuthContext";
 import { useOrganization } from "@/context/OrganizationContext";
@@ -22,11 +22,31 @@ export default function Header1({
 }) {
   const router = useRouter();
   const pathname = router.pathname;
+  const [mobileQuery, setMobileQuery] = useState("");
   const { user, isAuthenticated, logout } = useAuth();
   const { locationLabel, email, phoneLabel, phoneHref } = useOrganization();
 
   const handleLogout = async () => {
     await logout();
+  };
+
+  const submitSearch = (query) => {
+    const trimmed = query.trim();
+    if (!trimmed) return;
+
+    if (isSearch) {
+      handleSearch();
+    }
+    if (isMobileMenu) {
+      handleMobileMenu();
+    }
+
+    router.push(`/search?q=${encodeURIComponent(trimmed)}`);
+  };
+
+  const handleMobileSearch = (event) => {
+    event.preventDefault();
+    submitSearch(mobileQuery);
   };
 
   return (
@@ -248,10 +268,15 @@ export default function Header1({
                             </span>
                           </div>
                         </li>
-                        <li className="header-search" onClick={handleSearch}>
-                          <Link href="#">
+                        <li className="header-search">
+                          <button
+                            type="button"
+                            className="header-search-btn"
+                            onClick={handleSearch}
+                            aria-label="Open search"
+                          >
                             <i className="flaticon-search" />
-                          </Link>
+                          </button>
                         </li>
                       </ul>
                     </div>
@@ -271,9 +296,15 @@ export default function Header1({
                       </Link>
                     </div>
                     <div className="mobile-search">
-                      <form action="#">
-                        <input type="text" placeholder="Search here..." />
-                        <button type="button">
+                      <form onSubmit={handleMobileSearch}>
+                        <input
+                          type="search"
+                          placeholder="Search here..."
+                          value={mobileQuery}
+                          onChange={(event) => setMobileQuery(event.target.value)}
+                          aria-label="Search"
+                        />
+                        <button type="submit" aria-label="Submit search">
                           <i className="flaticon-search" />
                         </button>
                       </form>
@@ -332,7 +363,6 @@ export default function Header1({
             </div>
           </div>
         </div>
-        <SearchPopup isSearch={isSearch} handleSearch={handleSearch} />
       </header>
     </>
   );

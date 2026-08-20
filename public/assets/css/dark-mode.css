@@ -124,7 +124,8 @@ html[data-theme="dark"] .header-contact-two .content span,
 html[data-theme="dark"] .header-contact-two .content a,
 html[data-theme="dark"] .header-action ul > li > a,
 html[data-theme="dark"] .mobile-nav-toggler,
-html[data-theme="dark"] .header-search a {
+html[data-theme="dark"] .header-search a,
+html[data-theme="dark"] .header-search .header-search-btn {
   color: #d7e0ef !important;
 }
 
@@ -150,9 +151,65 @@ html[data-theme="dark"] .header-contact-two .icon i::before {
 html[data-theme="dark"] .mobile-menu .menu-box,
 html[data-theme="dark"] .extra-info,
 html[data-theme="dark"] .search-popup,
+html[data-theme="dark"] .search-popup-wrap,
 html[data-theme="dark"] .search-popup .search-form {
   background: #152033 !important;
   color: #d7e0ef;
+}
+
+html[data-theme="dark"] .ogaalsan-search-popup__panel {
+  background: #1a2538 !important;
+  border: 1px solid #334766;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45) !important;
+}
+
+html[data-theme="dark"] .ogaalsan-search-popup__title {
+  color: #f0f5ff !important;
+}
+
+html[data-theme="dark"] .ogaalsan-search-popup__subtitle,
+html[data-theme="dark"] .ogaalsan-search-popup__hint {
+  color: #b7c4d8 !important;
+}
+
+html[data-theme="dark"] .ogaalsan-search-popup__close {
+  background: #24344f !important;
+  color: #e8eef8 !important;
+}
+
+html[data-theme="dark"] .ogaalsan-search-popup__close:hover {
+  background: #3fa9f5 !important;
+  color: #ffffff !important;
+}
+
+html[data-theme="dark"] .ogaalsan-search-popup__field {
+  background: #0f1828 !important;
+  border-color: #4a5f7d !important;
+}
+
+html[data-theme="dark"] .ogaalsan-search-popup__field input {
+  color: #f0f5ff !important;
+}
+
+html[data-theme="dark"] .ogaalsan-search-popup__field input::placeholder {
+  color: #9aabc3 !important;
+}
+
+html[data-theme="dark"] .ogaalsan-search-results li {
+  border-bottom-color: #334766 !important;
+}
+
+html[data-theme="dark"] .ogaalsan-search-results__type {
+  background: rgba(63, 169, 245, 0.18) !important;
+  color: #7ec8f8 !important;
+}
+
+html[data-theme="dark"] .ogaalsan-search-results__title a {
+  color: #f0f5ff !important;
+}
+
+html[data-theme="dark"] .ogaalsan-search-results li p {
+  color: #b7c4d8 !important;
 }
 
 html[data-theme="dark"] .mobile-menu .navigation li > a,

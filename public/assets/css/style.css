@@ -710,7 +710,24 @@ label {
     transition: all 0.3s ease-out 0s;
 }
 
-.header-action ul li.header-search a:hover {
+.header-action ul li.header-search .header-search-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: #334770;
+    font-size: 22px;
+    line-height: 0;
+    cursor: pointer;
+    transition: all 0.3s ease-out 0s;
+}
+
+.header-action ul li.header-search a:hover,
+.header-action ul li.header-search .header-search-btn:hover {
     color: var(--tg-primary-color);
 }
 
@@ -1367,9 +1384,13 @@ label {
     background: rgba(255, 255, 255, 0.90);
     height: 100%;
     width: 100%;
-    z-index: 99;
+    z-index: 99999;
     padding: 100px 0;
     display: none;
+}
+
+.search-popup-wrap.is-open {
+    display: block;
 }
 
 .search-wrap {

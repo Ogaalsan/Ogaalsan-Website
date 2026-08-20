@@ -7,6 +7,7 @@ import Breadcrumb from './Breadcrumb'
 import PageHead from './PageHead'
 import Footer2 from './footer/Footer2'
 import Header1 from "./header/Header1"
+import SearchPopup from "./SearchPopup"
 
 export default function Layout({ headTitle, breadcrumbTitle, children }) {
     const [scroll, setScroll] = useState(0)
@@ -76,6 +77,8 @@ export default function Layout({ headTitle, breadcrumbTitle, children }) {
                 isOffcanvus={isOffcanvus}
                 handleOffcanvus={handleOffcanvus}
             />
+
+            <SearchPopup isSearch={isSearch} handleSearch={handleSearch} />
 
             <main className="fix">
                 {breadcrumbTitle && <Breadcrumb breadcrumbTitle={breadcrumbTitle} />}
