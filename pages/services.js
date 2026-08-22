@@ -33,11 +33,11 @@ export default function Services() {
             </div>
           </div>
 
-          <div className="row justify-content-center mb-50">
+          <div className="row justify-content-center mb-50 align-items-stretch">
             {SERVICE_DIVISIONS.map((division) => (
-              <div key={division.slug} className="col-lg-4 col-md-6 mb-30">
-                <div className="services-item" style={{ height: "100%" }}>
-                  <div className="services-content">
+              <div key={division.slug} className="col-lg-4 col-md-6 mb-30 d-flex">
+                <div className="services-item w-100">
+                  <div className="services-content h-100 d-flex flex-column">
                     <div className="content-top">
                       <div className="icon">
                         <i className={division.icon} />
@@ -48,10 +48,10 @@ export default function Services() {
                         </Link>
                       </h2>
                     </div>
-                    <p>{division.summary}</p>
+                    <p className="flex-grow-1">{division.summary}</p>
                     <Link
                       href={`/services/${division.slug}`}
-                      className="btn transparent-btn"
+                      className="btn transparent-btn mt-auto"
                     >
                       Learn More
                     </Link>

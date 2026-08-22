@@ -929,3 +929,61 @@ html[data-theme="dark"] .services-area-two .services-item-two:hover .services-co
 html[data-theme="dark"] .services-area-two .services-item-two:hover .services-content-two p {
   color: #ffffff !important;
 }
+
+/* Services page — equal cards + brand button */
+.services-area-five .services-item .services-content p {
+  margin-bottom: 24px;
+}
+
+.services-area-five .services-item .transparent-btn.btn {
+  border-color: #3fa9f5;
+  color: #22428f;
+}
+
+.services-area-five .services-item .transparent-btn.btn::before {
+  background: #3fa9f5;
+  z-index: -1;
+}
+
+.services-area-five .services-item .transparent-btn.btn::after {
+  content: "";
+  font-family: none;
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-left: 0;
+  width: 18px;
+  height: 12px;
+  background-image: url(../img/icons/right-arrow.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  filter: brightness(0) invert(1);
+  z-index: 1;
+}
+
+.services-area-five .services-item .transparent-btn.btn:hover {
+  background: #22428f !important;
+  color: #ffffff !important;
+  border-color: #3fa9f5 !important;
+}
+
+.services-area-five .services-item .transparent-btn.btn:hover::before {
+  width: 50px;
+  background: #3fa9f5;
+  z-index: -1;
+}
+
+.services-area-five .services-item .transparent-btn.btn:hover::after {
+  filter: brightness(0) invert(1);
+}
+
+/* Overview — ICT illustration */
+.overview-img-wrap--illustration img {
+  width: 100%;
+  max-width: 580px;
+  height: auto !important;
+  border-radius: 0;
+  object-fit: contain;
+}

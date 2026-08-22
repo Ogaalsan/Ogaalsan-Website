@@ -1,4 +1,3 @@
-import CounterUp from "@/components/elements/CounterUp";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -44,8 +43,8 @@ export default function About() {
                 data-aos="fade-left"
                 data-aos-delay={0}
               >
-                <h2 className="title">25</h2>
-                <p>Years Of Experience</p>
+                <h2 className="title">3</h2>
+                <p>Core Service Areas</p>
               </div>
             </div>
           </div>
@@ -76,10 +75,8 @@ export default function About() {
                       <i className="flaticon-investment" />
                     </div>
                     <div className="content">
-                      <h2 className="count">
-                        <CounterUp count={500} />+
-                      </h2>
-                      <p>Professionals trained</p>
+                      <h2 className="count">ICT</h2>
+                      <p>Digital solutions &amp; innovation</p>
                     </div>
                   </li>
                   <li>
@@ -87,10 +84,8 @@ export default function About() {
                       <i className="flaticon-business-presentation" />
                     </div>
                     <div className="content">
-                      <h2 className="count">
-                        <CounterUp count={98} />%
-                      </h2>
-                      <p>Client satisfaction</p>
+                      <h2 className="count">Training</h2>
+                      <p>Capacity building for teams</p>
                     </div>
                   </li>
                 </ul>

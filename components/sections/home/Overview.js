@@ -1,4 +1,5 @@
-import CounterUp from "@/components/elements/CounterUp"
+import CounterUp from "@/components/elements/CounterUp";
+import Image from "next/image";
 
 export default function Overview() {
     return (
@@ -8,10 +9,19 @@ export default function Overview() {
                 <div className="container">
                     <div className="row align-items-center justify-content-center">
                         <div className="col-lg-6 col-md-10">
-                            <div className="overview-img-wrap">
-                                <img src="/assets/img/ogalsan/power2.jpg" alt="" style={{ width: '400px' }} />
-                                <img src="/assets/img/images/overview_img02.jpg" alt="" data-parallax="{&quot;x&quot; : 50 }" />
-                                <img src="/assets/img/images/overview_img_shape.png" alt="" />
+                            <div className="overview-img-wrap overview-img-wrap--illustration">
+                                <Image
+                                    src="/assets/img/images/ict.png"
+                                    alt="ICT and digital consultancy illustration"
+                                    width={620}
+                                    height={620}
+                                    loading="lazy"
+                                    style={{
+                                        width: "100%",
+                                        maxWidth: "580px",
+                                        height: "auto",
+                                    }}
+                                />
                                 <div className="icon">
                                     <i className="flaticon-report-1" />
                                 </div>
@@ -41,8 +51,8 @@ export default function Overview() {
                                                 <i className="flaticon-rating" />
                                             </div>
                                             <div className="content">
-                                                <h2 className="count"><CounterUp count={10} /></h2>
-                                                <p>Happy Clients</p>
+                                                <h2 className="count">Business</h2>
+                                                <p>Development &amp; growth support</p>
                                             </div>
                                         </li>
                                     </ul>
