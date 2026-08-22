@@ -9,20 +9,17 @@ export default function Overview() {
                 <div className="container">
                     <div className="row align-items-center justify-content-center">
                         <div className="col-lg-6 col-md-10">
-                            <div className="overview-img-wrap overview-img-wrap--illustration">
+                            <div className="overview-img-wrap overview-img-wrap--illustration ogaalsan-overview-visual">
+                                <div className="ogaalsan-overview-visual__glow" aria-hidden="true" />
                                 <Image
                                     src="/assets/img/images/ict.png"
                                     alt="ICT and digital consultancy illustration"
-                                    width={620}
-                                    height={620}
+                                    width={760}
+                                    height={760}
+                                    className="ogaalsan-overview-visual__img"
                                     loading="lazy"
-                                    style={{
-                                        width: "100%",
-                                        maxWidth: "580px",
-                                        height: "auto",
-                                    }}
                                 />
-                                <div className="icon">
+                                <div className="icon ogaalsan-overview-visual__icon">
                                     <i className="flaticon-report-1" />
                                 </div>
                             </div>

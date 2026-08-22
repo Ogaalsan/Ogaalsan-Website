@@ -7,41 +7,22 @@ export default function About() {
       <div className="container">
         <div className="row align-items-center justify-content-center">
           <div className="col-lg-6 col-md-9 order-0 order-lg-2">
-            <div className="about-img-seven-wrap">
+            <div className="about-img-seven-wrap about-img-seven-wrap--illustration ogaalsan-about-visual">
+              <div className="ogaalsan-about-visual__glow" aria-hidden="true" />
               <Image
-                src="/assets/img/ogalsan/person.jpg"
-                alt=""
-                width={600}
-                height={365}
-                style={{ maxWidth: "100%", height: "auto", objectFit: "cover" }}
+                src="/assets/img/images/about.png"
+                alt="About OgaalSan Consultancy"
+                width={760}
+                height={760}
+                className="ogaalsan-about-visual__img"
                 data-aos="fade-right"
                 data-aos-delay={0}
                 loading="lazy"
               />
-              <Image
-                src="/assets/img/ogalsan/creative.jpg"
-                alt=""
-                width={300}
-                height={200}
-                style={{ maxWidth: "300px", height: "auto", objectFit: "cover" }}
-                data-aos="fade-up"
-                data-aos-delay={300}
-                loading="lazy"
-              />
-              <Image
-                src="/assets/img/images/inner_about_shape01.png"
-                alt=""
-                width={200}
-                height={200}
-                className="shape"
-                data-aos="zoom-in"
-                data-aos-delay={500}
-                loading="lazy"
-              />
               <div
-                className="experience-wrap"
-                data-aos="fade-left"
-                data-aos-delay={0}
+                className="experience-wrap ogaalsan-about-visual__badge"
+                data-aos="fade-up"
+                data-aos-delay={200}
               >
                 <h2 className="title">3</h2>
                 <p>Core Service Areas</p>
@@ -49,7 +30,7 @@ export default function About() {
             </div>
           </div>
           <div className="col-lg-6">
-            <div className="about-content-seven">
+            <div className="about-content-seven ogaalsan-about-content">
               <div className="section-title mb-30">
                 <Link href="/about" className="sub-title">
                   About
@@ -68,7 +49,7 @@ export default function About() {
                 thrive in an increasingly digital and
                 knowledge-driven economy.
               </p>
-              <div className="success-wrap-two">
+              <div className="success-wrap-two ogaalsan-about-pillars">
                 <ul className="list-wrap">
                   <li>
                     <div className="icon">
