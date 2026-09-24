@@ -23,7 +23,12 @@ export default function CourseCard({ course }) {
             />
           </Link>
           <span className="course-card__badge">{course.category}</span>
-          {course.level && (
+          {course.format && (
+            <span className="course-card__level">
+              {course.format === "online" ? "Online" : "Offline"}
+            </span>
+          )}
+          {!course.format && course.level && (
             <span className="course-card__level">{course.level}</span>
           )}
         </div>
@@ -38,7 +43,9 @@ export default function CourseCard({ course }) {
             )}
             <span>
               <i className="fas fa-play-circle" />
-              {course.lessonCount} lessons
+              {course.format === "online"
+                ? `${course.lessonCount} lessons`
+                : `${course.sectionCount || course.lessonCount} topics`}
             </span>
           </div>
 

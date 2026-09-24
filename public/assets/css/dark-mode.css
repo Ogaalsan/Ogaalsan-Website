@@ -777,6 +777,40 @@ html[data-theme="dark"] .course-details-content li {
   color: #c5d0e0 !important;
 }
 
+html[data-theme="dark"] .course-curriculum__section,
+html[data-theme="dark"] .course-curriculum__topic {
+  background: #1a2740 !important;
+  border-color: rgba(63, 169, 245, 0.22) !important;
+}
+
+html[data-theme="dark"] .course-curriculum__section-toggle {
+  background: #152238 !important;
+}
+
+html[data-theme="dark"] .course-curriculum__section.is-open .course-curriculum__section-toggle {
+  border-bottom-color: rgba(63, 169, 245, 0.18) !important;
+}
+
+html[data-theme="dark"] .course-curriculum__heading,
+html[data-theme="dark"] .course-curriculum__section-label strong,
+html[data-theme="dark"] .course-curriculum__lesson-title,
+html[data-theme="dark"] .course-curriculum__topic strong {
+  color: #f0f5ff !important;
+}
+
+html[data-theme="dark"] .course-curriculum__intro,
+html[data-theme="dark"] .course-curriculum__section-meta,
+html[data-theme="dark"] .course-curriculum__section-desc,
+html[data-theme="dark"] .course-curriculum__lesson-meta,
+html[data-theme="dark"] .course-curriculum__locked-hint,
+html[data-theme="dark"] .course-curriculum__topic p {
+  color: #9aadc6 !important;
+}
+
+html[data-theme="dark"] .course-curriculum__lesson + .course-curriculum__lesson {
+  border-top-color: rgba(63, 169, 245, 0.12) !important;
+}
+
 html[data-theme="dark"] .course-sidebar {
   background: #1a2740 !important;
   border-color: rgba(63, 169, 245, 0.28) !important;

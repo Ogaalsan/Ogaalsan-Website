@@ -99,7 +99,7 @@ export default function CourseRegister() {
       setSubmitStatus({
         type: "success",
         message:
-          "Your registration has been received. Our team will contact you with the next steps (payment instructions, venue details, or the Zoom meeting link).",
+          "Your registration has been received. Our team will confirm it soon. You can track status in My Courses.",
       });
     } catch (error) {
       setSubmitStatus({
@@ -247,6 +247,19 @@ export default function CourseRegister() {
                       marginTop: "10px",
                     }}
                   >
+                    <Link
+                      href="/my-courses"
+                      style={{
+                        backgroundColor: "#22428F",
+                        color: "#fff",
+                        padding: "12px 20px",
+                        borderRadius: "8px",
+                        fontWeight: 600,
+                        textDecoration: "none",
+                      }}
+                    >
+                      Go to My Courses
+                    </Link>
                     <Link
                       href={`/course/${course.slug || course.id}`}
                       style={{
