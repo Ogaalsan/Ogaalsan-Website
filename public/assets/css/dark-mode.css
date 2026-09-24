@@ -529,6 +529,11 @@ html[data-theme="dark"] .footer-info .content a:hover {
   color: #3fa9f5 !important;
 }
 
+html[data-theme="dark"] .footer-brand-watermark {
+  color: #ffffff !important;
+  opacity: 0.06;
+}
+
 html[data-theme="dark"] .footer-newsletter form button {
   background: #3fa9f5 !important;
   color: #ffffff !important;

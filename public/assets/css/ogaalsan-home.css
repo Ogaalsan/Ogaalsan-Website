@@ -667,6 +667,60 @@
   color: #ffffff;
 }
 
+/* Footer brand watermark — large faded name behind content */
+.footer-area-two {
+  position: relative;
+  overflow: hidden;
+}
+
+.footer-brand-watermark {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: auto;
+  bottom: 2%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  width: 100%;
+  height: auto;
+  margin: 0;
+  padding: 0 1vw 0;
+  text-align: center;
+  font-size: 11.5vw;
+  font-weight: 800;
+  line-height: 0.85;
+  letter-spacing: -0.05em;
+  color: #22428f;
+  opacity: 0.08;
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+  transform: none;
+}
+
+.footer-area-two > .footer-top-two,
+.footer-area-two > .footer-bottom-two {
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 991px) {
+  .footer-brand-watermark {
+    font-size: 12vw;
+    opacity: 0.07;
+  }
+}
+
+@media (max-width: 575px) {
+  .footer-brand-watermark {
+    font-size: 11vw;
+    letter-spacing: -0.04em;
+    padding: 0 8px;
+  }
+}
+
 /* Search results */
 .ogaalsan-search-results {
   margin: 0;
