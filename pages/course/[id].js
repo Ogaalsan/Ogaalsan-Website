@@ -1,23 +1,57 @@
 import Layout from "@/components/layout/Layout";
 import ContentLoader from "@/components/common/ContentLoader";
+import CourseCurriculum from "@/components/courses/CourseCurriculum";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { useAuth } from "@/context/AuthContext";
 import { useOrganization } from "@/context/OrganizationContext";
 import { fetchPublishedCourse } from "@/lib/courses";
+import { fetchMyCourses } from "@/lib/learner";
 import { useClientFetch } from "@/hooks/useClientFetch";
 
 export default function CourseDetails() {
   const router = useRouter();
   const identifier = router.query.id;
   const ready = router.isReady && Boolean(identifier);
+  const { isAuthenticated, loading: authLoading } = useAuth();
   const { whatsappUrl: buildWhatsAppUrl } = useOrganization();
+  const [enrollment, setEnrollment] = useState(null);
 
   const { data: course, loading } = useClientFetch(
     () => fetchPublishedCourse(identifier),
     [identifier],
     { enabled: ready, initialData: null }
   );
+
+  useEffect(() => {
+    if (!isAuthenticated || authLoading || !course?.id) {
+      setEnrollment(null);
+      return undefined;
+    }
+
+    let active = true;
+    fetchMyCourses()
+      .then((result) => {
+        if (!active) return;
+        const match = (result.courses || []).find(
+          (item) =>
+            item.course?.id === course.id ||
+            item.course?.slug === course.slug ||
+            String(item.course?.id) === String(identifier) ||
+            item.course?.slug === identifier
+        );
+        setEnrollment(match || null);
+      })
+      .catch(() => {
+        if (active) setEnrollment(null);
+      });
+
+    return () => {
+      active = false;
+    };
+  }, [isAuthenticated, authLoading, course?.id, course?.slug, identifier]);
 
   const whatsappUrl = course
     ? buildWhatsAppUrl(
@@ -96,25 +130,24 @@ export default function CourseDetails() {
                     {course.description}
                   </p>
 
-                  <h3 className="mb-20" style={{ color: "#22428F" }}>
-                    What You Will Learn
-                  </h3>
-                  <ul style={{ marginBottom: "30px", paddingLeft: "20px" }}>
-                    {course.syllabus?.map((item, index) => (
-                      <li
-                        key={index}
+                  {course.sections?.length > 0 ? (
+                    <CourseCurriculum course={course} />
+                  ) : (
+                    <>
+                      <h3 className="mb-20" style={{ color: "#22428F" }}>
+                        What You Will Learn
+                      </h3>
+                      <p
                         style={{
-                          color: "#334770",
-                          lineHeight: "1.8",
-                          fontSize: "16px",
-                          marginBottom: "10px",
-                          listStyleType: "disc",
+                          color: "#667085",
+                          marginBottom: "30px",
                         }}
                       >
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
+                        Curriculum for this course will appear once sections are
+                        added in the admin.
+                      </p>
+                    </>
+                  )}
                 </div>
               </div>
 
@@ -187,10 +220,29 @@ export default function CourseDetails() {
                         marginBottom: "5px",
                       }}
                     >
-                      Lessons:
+                      Format:
                     </strong>
                     <span style={{ color: "#334770" }}>
-                      {course.lessonCount} lessons
+                      {course.format === "online"
+                        ? "Online (sections & lessons)"
+                        : "Offline / instructor-led"}
+                    </span>
+                  </div>
+
+                  <div className="info-item mb-20">
+                    <strong
+                      style={{
+                        color: "#22428F",
+                        display: "block",
+                        marginBottom: "5px",
+                      }}
+                    >
+                      {course.format === "online" ? "Curriculum:" : "Topics:"}
+                    </strong>
+                    <span style={{ color: "#334770" }}>
+                      {course.format === "online"
+                        ? `${course.sectionCount} sections · ${course.lessonCount} lessons`
+                        : `${course.sectionCount || course.lessonCount} topics`}
                     </span>
                   </div>
 
@@ -202,7 +254,9 @@ export default function CourseDetails() {
                         marginBottom: "5px",
                       }}
                     >
-                      Where to Watch / Take:
+                      {course.format === "online"
+                        ? "Where to Watch / Take:"
+                        : "How to Attend:"}
                     </strong>
                     <span style={{ color: "#334770" }}>
                       {course.whereToWatch}
@@ -217,28 +271,98 @@ export default function CourseDetails() {
                       marginTop: "8px",
                     }}
                   >
-                    <Link
-                      href={`/course/${course.slug || course.id}/register`}
-                      style={{
-                        backgroundColor: "#3FA9F5",
-                        color: "#fff",
-                        padding: "14px 18px",
-                        borderRadius: "8px",
-                        fontWeight: "600",
-                        fontSize: "15px",
-                        textDecoration: "none",
-                        display: "inline-flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        gap: "10px",
-                        width: "100%",
-                        lineHeight: 1.3,
-                        boxShadow: "0 4px 12px rgba(63, 169, 245, 0.25)",
-                      }}
-                    >
-                      <i className="fas fa-user-plus" aria-hidden="true" />
-                      Register for Course
-                    </Link>
+                    {enrollment?.canAccess && course.format === "online" ? (
+                      <Link
+                        href={`/course/watch/${course.slug || course.id}`}
+                        style={{
+                          backgroundColor: "#22428F",
+                          color: "#fff",
+                          padding: "14px 18px",
+                          borderRadius: "8px",
+                          fontWeight: "600",
+                          fontSize: "15px",
+                          textDecoration: "none",
+                          display: "inline-flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          gap: "10px",
+                          width: "100%",
+                          lineHeight: 1.3,
+                          boxShadow: "0 4px 12px rgba(34, 66, 143, 0.25)",
+                        }}
+                      >
+                        <i className="fas fa-play" aria-hidden="true" />
+                        Continue Learning
+                      </Link>
+                    ) : enrollment?.canAccess ? (
+                      <Link
+                        href="/my-courses"
+                        style={{
+                          backgroundColor: "#22428F",
+                          color: "#fff",
+                          padding: "14px 18px",
+                          borderRadius: "8px",
+                          fontWeight: "600",
+                          fontSize: "15px",
+                          textDecoration: "none",
+                          display: "inline-flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          gap: "10px",
+                          width: "100%",
+                          lineHeight: 1.3,
+                          boxShadow: "0 4px 12px rgba(34, 66, 143, 0.25)",
+                        }}
+                      >
+                        <i className="fas fa-check-circle" aria-hidden="true" />
+                        You’re registered — My Courses
+                      </Link>
+                    ) : enrollment?.status === "pending" ? (
+                      <Link
+                        href="/my-courses"
+                        style={{
+                          backgroundColor: "#d97706",
+                          color: "#fff",
+                          padding: "14px 18px",
+                          borderRadius: "8px",
+                          fontWeight: "600",
+                          fontSize: "15px",
+                          textDecoration: "none",
+                          display: "inline-flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          gap: "10px",
+                          width: "100%",
+                          lineHeight: 1.3,
+                        }}
+                      >
+                        <i className="fas fa-clock" aria-hidden="true" />
+                        Registration Pending — My Courses
+                      </Link>
+                    ) : (
+                      <Link
+                        href={`/course/${course.slug || course.id}/register`}
+                        style={{
+                          backgroundColor: "#3FA9F5",
+                          color: "#fff",
+                          padding: "14px 18px",
+                          borderRadius: "8px",
+                          fontWeight: "600",
+                          fontSize: "15px",
+                          textDecoration: "none",
+                          display: "inline-flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          gap: "10px",
+                          width: "100%",
+                          lineHeight: 1.3,
+                          boxShadow: "0 4px 12px rgba(63, 169, 245, 0.25)",
+                        }}
+                      >
+                        <i className="fas fa-user-plus" aria-hidden="true" />
+                        Register for Course
+                      </Link>
+                    )}
 
                     <a
                       href={whatsappUrl}

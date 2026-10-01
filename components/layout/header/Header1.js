@@ -125,6 +125,12 @@ export default function Header1({
                     <div className="header-top-btn d-none d-md-flex align-items-center gap-2">
                       {isAuthenticated ? (
                         <>
+                          <Link
+                            href="/my-courses"
+                            className="btn btn-sm btn-outline-auth"
+                          >
+                            My Courses
+                          </Link>
                           <span className="auth-user-greeting">
                             Hi, {user?.name?.split(" ")[0] || "there"}
                           </span>
@@ -208,7 +214,8 @@ export default function Header1({
                         <li
                           className={
                             navActive(pathname, "/courses") ||
-                            navActive(pathname, "/course")
+                            navActive(pathname, "/course") ||
+                            navActive(pathname, "/my-courses")
                               ? "active"
                               : ""
                           }

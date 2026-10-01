@@ -64,12 +64,17 @@ export default function MobileMenu() {
       </li>
       <li
         className={
-          navActive(pathname, "/courses") || navActive(pathname, "/course")
+          navActive(pathname, "/courses") ||
+          navActive(pathname, "/course") ||
+          navActive(pathname, "/my-courses")
             ? "active"
             : ""
         }
       >
         <Link href="/courses">Courses</Link>
+      </li>
+      <li className={navActive(pathname, "/my-courses") ? "active" : ""}>
+        <Link href="/my-courses">My Courses</Link>
       </li>
       <li className={navActive(pathname, "/training") ? "active" : ""}>
         <Link href="/training">Training</Link>
