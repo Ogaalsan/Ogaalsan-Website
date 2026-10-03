@@ -381,11 +381,17 @@
   color: #22428f;
 }
 
-.course-curriculum__locked-hint {
-  color: #8b9db5;
-  font-size: 12px;
-  font-weight: 600;
-  white-space: nowrap;
+.course-curriculum__quiz .course-curriculum__lesson-icon {
+  background: rgba(124, 58, 237, 0.12);
+  color: #7c3aed;
+}
+
+.course-curriculum__final {
+  margin-top: 18px;
+  padding: 16px 18px;
+  border: 1px dashed #d8c8f5;
+  border-radius: 12px;
+  background: #faf7ff;
 }
 
 .course-curriculum__topics {

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, Fragment } from "react";
 import Link from "next/link";
 
 function LessonMeta({ lesson }) {
@@ -113,55 +113,113 @@ export default function CourseCurriculum({ course }) {
                     </li>
                   ) : (
                     section.lessons.map((lesson, lessonIndex) => (
-                      <li
-                        key={lesson.id || lessonIndex}
-                        className={`course-curriculum__lesson${
-                          lesson.isFreePreview ? " is-preview" : ""
-                        }${lesson.isLocked ? " is-locked" : ""}`}
-                      >
-                        <span className="course-curriculum__lesson-icon">
-                          <i
-                            className={
-                              lesson.isLocked && !lesson.isFreePreview
-                                ? "fas fa-lock"
-                                : lesson.hasVideo
-                                  ? "fas fa-play-circle"
-                                  : lesson.hasDocument
-                                    ? "fas fa-file-alt"
-                                    : "fas fa-book-open"
-                            }
-                            aria-hidden="true"
-                          />
-                        </span>
-                        <div className="course-curriculum__lesson-body">
-                          <div className="course-curriculum__lesson-title">
-                            {lesson.title}
-                          </div>
-                          <div className="course-curriculum__lesson-meta">
-                            <LessonMeta lesson={lesson} />
-                          </div>
-                        </div>
-                        {lesson.isFreePreview ? (
-                          <Link
-                            href={`/course/watch/${course.slug || course.id}`}
-                            className="course-curriculum__preview-link"
-                          >
-                            Preview
-                          </Link>
-                        ) : (
-                          <span className="course-curriculum__locked-hint">
-                            Locked
+                      <Fragment key={lesson.id || lessonIndex}>
+                        <li
+                          className={`course-curriculum__lesson${
+                            lesson.isFreePreview ? " is-preview" : ""
+                          }${lesson.isLocked ? " is-locked" : ""}`}
+                        >
+                          <span className="course-curriculum__lesson-icon">
+                            <i
+                              className={
+                                lesson.isLocked && !lesson.isFreePreview
+                                  ? "fas fa-lock"
+                                  : lesson.hasVideo
+                                    ? "fas fa-play-circle"
+                                    : lesson.hasDocument
+                                      ? "fas fa-file-alt"
+                                      : "fas fa-book-open"
+                              }
+                              aria-hidden="true"
+                            />
                           </span>
-                        )}
-                      </li>
+                          <div className="course-curriculum__lesson-body">
+                            <div className="course-curriculum__lesson-title">
+                              {lesson.title}
+                            </div>
+                            <div className="course-curriculum__lesson-meta">
+                              <LessonMeta lesson={lesson} />
+                            </div>
+                          </div>
+                          {lesson.isFreePreview ? (
+                            <Link
+                              href={`/course/watch/${course.slug || course.id}`}
+                              className="course-curriculum__preview-link"
+                            >
+                              Preview
+                            </Link>
+                          ) : (
+                            <span className="course-curriculum__locked-hint">
+                              Locked
+                            </span>
+                          )}
+                        </li>
+                        {(lesson.quizzes || []).map((quiz) => (
+                          <li
+                            key={quiz.id}
+                            className="course-curriculum__lesson course-curriculum__quiz"
+                          >
+                            <span className="course-curriculum__lesson-icon">
+                              <i className="fas fa-question-circle" aria-hidden="true" />
+                            </span>
+                            <div className="course-curriculum__lesson-body">
+                              <div className="course-curriculum__lesson-title">
+                                {quiz.title}
+                              </div>
+                              <div className="course-curriculum__lesson-meta">
+                                Lesson quiz · {quiz.questionCount} questions · Pass {quiz.passingScore}%
+                              </div>
+                            </div>
+                          </li>
+                        ))}
+                      </Fragment>
                     ))
                   )}
+                  {(section.quizzes || []).map((quiz) => (
+                    <li
+                      key={quiz.id}
+                      className="course-curriculum__lesson course-curriculum__quiz"
+                    >
+                      <span className="course-curriculum__lesson-icon">
+                        <i className="fas fa-clipboard-list" aria-hidden="true" />
+                      </span>
+                      <div className="course-curriculum__lesson-body">
+                        <div className="course-curriculum__lesson-title">
+                          {quiz.title}
+                        </div>
+                        <div className="course-curriculum__lesson-meta">
+                          Section quiz · {quiz.questionCount} questions · Pass {quiz.passingScore}%
+                        </div>
+                      </div>
+                    </li>
+                  ))}
                 </ul>
               )}
             </div>
           );
         })}
       </div>
+
+      {(course.finalQuizzes || []).length > 0 && (
+        <div className="course-curriculum__final">
+          <h4 className="course-curriculum__heading">Final Quiz</h4>
+          <ul className="course-curriculum__lessons">
+            {course.finalQuizzes.map((quiz) => (
+              <li key={quiz.id} className="course-curriculum__lesson course-curriculum__quiz">
+                <span className="course-curriculum__lesson-icon">
+                  <i className="fas fa-flag-checkered" aria-hidden="true" />
+                </span>
+                <div className="course-curriculum__lesson-body">
+                  <div className="course-curriculum__lesson-title">{quiz.title}</div>
+                  <div className="course-curriculum__lesson-meta">
+                    Course quiz · {quiz.questionCount} questions · Pass {quiz.passingScore}%
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 }
