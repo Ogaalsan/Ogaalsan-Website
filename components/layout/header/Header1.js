@@ -58,9 +58,9 @@ export default function Header1({
         }`}
       >
         <div className="container custom-container">
-          <div className="heder-top-wrap">
+          <div className="header-top-wrap heder-top-wrap">
             <div className="row align-items-center">
-              <div className="col-lg-7">
+              <div className="col-lg-7 d-none d-lg-block">
                 <div className="header-top-left">
                   <ul className="list-wrap">
                     <li>
@@ -74,9 +74,9 @@ export default function Header1({
                   </ul>
                 </div>
               </div>
-              <div className="col-lg-5">
-                <div className="header-top-right d-flex justify-content-end align-items-center">
-                  <div className="header-social">
+              <div className="col-lg-5 col-12">
+                <div className="header-top-right d-flex justify-content-end align-items-center flex-wrap gap-2">
+                  <div className="header-social d-none d-sm-block">
                     <ul className="list-wrap">
                       <li>
                         <Link
@@ -120,16 +120,17 @@ export default function Header1({
                       </li>
                     </ul>
                   </div>
-                  <div className="d-flex align-items-center ms-3 gap-2">
+                  <div className="d-flex align-items-center ms-auto ms-sm-3 gap-2">
                     <ThemeToggle />
                     <div className="header-top-btn d-none d-md-flex align-items-center gap-2">
                       {isAuthenticated ? (
                         <>
                           <Link
-                            href="/my-courses"
-                            className="btn btn-sm btn-outline-auth"
+                            href="/student-dashboard"
+                            className="btn btn-sm btn-outline-auth d-inline-flex align-items-center gap-1"
                           >
-                            My Courses
+                            <i className="fas fa-th-large" />
+                            Dashboard
                           </Link>
                           <span className="auth-user-greeting">
                             Hi, {user?.name?.split(" ")[0] || "there"}
@@ -177,7 +178,7 @@ export default function Header1({
                         />
                       </Link>
                     </div>
-                    <div className="navbar-wrap main-menu d-none d-lg-flex">
+                    <div className="navbar-wrap main-menu d-none d-xl-flex">
                       <ul className="navigation">
                         <li className={navActive(pathname, "/") ? "active" : ""}>
                           <Link href="/">Home</Link>
@@ -214,8 +215,7 @@ export default function Header1({
                         <li
                           className={
                             navActive(pathname, "/courses") ||
-                            navActive(pathname, "/course") ||
-                            navActive(pathname, "/my-courses")
+                            navActive(pathname, "/course")
                               ? "active"
                               : ""
                           }
@@ -264,7 +264,7 @@ export default function Header1({
                     </div>
                     <div className="header-action">
                       <ul className="list-wrap">
-                        <li className="header-contact-two">
+                        <li className="header-contact-two d-none d-xl-flex">
                           <div className="icon">
                             <i className="flaticon-phone-call" />
                           </div>
@@ -315,6 +315,51 @@ export default function Header1({
                           <i className="flaticon-search" />
                         </button>
                       </form>
+                    </div>
+                    <div className="mobile-menu-auth p-3 text-center my-2 style-mobile-auth">
+                      {isAuthenticated ? (
+                        <div className="d-flex flex-column gap-2 align-items-center">
+                          <span className="text-white font-weight-bold">
+                            Hi, {user?.name?.split(" ")[0] || "Learner"}
+                          </span>
+                          <div className="d-flex gap-2">
+                            <Link
+                              href="/student-dashboard"
+                              className="btn btn-sm btn-two"
+                              onClick={handleMobileMenu}
+                            >
+                              Dashboard
+                            </Link>
+                            <button
+                              type="button"
+                              className="btn btn-sm btn-outline-light"
+                              onClick={() => {
+                                handleLogout();
+                                handleMobileMenu();
+                              }}
+                            >
+                              Sign Out
+                            </button>
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="d-flex gap-2 justify-content-center">
+                          <Link
+                            href="/auth/sign-in"
+                            className="btn btn-sm"
+                            onClick={handleMobileMenu}
+                          >
+                            Sign In
+                          </Link>
+                          <Link
+                            href="/auth/sign-up"
+                            className="btn btn-sm btn-two"
+                            onClick={handleMobileMenu}
+                          >
+                            Sign Up
+                          </Link>
+                        </div>
+                      )}
                     </div>
                     <div className="menu-outer">
                       <MobileMenu />

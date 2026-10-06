@@ -23,7 +23,9 @@ export default function SignUp() {
 
   const redirectTo = (() => {
     const raw =
-      typeof router.query.redirect === "string" ? router.query.redirect : "/";
+      typeof router.query.redirect === "string"
+        ? router.query.redirect
+        : "/student-dashboard";
     try {
       return decodeURIComponent(raw);
     } catch {
@@ -69,7 +71,7 @@ export default function SignUp() {
     <Layout breadcrumbTitle="Sign Up">
       <AuthCard
         title="Create your account"
-        subtitle="Join Ogaalsan to explore courses, services, and learning resources."
+        subtitle="Create an account to enroll in courses and track your learning progress."
         footer={
           <AuthFooterLink
             href={`/auth/sign-in${

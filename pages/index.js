@@ -9,6 +9,7 @@ import Project from "@/components/sections/home/Project";
 import Cta from "@/components/sections/home/Cta";
 import FocusAreas from "@/components/sections/home/FocusAreas";
 import Blog from "@/components/sections/home/Blog";
+import LearnerPortalBanner from "@/components/courses/LearnerPortalBanner";
 import { fetchActiveServices } from "@/lib/services";
 import { fetchPublishedPosts } from "@/lib/posts";
 import { useClientFetch } from "@/hooks/useClientFetch";
@@ -28,6 +29,11 @@ export default function Home() {
       <Banner />
       <Features />
       <About />
+      <section className="pt-20 pb-20">
+        <div className="container">
+          <LearnerPortalBanner />
+        </div>
+      </section>
       <Services services={services} loading={servicesLoading} />
       <Overview />
       <Choose />

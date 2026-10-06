@@ -1,12 +1,15 @@
 import Link from "next/link";
 import Image from "next/image";
 
-export default function CourseCard({ course }) {
+export default function CourseCard({ course, enrollment = null }) {
   const hasDiscount =
     course.discountPrice != null &&
     Number(course.discountPrice) > 0 &&
     Number(course.discountPrice) < Number(course.price);
   const courseHref = `/course/${course.slug || course.id}`;
+  const watchHref = `/course/watch/${course.slug || course.id}`;
+  const canContinue = Boolean(enrollment?.canAccess);
+  const progressPercent = enrollment?.progress?.percent ?? 0;
 
   return (
     <div className="col-lg-4 col-md-6 col-sm-10">
@@ -23,14 +26,23 @@ export default function CourseCard({ course }) {
             />
           </Link>
           <span className="course-card__badge">{course.category}</span>
-          {course.format && (
+          {enrollment ? (
+            <span
+              className={`course-card__enrolled${
+                canContinue ? " is-confirmed" : " is-pending"
+              }`}
+            >
+              {canContinue
+                ? `${progressPercent}% complete`
+                : "Registration pending"}
+            </span>
+          ) : course.format ? (
             <span className="course-card__level">
               {course.format === "online" ? "Online" : "Offline"}
             </span>
-          )}
-          {!course.format && course.level && (
+          ) : course.level ? (
             <span className="course-card__level">{course.level}</span>
-          )}
+          ) : null}
         </div>
 
         <div className="course-card__body">
@@ -59,6 +71,14 @@ export default function CourseCard({ course }) {
               : course.description}
           </p>
 
+          {enrollment ? (
+            <div className="course-card__progress">
+              <div className="course-card__progress-bar">
+                <span style={{ width: `${progressPercent}%` }} />
+              </div>
+            </div>
+          ) : null}
+
           <div className="course-card__footer">
             <div className="course-card__instructor">
               <i className="fas fa-user-graduate" />
@@ -84,8 +104,15 @@ export default function CourseCard({ course }) {
                 <span className="course-card__free">Free</span>
               )}
 
-              <Link href={courseHref} className="course-card__btn">
-                View Course
+              <Link
+                href={canContinue ? watchHref : courseHref}
+                className="course-card__btn"
+              >
+                {canContinue
+                  ? "Continue"
+                  : enrollment
+                    ? "View Status"
+                    : "View Course"}
               </Link>
             </div>
           </div>

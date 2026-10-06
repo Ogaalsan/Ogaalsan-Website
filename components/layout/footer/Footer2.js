@@ -91,10 +91,10 @@ export default function Footer2() {
                                         <div className="footer-link">
                                             <ul className="list-wrap">
                                                 <li><Link href="/about">About Us</Link></li>
-                                                <li><Link href="/services">Our Services</Link></li>
+                                                <li><Link href="/courses">Courses</Link></li>
+                                                <li><Link href="/my-courses">My Courses</Link></li>
                                                 <li><Link href="/blog">Our Blog</Link></li>
                                                 <li><Link href="/contact">Contact</Link></li>
-                                                <li><Link href="/contact">Privacy Policy</Link></li>
                                             </ul>
                                         </div>
                                     </div>
