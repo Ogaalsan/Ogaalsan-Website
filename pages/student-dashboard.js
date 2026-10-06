@@ -121,7 +121,7 @@ export default function StudentDashboard() {
           <div className="portal-sidebar-brand">
             <Link href="/" className="portal-brand-link">
               <img
-                src="/assets/img/logo/logo-ogalsan.png"
+                src="/assets/img/logo/ogaalsan version 4-03.png"
                 alt="OgaalSan"
                 className="portal-brand-logo"
               />
@@ -545,9 +545,10 @@ export default function StudentDashboard() {
         }
 
         .portal-brand-logo {
-          height: 38px;
-          width: auto;
+          height: 40px;
+          width: 40px;
           object-fit: contain;
+          flex-shrink: 0;
         }
 
         .portal-brand-text {

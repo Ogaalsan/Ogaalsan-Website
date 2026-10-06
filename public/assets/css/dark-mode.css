@@ -835,6 +835,45 @@ html[data-theme="dark"] .course-sidebar .course-sidebar__note {
   color: #9aa8bd !important;
 }
 
+html[data-theme="dark"] .course-preview-modal {
+  background: rgba(10, 22, 48, 0.82) !important;
+}
+
+html[data-theme="dark"] .course-preview-modal__content {
+  background: #071426 !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 28px 80px rgba(3, 10, 24, 0.48) !important;
+}
+
+html[data-theme="dark"] .course-preview-modal__eyebrow {
+  color: #74c4ff !important;
+}
+
+html[data-theme="dark"] .course-preview-modal__title {
+  color: #ffffff !important;
+}
+
+html[data-theme="dark"] .course-preview-modal__close {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-color: rgba(255, 255, 255, 0.18) !important;
+  color: #ffffff !important;
+}
+
+html[data-theme="dark"] .course-preview-modal__close:hover,
+html[data-theme="dark"] .course-preview-modal__close:focus {
+  background: #3fa9f5 !important;
+  border-color: #3fa9f5 !important;
+}
+
+html[data-theme="dark"] .course-preview-modal__frame {
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+html[data-theme="dark"] .course-preview-modal__empty {
+  background: #0e1d36 !important;
+  color: #d7e5f8 !important;
+}
+
 /* Course registration — dark mode only */
 html[data-theme="dark"] .course-register-card {
   background: #1a2740 !important;
