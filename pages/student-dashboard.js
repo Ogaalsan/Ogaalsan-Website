@@ -27,7 +27,7 @@ export default function StudentDashboard() {
     if (authLoading) return;
     if (!isAuthenticated) {
       router.replace(
-        `/auth/sign-in?redirect=${encodeURIComponent("/student-dashboard")}`
+        `/auth/sign-in?redirect=${encodeURIComponent("/student-dashboard")}`,
       );
     }
   }, [authLoading, isAuthenticated, router]);
@@ -39,7 +39,7 @@ export default function StudentDashboard() {
       enabled: isAuthenticated && !authLoading,
       initialData: null,
       cacheKey: `student-dashboard-${user?.id || "guest"}`,
-    }
+    },
   );
 
   const courses = data?.courses || [];
@@ -55,7 +55,7 @@ export default function StudentDashboard() {
     if (!courses.length) return 0;
     const totalPercent = courses.reduce(
       (sum, item) => sum + (item.progress?.percent || 0),
-      0
+      0,
     );
     return Math.round(totalPercent / courses.length);
   }, [courses]);
@@ -63,9 +63,10 @@ export default function StudentDashboard() {
   const filteredCourses = useMemo(() => {
     if (!searchQuery.trim()) return courses;
     const q = searchQuery.toLowerCase().trim();
-    return courses.filter((c) =>
-      c.course?.title?.toLowerCase().includes(q) ||
-      c.course?.category?.toLowerCase().includes(q)
+    return courses.filter(
+      (c) =>
+        c.course?.title?.toLowerCase().includes(q) ||
+        c.course?.category?.toLowerCase().includes(q),
     );
   }, [courses, searchQuery]);
 
@@ -156,11 +157,11 @@ export default function StudentDashboard() {
           {/* User Profile Card */}
           <div className="portal-sidebar-footer">
             <div className="portal-user-card">
-              <div className="portal-user-avatar">
-                {userInitials}
-              </div>
+              <div className="portal-user-avatar">{userInitials}</div>
               <div className="portal-user-info">
-                <span className="portal-user-name">{user?.name || "Student"}</span>
+                <span className="portal-user-name">
+                  {user?.name || "Student"}
+                </span>
                 <span className="portal-user-email">{user?.email || ""}</span>
               </div>
               <button
@@ -301,7 +302,9 @@ export default function StudentDashboard() {
                       <i className="fas fa-book-open" />
                     </div>
                     <h3 className="portal-empty-title">
-                      {searchQuery ? "No matching courses found" : "No courses yet"}
+                      {searchQuery
+                        ? "No matching courses found"
+                        : "No courses yet"}
                     </h3>
                     <p className="portal-empty-desc">
                       {searchQuery
@@ -319,20 +322,29 @@ export default function StudentDashboard() {
                       const course = item.course;
                       const watchHref = `/course/watch/${course.slug || course.id}`;
                       const percent = item.progress?.percent || 0;
-                      const isConfirmed = item.status === "confirmed" || item.canAccess;
+                      const isConfirmed =
+                        item.status === "confirmed" || item.canAccess;
 
                       return (
-                        <div className="portal-course-card" key={item.registrationId}>
+                        <div
+                          className="portal-course-card"
+                          key={item.registrationId}
+                        >
                           <div className="portal-course-thumb">
                             <Image
-                              src={course.image || "/assets/img/courses/course_thumb01.jpg"}
+                              src={
+                                course.image ||
+                                "/assets/img/courses/course_thumb01.jpg"
+                              }
                               alt={course.title}
                               fill
                               style={{ objectFit: "cover" }}
                             />
                             <span
                               className={`portal-badge ${
-                                isConfirmed ? "badge-confirmed" : "badge-pending"
+                                isConfirmed
+                                  ? "badge-confirmed"
+                                  : "badge-pending"
                               }`}
                             >
                               {isConfirmed ? "Confirmed" : "Pending"}
@@ -354,25 +366,32 @@ export default function StudentDashboard() {
                             <div className="portal-course-progress">
                               <div className="d-flex justify-content-between text-xs mb-1">
                                 <span className="progress-label">Progress</span>
-                                <span className="progress-percent">{percent}%</span>
+                                <span className="progress-percent">
+                                  {percent}%
+                                </span>
                               </div>
                               <div className="progress-track">
                                 <div
                                   className="progress-fill"
                                   style={{
                                     width: `${percent}%`,
-                                    backgroundColor: percent >= 100 ? "#16a34a" : "#3FA9F5",
+                                    backgroundColor:
+                                      percent >= 100 ? "#16a34a" : "#3FA9F5",
                                   }}
                                 />
                               </div>
                               <div className="progress-count mt-1">
                                 {item.progress?.completedLessons || 0} of{" "}
-                                {item.progress?.totalLessons || 0} lessons completed
+                                {item.progress?.totalLessons || 0} lessons
+                                completed
                               </div>
                             </div>
 
                             <div className="portal-course-footer">
-                              <Link href={watchHref} className="portal-continue-btn">
+                              <Link
+                                href={watchHref}
+                                className="portal-continue-btn"
+                              >
                                 <i className="fas fa-play" />
                                 <span>Continue Learning</span>
                               </Link>
@@ -393,7 +412,8 @@ export default function StudentDashboard() {
                 </div>
                 <h3 className="portal-empty-title">My Certificates</h3>
                 <p className="portal-empty-desc">
-                  Complete 100% of your course lessons and quizzes to earn verified certificates.
+                  Complete 100% of your course lessons and quizzes to earn
+                  verified certificates.
                 </p>
                 <button
                   type="button"
@@ -412,7 +432,8 @@ export default function StudentDashboard() {
                 </div>
                 <h3 className="portal-empty-title">Quiz Attempts</h3>
                 <p className="portal-empty-desc">
-                  Your quiz scores and attempt history will appear here once you take module quizzes.
+                  Your quiz scores and attempt history will appear here once you
+                  take module quizzes.
                 </p>
               </div>
             )}
@@ -424,7 +445,8 @@ export default function StudentDashboard() {
                 </div>
                 <h3 className="portal-empty-title">Events &amp; Workshops</h3>
                 <p className="portal-empty-desc">
-                  Join upcoming live webinars and capacity building sessions organized by OgaalSan.
+                  Join upcoming live webinars and capacity building sessions
+                  organized by OgaalSan.
                 </p>
                 <Link href="/events" className="portal-action-btn">
                   Browse Events
@@ -437,7 +459,9 @@ export default function StudentDashboard() {
                 <h3 className="portal-section-title mb-4">Account Settings</h3>
                 <div className="row g-3">
                   <div className="col-md-6">
-                    <label className="form-label text-sm fw-bold">Full Name</label>
+                    <label className="form-label text-sm fw-bold">
+                      Full Name
+                    </label>
                     <input
                       type="text"
                       className="form-control"
@@ -446,7 +470,9 @@ export default function StudentDashboard() {
                     />
                   </div>
                   <div className="col-md-6">
-                    <label className="form-label text-sm fw-bold">Email Address</label>
+                    <label className="form-label text-sm fw-bold">
+                      Email Address
+                    </label>
                     <input
                       type="email"
                       className="form-control"
@@ -466,7 +492,14 @@ export default function StudentDashboard() {
           display: flex;
           min-height: 100vh;
           background-color: #f8fafc;
-          font-family: var(--tg-body-font-family, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
+          font-family: var(
+            --tg-body-font-family,
+            -apple-system,
+            BlinkMacSystemFont,
+            "Segoe UI",
+            Roboto,
+            sans-serif
+          );
         }
 
         .portal-sidebar {
@@ -525,7 +558,7 @@ export default function StudentDashboard() {
         .portal-title {
           font-size: 15px;
           font-weight: 700;
-          color: #22428F;
+          color: #22428f;
           line-height: 1.2;
         }
 
@@ -568,11 +601,11 @@ export default function StudentDashboard() {
 
         .portal-nav-btn:hover {
           background: #f1f5f9;
-          color: #22428F;
+          color: #22428f;
         }
 
         .portal-nav-btn.active {
-          background: #3FA9F5;
+          background: #3fa9f5;
           color: #ffffff;
           font-weight: 600;
           box-shadow: 0 4px 12px rgba(63, 169, 245, 0.25);
@@ -603,7 +636,7 @@ export default function StudentDashboard() {
           width: 36px;
           height: 36px;
           border-radius: 50%;
-          background: #22428F;
+          background: #22428f;
           color: #ffffff;
           display: flex;
           align-items: center;
@@ -714,7 +747,7 @@ export default function StudentDashboard() {
           gap: 6px;
           font-size: 13px;
           font-weight: 500;
-          color: #22428F;
+          color: #22428f;
           text-decoration: none;
           padding: 6px 12px;
           border-radius: 6px;
@@ -749,7 +782,7 @@ export default function StudentDashboard() {
           height: 52px;
           border-radius: 12px;
           background: #e6f4fe;
-          color: #3FA9F5;
+          color: #3fa9f5;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -787,8 +820,8 @@ export default function StudentDashboard() {
         }
 
         .portal-banner-btn:hover {
-          border-color: #3FA9F5;
-          color: #3FA9F5;
+          border-color: #3fa9f5;
+          color: #3fa9f5;
         }
 
         .portal-stats-grid {
@@ -814,7 +847,7 @@ export default function StudentDashboard() {
           height: 46px;
           border-radius: 10px;
           background: #e6f4fe;
-          color: #3FA9F5;
+          color: #3fa9f5;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -889,7 +922,7 @@ export default function StudentDashboard() {
         }
 
         .portal-search-box input:focus {
-          border-color: #3FA9F5;
+          border-color: #3fa9f5;
         }
 
         .portal-search-box .search-icon {
@@ -925,7 +958,7 @@ export default function StudentDashboard() {
           margin: 0 auto 16px;
           border-radius: 12px;
           background: #e6f4fe;
-          color: #3FA9F5;
+          color: #3fa9f5;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -952,7 +985,7 @@ export default function StudentDashboard() {
           gap: 8px;
           padding: 10px 22px;
           border-radius: 8px;
-          background: #3FA9F5;
+          background: #3fa9f5;
           color: #ffffff;
           font-size: 14px;
           font-weight: 600;
@@ -963,7 +996,7 @@ export default function StudentDashboard() {
         }
 
         .portal-action-btn:hover {
-          background: #22428F;
+          background: #22428f;
           color: #ffffff;
         }
 
@@ -978,7 +1011,9 @@ export default function StudentDashboard() {
           border-radius: 12px;
           overflow: hidden;
           background: #ffffff;
-          transition: transform 0.2s, box-shadow 0.2s;
+          transition:
+            transform 0.2s,
+            box-shadow 0.2s;
           display: flex;
           flex-direction: column;
         }
@@ -1026,7 +1061,7 @@ export default function StudentDashboard() {
         .portal-course-category {
           font-size: 12px;
           font-weight: 600;
-          color: #3FA9F5;
+          color: #3fa9f5;
           text-transform: uppercase;
           margin-bottom: 6px;
         }
@@ -1044,7 +1079,7 @@ export default function StudentDashboard() {
         }
 
         .portal-course-title a:hover {
-          color: #22428F;
+          color: #22428f;
         }
 
         .portal-course-instructor {
@@ -1098,7 +1133,7 @@ export default function StudentDashboard() {
           width: 100%;
           padding: 10px;
           border-radius: 8px;
-          background: #22428F;
+          background: #22428f;
           color: #ffffff;
           font-size: 13px;
           font-weight: 600;
@@ -1107,7 +1142,7 @@ export default function StudentDashboard() {
         }
 
         .portal-continue-btn:hover {
-          background: #3FA9F5;
+          background: #3fa9f5;
           color: #ffffff;
         }
 
