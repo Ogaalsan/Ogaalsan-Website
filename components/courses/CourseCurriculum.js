@@ -1,5 +1,5 @@
-import { useState } from "react";
-import Link from "next/link";
+import { useEffect, useState, Fragment } from "react";
+import { extractYouTubeId } from "@/lib/courses";
 
 function LessonMeta({ lesson }) {
   const bits = [];
@@ -13,9 +13,32 @@ function LessonMeta({ lesson }) {
 export default function CourseCurriculum({ course }) {
   const sections = course?.sections || [];
   const isOnline = course?.format === "online";
+  const [previewLesson, setPreviewLesson] = useState(null);
   const [openIds, setOpenIds] = useState(() =>
     sections.length ? [sections[0].id] : []
   );
+  const previewVideoId = extractYouTubeId(
+    previewLesson?.videoUrl || previewLesson?.video_url
+  );
+
+  useEffect(() => {
+    if (!previewLesson) return undefined;
+
+    document.body.style.overflow = "hidden";
+
+    const handleEscape = (event) => {
+      if (event.key === "Escape") {
+        setPreviewLesson(null);
+      }
+    };
+
+    document.addEventListener("keydown", handleEscape);
+
+    return () => {
+      document.body.style.overflow = "";
+      document.removeEventListener("keydown", handleEscape);
+    };
+  }, [previewLesson]);
 
   if (!sections.length) {
     return null;
@@ -113,55 +136,161 @@ export default function CourseCurriculum({ course }) {
                     </li>
                   ) : (
                     section.lessons.map((lesson, lessonIndex) => (
-                      <li
-                        key={lesson.id || lessonIndex}
-                        className={`course-curriculum__lesson${
-                          lesson.isFreePreview ? " is-preview" : ""
-                        }${lesson.isLocked ? " is-locked" : ""}`}
-                      >
-                        <span className="course-curriculum__lesson-icon">
-                          <i
-                            className={
-                              lesson.isLocked && !lesson.isFreePreview
-                                ? "fas fa-lock"
-                                : lesson.hasVideo
-                                  ? "fas fa-play-circle"
-                                  : lesson.hasDocument
-                                    ? "fas fa-file-alt"
-                                    : "fas fa-book-open"
-                            }
-                            aria-hidden="true"
-                          />
-                        </span>
-                        <div className="course-curriculum__lesson-body">
-                          <div className="course-curriculum__lesson-title">
-                            {lesson.title}
-                          </div>
-                          <div className="course-curriculum__lesson-meta">
-                            <LessonMeta lesson={lesson} />
-                          </div>
-                        </div>
-                        {lesson.isFreePreview ? (
-                          <Link
-                            href={`/course/watch/${course.slug || course.id}`}
-                            className="course-curriculum__preview-link"
-                          >
-                            Preview
-                          </Link>
-                        ) : (
-                          <span className="course-curriculum__locked-hint">
-                            Locked
+                      <Fragment key={lesson.id || lessonIndex}>
+                        <li
+                          className={`course-curriculum__lesson${
+                            lesson.isFreePreview ? " is-preview" : ""
+                          }${lesson.isLocked ? " is-locked" : ""}`}
+                        >
+                          <span className="course-curriculum__lesson-icon">
+                            <i
+                              className={
+                                lesson.isLocked && !lesson.isFreePreview
+                                  ? "fas fa-lock"
+                                  : lesson.hasVideo
+                                    ? "fas fa-play-circle"
+                                    : lesson.hasDocument
+                                      ? "fas fa-file-alt"
+                                      : "fas fa-book-open"
+                              }
+                              aria-hidden="true"
+                            />
                           </span>
-                        )}
-                      </li>
+                          <div className="course-curriculum__lesson-body">
+                            <div className="course-curriculum__lesson-title">
+                              {lesson.title}
+                            </div>
+                            <div className="course-curriculum__lesson-meta">
+                              <LessonMeta lesson={lesson} />
+                            </div>
+                          </div>
+                          {lesson.isFreePreview ? (
+                            <button
+                              type="button"
+                              className="course-curriculum__preview-link"
+                              onClick={() => setPreviewLesson(lesson)}
+                            >
+                              Preview
+                            </button>
+                          ) : (
+                            <span className="course-curriculum__locked-hint">
+                              Locked
+                            </span>
+                          )}
+                        </li>
+                        {(lesson.quizzes || []).map((quiz) => (
+                          <li
+                            key={quiz.id}
+                            className="course-curriculum__lesson course-curriculum__quiz"
+                          >
+                            <span className="course-curriculum__lesson-icon">
+                              <i className="fas fa-question-circle" aria-hidden="true" />
+                            </span>
+                            <div className="course-curriculum__lesson-body">
+                              <div className="course-curriculum__lesson-title">
+                                {quiz.title}
+                              </div>
+                              <div className="course-curriculum__lesson-meta">
+                                Lesson quiz · {quiz.questionCount} questions · Pass {quiz.passingScore}%
+                              </div>
+                            </div>
+                          </li>
+                        ))}
+                      </Fragment>
                     ))
                   )}
+                  {(section.quizzes || []).map((quiz) => (
+                    <li
+                      key={quiz.id}
+                      className="course-curriculum__lesson course-curriculum__quiz"
+                    >
+                      <span className="course-curriculum__lesson-icon">
+                        <i className="fas fa-clipboard-list" aria-hidden="true" />
+                      </span>
+                      <div className="course-curriculum__lesson-body">
+                        <div className="course-curriculum__lesson-title">
+                          {quiz.title}
+                        </div>
+                        <div className="course-curriculum__lesson-meta">
+                          Section quiz · {quiz.questionCount} questions · Pass {quiz.passingScore}%
+                        </div>
+                      </div>
+                    </li>
+                  ))}
                 </ul>
               )}
             </div>
           );
         })}
       </div>
+
+      {(course.finalQuizzes || []).length > 0 && (
+        <div className="course-curriculum__final">
+          <h4 className="course-curriculum__heading">Final Quiz</h4>
+          <ul className="course-curriculum__lessons">
+            {course.finalQuizzes.map((quiz) => (
+              <li key={quiz.id} className="course-curriculum__lesson course-curriculum__quiz">
+                <span className="course-curriculum__lesson-icon">
+                  <i className="fas fa-flag-checkered" aria-hidden="true" />
+                </span>
+                <div className="course-curriculum__lesson-body">
+                  <div className="course-curriculum__lesson-title">{quiz.title}</div>
+                  <div className="course-curriculum__lesson-meta">
+                    Course quiz · {quiz.questionCount} questions · Pass {quiz.passingScore}%
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {previewLesson && (
+        <div
+          className="course-preview-modal"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="course-preview-modal-title"
+          onClick={() => setPreviewLesson(null)}
+        >
+          <div
+            className="course-preview-modal__content"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <div className="course-preview-modal__header">
+              <div>
+                <span className="course-preview-modal__eyebrow">Free preview</span>
+                <h4 id="course-preview-modal-title" className="course-preview-modal__title">
+                  {previewLesson.title}
+                </h4>
+              </div>
+              <button
+                type="button"
+                className="course-preview-modal__close"
+                aria-label="Close preview"
+                onClick={() => setPreviewLesson(null)}
+              >
+                <i className="fas fa-times" aria-hidden="true" />
+              </button>
+            </div>
+            {previewVideoId ? (
+              <div className="course-preview-modal__frame">
+                <iframe
+                  src={`https://www.youtube.com/embed/${previewVideoId}?autoplay=1&rel=0&modestbranding=1`}
+                  title={previewLesson.title}
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              </div>
+            ) : (
+              <div className="course-preview-modal__empty">
+                Preview video is not available for this lesson yet.
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

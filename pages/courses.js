@@ -1,13 +1,30 @@
 import Layout from "@/components/layout/Layout";
 import CourseCard from "@/components/courses/CourseCard";
+import LearnerPortalBanner from "@/components/courses/LearnerPortalBanner";
 import ContentLoader from "@/components/common/ContentLoader";
 import { fetchPublishedCourses } from "@/lib/courses";
+import { fetchMyCourses } from "@/lib/learner";
+import { useAuth } from "@/context/AuthContext";
 import { useClientFetch } from "@/hooks/useClientFetch";
 
 export default function Courses() {
+  const { isAuthenticated, loading: authLoading } = useAuth();
   const { data: courses = [], loading } = useClientFetch(
     fetchPublishedCourses,
     []
+  );
+  const { data: mine } = useClientFetch(
+    () => fetchMyCourses(),
+    [],
+    {
+      enabled: isAuthenticated && !authLoading,
+      initialData: { courses: [] },
+      cacheKey: "catalog-my-courses",
+    }
+  );
+
+  const enrollmentsByCourseId = new Map(
+    (mine?.courses || []).map((item) => [item.course?.id, item])
   );
 
   return (
@@ -30,12 +47,22 @@ export default function Courses() {
             </div>
           </div>
 
+          <div className="row justify-content-center mb-40">
+            <div className="col-xl-10">
+              <LearnerPortalBanner compact />
+            </div>
+          </div>
+
           {loading ? (
             <ContentLoader message="Loading courses..." />
           ) : courses.length > 0 ? (
             <div className="row justify-content-center g-4">
               {courses.map((course) => (
-                <CourseCard key={course.id} course={course} />
+                <CourseCard
+                  key={course.id}
+                  course={course}
+                  enrollment={enrollmentsByCourseId.get(course.id) || null}
+                />
               ))}
             </div>
           ) : (
@@ -56,3 +83,4 @@ export default function Courses() {
     </Layout>
   );
 }
+

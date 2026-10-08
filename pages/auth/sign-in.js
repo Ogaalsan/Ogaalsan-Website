@@ -13,7 +13,9 @@ export default function SignIn() {
 
   const redirectTo = (() => {
     const raw =
-      typeof router.query.redirect === "string" ? router.query.redirect : "/";
+      typeof router.query.redirect === "string"
+        ? router.query.redirect
+        : "/student-dashboard";
     try {
       return decodeURIComponent(raw);
     } catch {
@@ -51,7 +53,7 @@ export default function SignIn() {
     <Layout breadcrumbTitle="Sign In">
       <AuthCard
         title="Welcome back"
-        subtitle="Sign in to access your Ogaalsan account, courses, and updates."
+        subtitle="Sign in to open your learning dashboard, My Courses, and progress."
         footer={
           <>
             <AuthFooterLink
