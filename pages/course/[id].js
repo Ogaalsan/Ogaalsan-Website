@@ -131,7 +131,10 @@ export default function CourseDetails() {
                   </p>
 
                   {course.sections?.length > 0 ? (
-                    <CourseCurriculum course={course} />
+                    <CourseCurriculum
+                      course={course}
+                      canTakeQuizzes={Boolean(enrollment?.canAccess)}
+                    />
                   ) : (
                     <>
                       <h3 className="mb-20" style={{ color: "#22428F" }}>

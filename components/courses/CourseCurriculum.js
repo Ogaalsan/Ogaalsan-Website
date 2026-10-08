@@ -1,4 +1,5 @@
 import { useEffect, useState, Fragment } from "react";
+import Link from "next/link";
 import { extractYouTubeId } from "@/lib/courses";
 
 function LessonMeta({ lesson }) {
@@ -10,7 +11,7 @@ function LessonMeta({ lesson }) {
   return bits.length ? bits.join(" · ") : "Lesson";
 }
 
-export default function CourseCurriculum({ course }) {
+export default function CourseCurriculum({ course, canTakeQuizzes = false }) {
   const sections = course?.sections || [];
   const isOnline = course?.format === "online";
   const [previewLesson, setPreviewLesson] = useState(null);
@@ -188,10 +189,17 @@ export default function CourseCurriculum({ course }) {
                             </span>
                             <div className="course-curriculum__lesson-body">
                               <div className="course-curriculum__lesson-title">
-                                {quiz.title}
+                                {canTakeQuizzes ? (
+                                  <Link href={`/course/quiz/${quiz.id}`}>
+                                    {quiz.title}
+                                  </Link>
+                                ) : (
+                                  quiz.title
+                                )}
                               </div>
                               <div className="course-curriculum__lesson-meta">
                                 Lesson quiz · {quiz.questionCount} questions · Pass {quiz.passingScore}%
+                                {canTakeQuizzes ? " · Take quiz" : ""}
                               </div>
                             </div>
                           </li>
@@ -209,10 +217,17 @@ export default function CourseCurriculum({ course }) {
                       </span>
                       <div className="course-curriculum__lesson-body">
                         <div className="course-curriculum__lesson-title">
-                          {quiz.title}
+                          {canTakeQuizzes ? (
+                            <Link href={`/course/quiz/${quiz.id}`}>
+                              {quiz.title}
+                            </Link>
+                          ) : (
+                            quiz.title
+                          )}
                         </div>
                         <div className="course-curriculum__lesson-meta">
                           Section quiz · {quiz.questionCount} questions · Pass {quiz.passingScore}%
+                          {canTakeQuizzes ? " · Take quiz" : ""}
                         </div>
                       </div>
                     </li>
@@ -234,9 +249,16 @@ export default function CourseCurriculum({ course }) {
                   <i className="fas fa-flag-checkered" aria-hidden="true" />
                 </span>
                 <div className="course-curriculum__lesson-body">
-                  <div className="course-curriculum__lesson-title">{quiz.title}</div>
+                  <div className="course-curriculum__lesson-title">
+                    {canTakeQuizzes ? (
+                      <Link href={`/course/quiz/${quiz.id}`}>{quiz.title}</Link>
+                    ) : (
+                      quiz.title
+                    )}
+                  </div>
                   <div className="course-curriculum__lesson-meta">
                     Course quiz · {quiz.questionCount} questions · Pass {quiz.passingScore}%
+                    {canTakeQuizzes ? " · Take quiz" : ""}
                   </div>
                 </div>
               </li>

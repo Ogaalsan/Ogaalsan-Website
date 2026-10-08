@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { useOrganization } from "@/context/OrganizationContext";
 import { fetchPublishedCourse } from "@/lib/courses";
-import { submitTrainingRegistration } from "@/lib/trainings";
+import { enrollInCourse } from "@/lib/learner";
 import { useClientFetch } from "@/hooks/useClientFetch";
 
 function buildFormFromUser(user) {
@@ -83,24 +83,22 @@ export default function CourseRegister() {
     setSubmitStatus(null);
 
     try {
-      await submitTrainingRegistration({
-        registration_type: "course",
-        course_id: course.id,
-        training_slug: course.slug || String(course.id),
-        training_title: course.title,
-        name: formData.name,
-        email: formData.email,
+      await enrollInCourse({
+        courseId: course.id,
         phone: formData.phone,
         organization: formData.organization || null,
         notes: formData.notes || null,
-        training_mode: formData.trainingMode,
       });
 
       setSubmitStatus({
         type: "success",
         message:
-          "Your registration has been received. Our team will confirm it soon. You can track status in My Courses.",
+          "Your enrollment has been received. Our team will confirm it soon. You can track status in My Courses.",
       });
+
+      setTimeout(() => {
+        router.push("/my-courses");
+      }, 1500);
     } catch (error) {
       setSubmitStatus({
         type: "error",

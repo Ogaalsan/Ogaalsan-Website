@@ -77,8 +77,19 @@ export default function CourseWatch() {
   const progress = payload?.progress;
 
   const lessons = useMemo(() => course?.lessons || [], [course]);
+  const quizzes = useMemo(() => course?.quizzes || [], [course]);
   const activeLesson = lessons[activeLessonIndex] || lessons[0];
   const activeVideo = extractYouTubeId(activeLesson?.video_url);
+  const lessonQuizzes = useMemo(
+    () =>
+      quizzes.filter(
+        (quiz) =>
+          quiz.type === "lesson" &&
+          activeLesson?.id &&
+          Number(quiz.lessonId) === Number(activeLesson.id)
+      ),
+    [quizzes, activeLesson?.id]
+  );
 
   const refreshProgressLocal = (lessonId, completed) => {
     setPayload((prev) => {
@@ -440,6 +451,63 @@ export default function CourseWatch() {
                   </a>
                 )}
 
+                {lessonQuizzes.length > 0 && (
+                  <div className="mt-30">
+                    <h4 style={{ color: "#22428F", marginBottom: 12 }}>
+                      Lesson quizzes
+                    </h4>
+                    <div className="d-flex flex-column gap-2">
+                      {lessonQuizzes.map((quiz) => (
+                        <Link
+                          key={quiz.id}
+                          href={
+                            quiz.canTake
+                              ? `/course/quiz/${quiz.id}`
+                              : `/course/${course.slug || course.id}/register`
+                          }
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            gap: 12,
+                            padding: "12px 14px",
+                            borderRadius: 10,
+                            border: "1px solid #e2e8f0",
+                            textDecoration: "none",
+                            color: "#22428F",
+                            background: "#f9fbff",
+                          }}
+                        >
+                          <span>
+                            <strong>{quiz.title}</strong>
+                            <span
+                              style={{
+                                display: "block",
+                                fontSize: 13,
+                                color: "#8b9db5",
+                                marginTop: 2,
+                              }}
+                            >
+                              {quiz.questionCount} questions · Pass{" "}
+                              {quiz.passingScore}%
+                              {quiz.bestScore != null
+                                ? ` · Best ${quiz.bestScore}%`
+                                : ""}
+                            </span>
+                          </span>
+                          <span style={{ color: "#3FA9F5", fontWeight: 600 }}>
+                            {quiz.canTake
+                              ? quiz.passed
+                                ? "Retake →"
+                                : "Take quiz →"
+                              : "Enroll →"}
+                          </span>
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
                 <div
                   className="mt-30 pt-30"
                   style={{ borderTop: "1px solid #eef2f6" }}
@@ -496,7 +564,9 @@ export default function CourseWatch() {
                     Course Content
                   </h4>
                   <span style={{ fontSize: "14px", color: "#334770" }}>
-                    {lessons.length} lessons • {course.duration}
+                    {lessons.length} lessons
+                    {quizzes.length ? ` • ${quizzes.length} quizzes` : ""} •{" "}
+                    {course.duration}
                   </span>
                 </div>
 
@@ -572,6 +642,76 @@ export default function CourseWatch() {
                       </div>
                     );
                   })}
+
+                  {quizzes.length > 0 && (
+                    <div
+                      style={{
+                        padding: "16px 25px 8px",
+                        borderTop: "1px solid #eef2f6",
+                        background: "#f9fbff",
+                      }}
+                    >
+                      <h5
+                        style={{
+                          margin: "0 0 10px",
+                          color: "#22428F",
+                          fontSize: 14,
+                          textTransform: "uppercase",
+                          letterSpacing: "0.04em",
+                        }}
+                      >
+                        Quizzes
+                      </h5>
+                      {quizzes.map((quiz) => (
+                        <Link
+                          key={quiz.id}
+                          href={
+                            quiz.canTake
+                              ? `/course/quiz/${quiz.id}`
+                              : `/course/${course.slug || course.id}/register`
+                          }
+                          style={{
+                            display: "flex",
+                            alignItems: "flex-start",
+                            gap: 12,
+                            padding: "12px 0",
+                            borderBottom: "1px solid #eef2f6",
+                            textDecoration: "none",
+                          }}
+                        >
+                          <i
+                            className={
+                              quiz.passed
+                                ? "fas fa-check-circle"
+                                : "fas fa-question-circle"
+                            }
+                            style={{
+                              marginTop: 3,
+                              color: quiz.passed ? "#16a34a" : "#3FA9F5",
+                            }}
+                          />
+                          <div>
+                            <h6
+                              style={{
+                                margin: 0,
+                                color: "#22428F",
+                                fontSize: 14,
+                                lineHeight: 1.4,
+                              }}
+                            >
+                              {quiz.title}
+                            </h6>
+                            <span style={{ fontSize: 12, color: "#8b9db5" }}>
+                              {quiz.type} · Pass {quiz.passingScore}%
+                              {quiz.bestScore != null
+                                ? ` · Best ${quiz.bestScore}%`
+                                : ""}
+                            </span>
+                          </div>
+                        </Link>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
