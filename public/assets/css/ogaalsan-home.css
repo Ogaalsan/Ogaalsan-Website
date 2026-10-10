@@ -1701,6 +1701,26 @@ html[data-theme="dark"] .services-area-two .services-item-two:hover .services-co
   border-radius: 0;
 }
 
+/* Glow is child 1, so the About img is nth-child(2) and inherits the
+   theme's secondary-photo styles (8px border + absolute). Kill those. */
+.about-img-seven-wrap--illustration img,
+.about-img-seven-wrap--illustration img:nth-child(1),
+.about-img-seven-wrap--illustration img:nth-child(2),
+.about-img-seven-wrap--illustration .ogaalsan-about-visual__img {
+  position: relative !important;
+  right: auto !important;
+  bottom: auto !important;
+  width: 100% !important;
+  max-width: 700px !important;
+  height: auto !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  object-fit: contain !important;
+  z-index: 1;
+}
+
 @media (min-width: 1200px) {
   .overview-area .overview-img-wrap--illustration img,
   .overview-area .overview-img-wrap--illustration .ogaalsan-overview-visual__img {
