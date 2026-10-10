@@ -4,7 +4,7 @@ export default function Features() {
             <section className="features-area-two pt-80">
                 <div className="container">
                     <div className="features-item-wrap">
-                        <div className="row justify-content-center">
+                        <div className="row justify-content-center align-items-start">
                             <div className="col-lg-4 col-md-6 col-sm-6">
                                 <div className="features-item-two">
                                     <div className="features-icon-two">
@@ -12,7 +12,7 @@ export default function Features() {
                                     </div>
                                     <div className="features-content-two">
                                         <h4 className="title">ICT Solutions</h4>
-                                        <p>End‑to‑end ICT consulting, infrastructure, and digital systems tailored to how your organization works.</p>
+                                        <p>End-to-end ICT consulting, infrastructure, and digital systems tailored to how your organization works.</p>
                                     </div>
                                 </div>
                             </div>

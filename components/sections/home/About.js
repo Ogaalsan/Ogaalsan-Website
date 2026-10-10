@@ -10,10 +10,10 @@ export default function About() {
             <div className="about-img-seven-wrap about-img-seven-wrap--illustration ogaalsan-about-visual">
               <div className="ogaalsan-about-visual__glow" aria-hidden="true" />
               <Image
-                src="/assets/img/images/about.png"
+                src="/assets/img/ogalsan/about-lightbulb.png"
                 alt="About OgaalSan Consultancy"
-                width={760}
-                height={760}
+                width={499}
+                height={499}
                 className="ogaalsan-about-visual__img"
                 data-aos="fade-right"
                 data-aos-delay={0}

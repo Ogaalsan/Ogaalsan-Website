@@ -420,51 +420,52 @@ html[data-theme="dark"] .about-author-info .signature img {
   opacity: 0.95;
 }
 
-/* Hero — solid dark like header / other sections */
-html[data-theme="dark"] .ogaalsan-hero.banner-bg-two,
-html[data-theme="dark"] section.ogaalsan-hero,
-html[data-theme="dark"] .banner-area-two.ogaalsan-hero {
-  background-image: none !important;
-  background-color: #0d1421 !important;
+/* Hero — brand navy in dark mode */
+html[data-theme="dark"] .ogaalsan-hero {
+  background-color: #22428f !important;
 }
 
-html[data-theme="dark"] .ogaalsan-hero.banner-bg-two::before,
-html[data-theme="dark"] .ogaalsan-hero::before {
-  display: none !important;
+html[data-theme="dark"] .ogaalsan-hero__atmosphere {
+  background:
+    radial-gradient(ellipse 65% 55% at 92% 20%, rgba(63, 169, 245, 0.32), transparent 58%),
+    radial-gradient(ellipse 45% 40% at 8% 90%, rgba(15, 27, 51, 0.7), transparent 62%),
+    linear-gradient(135deg, #152a58 0%, #22428f 46%, #1a3a78 100%);
 }
 
-html[data-theme="dark"] .ogaalsan-hero .banner-shape-wrap {
-  display: none !important;
+html[data-theme="dark"] .ogaalsan-hero__brand,
+html[data-theme="dark"] .ogaalsan-hero__title {
+  color: #ffffff !important;
+  background: none !important;
+  -webkit-text-fill-color: #ffffff;
 }
 
-html[data-theme="dark"] .ogaalsan-hero__brand {
-  background: linear-gradient(90deg, #7ec8f8 0%, #3fa9f5 55%, #9fd7ff 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent !important;
-  -webkit-text-fill-color: transparent;
+html[data-theme="dark"] .ogaalsan-hero__lead {
+  color: rgba(230, 238, 255, 0.78) !important;
 }
 
-html[data-theme="dark"] .ogaalsan-hero .title {
-  color: #f0f5ff !important;
+html[data-theme="dark"] .ogaalsan-hero__btn.ogaalsan-btn--outline {
+  border-color: rgba(255, 255, 255, 0.85) !important;
+  color: #ffffff !important;
 }
 
-html[data-theme="dark"] .ogaalsan-hero .title span {
-  color: #4eb6f7 !important;
+html[data-theme="dark"] .ogaalsan-header.header-style-two.sticky-menu {
+  background: rgba(15, 23, 42, 0.94);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06);
 }
 
-html[data-theme="dark"] .ogaalsan-hero__lead,
-html[data-theme="dark"] .ogaalsan-hero__features li {
-  color: #b7c4d8 !important;
+html[data-theme="dark"] .ogaalsan-header.header-style-two.sticky-menu .navbar-wrap ul li a,
+html[data-theme="dark"] .ogaalsan-header.header-style-two.sticky-menu .header-search-btn,
+html[data-theme="dark"] .ogaalsan-header.header-style-two.sticky-menu .theme-toggle,
+html[data-theme="dark"] .ogaalsan-header.header-style-two.sticky-menu .theme-toggle i,
+html[data-theme="dark"] .ogaalsan-header.header-style-two.sticky-menu .ogaalsan-header__text-link,
+html[data-theme="dark"] .ogaalsan-header.header-style-two.sticky-menu .mobile-nav-toggler {
+  color: #e8eef8;
 }
 
-html[data-theme="dark"] .ogaalsan-hero .sub-title {
-  background: rgba(63, 169, 245, 0.18) !important;
-  color: #7ec8f8 !important;
-}
-
-html[data-theme="dark"] .ogaalsan-hero__features i {
-  color: #fff !important;
+html[data-theme="dark"] .ogaalsan-header.header-style-two.sticky-menu .navbar-wrap ul li a:hover,
+html[data-theme="dark"] .ogaalsan-header.header-style-two.sticky-menu .navbar-wrap ul li.active > a,
+html[data-theme="dark"] .ogaalsan-header.header-style-two.sticky-menu .ogaalsan-header__text-link:hover {
+  color: #3fa9f5;
 }
 
 /* Forms */

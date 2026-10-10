@@ -4,7 +4,6 @@ import { useState } from "react";
 import MobileMenu from "../MobileMenu";
 import ThemeToggle from "@/components/common/ThemeToggle";
 import { useAuth } from "@/context/AuthContext";
-import { useOrganization } from "@/context/OrganizationContext";
 
 function navActive(pathname, href) {
   if (href === "/") return pathname === "/";
@@ -17,14 +16,13 @@ export default function Header1({
   handleMobileMenu,
   isSearch,
   handleSearch,
-  isOffcanvus,
-  handleOffcanvus,
 }) {
   const router = useRouter();
   const pathname = router.pathname;
+  const isHome = pathname === "/";
   const [mobileQuery, setMobileQuery] = useState("");
   const { user, isAuthenticated, logout } = useAuth();
-  const { locationLabel, email, phoneLabel, phoneHref } = useOrganization();
+  const overHero = isHome && !scroll;
 
   const handleLogout = async () => {
     await logout();
@@ -53,115 +51,11 @@ export default function Header1({
     <>
       <header
         id="sticky-header"
-        className={`transparent-header header-style-two ${
-          scroll ? "sticky-menu" : ""
-        }`}
+        className={`transparent-header header-style-two ogaalsan-header${
+          overHero ? " ogaalsan-header--over-hero" : ""
+        }${scroll || !isHome ? " sticky-menu" : ""}`}
       >
         <div className="container custom-container">
-          <div className="header-top-wrap heder-top-wrap">
-            <div className="row align-items-center">
-              <div className="col-lg-7 d-none d-lg-block">
-                <div className="header-top-left">
-                  <ul className="list-wrap">
-                    <li>
-                      <i className="flaticon-location" />
-                      {locationLabel}
-                    </li>
-                    <li>
-                      <i className="flaticon-mail" />
-                      <Link href={`mailto:${email}`}>{email}</Link>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div className="col-lg-5 col-12">
-                <div className="header-top-right d-flex justify-content-end align-items-center flex-wrap gap-2">
-                  <div className="header-social d-none d-sm-block">
-                    <ul className="list-wrap">
-                      <li>
-                        <Link
-                          href="https://www.facebook.com/profile.php?id=61552529542233"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          <i className="fab fa-facebook-f" />
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          href="https://x.com/OgaalsanC"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          <span
-                            style={{ fontWeight: "bold", fontSize: "18px" }}
-                          >
-                            X
-                          </span>
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          href="https://www.instagram.com/ogaalsan.consultancy/"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          <i className="fab fa-instagram" />
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          href="https://www.tiktok.com/@ogaalsanconsultancy"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          <i className="fab fa-tiktok" />
-                        </Link>
-                      </li>
-                    </ul>
-                  </div>
-                  <div className="d-flex align-items-center ms-auto ms-sm-3 gap-2">
-                    <ThemeToggle />
-                    <div className="header-top-btn d-none d-md-flex align-items-center gap-2">
-                      {isAuthenticated ? (
-                        <>
-                          <Link
-                            href="/student-dashboard"
-                            className="btn btn-sm btn-outline-auth d-inline-flex align-items-center gap-1"
-                          >
-                            <i className="fas fa-th-large" />
-                            Dashboard
-                          </Link>
-                          <span className="auth-user-greeting">
-                            Hi, {user?.name?.split(" ")[0] || "there"}
-                          </span>
-                          <button
-                            type="button"
-                            className="btn btn-sm btn-outline-auth"
-                            onClick={handleLogout}
-                          >
-                            Sign Out
-                          </button>
-                        </>
-                      ) : (
-                        <>
-                          <Link
-                            href="/auth/sign-in"
-                            className="btn btn-sm btn-outline-auth"
-                          >
-                            Sign In
-                          </Link>
-                          <Link href="/auth/sign-up" className="btn btn-sm">
-                            Sign Up
-                          </Link>
-                        </>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
           <div className="menu-area">
             <div className="row">
               <div className="col-12">
@@ -253,29 +147,12 @@ export default function Header1({
                             </li>
                           </ul>
                         </li>
-                        <li
-                          className={
-                            navActive(pathname, "/contact") ? "active" : ""
-                          }
-                        >
-                          <Link href="/contact">Contact Us</Link>
-                        </li>
                       </ul>
                     </div>
-                    <div className="header-action">
+                    <div className="header-action ogaalsan-header__actions">
                       <ul className="list-wrap">
-                        <li className="header-contact-two d-none d-xl-flex">
-                          <div className="icon">
-                            <i className="flaticon-phone-call" />
-                          </div>
-                          <div className="content">
-                            <span>Hotline</span>
-                            <span className="d-block">
-                              <Link href={phoneHref}>{phoneLabel}</Link>
-                            </span>
-                          </div>
-                        </li>
-                        <li className="header-search">
+                        <li className="ogaalsan-header__tools d-none d-md-flex">
+                          <ThemeToggle />
                           <button
                             type="button"
                             className="header-search-btn"
@@ -284,6 +161,40 @@ export default function Header1({
                           >
                             <i className="flaticon-search" />
                           </button>
+                        </li>
+                        <li className="ogaalsan-header__auth d-none d-md-flex">
+                          {isAuthenticated ? (
+                            <>
+                              <Link
+                                href="/student-dashboard"
+                                className="ogaalsan-header__text-link"
+                              >
+                                Dashboard
+                              </Link>
+                              <button
+                                type="button"
+                                className="ogaalsan-header__text-link"
+                                onClick={handleLogout}
+                              >
+                                Sign Out
+                              </button>
+                            </>
+                          ) : (
+                            <Link
+                              href="/auth/sign-in"
+                              className="ogaalsan-header__text-link"
+                            >
+                              Sign In
+                            </Link>
+                          )}
+                        </li>
+                        <li className="ogaalsan-header__cta d-none d-xl-flex">
+                          <Link
+                            href="/contact"
+                            className="ogaalsan-btn ogaalsan-btn--primary"
+                          >
+                            Contact
+                          </Link>
                         </li>
                       </ul>
                     </div>

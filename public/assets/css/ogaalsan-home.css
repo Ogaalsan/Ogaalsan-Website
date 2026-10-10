@@ -1,169 +1,606 @@
-/* Homepage hero — keep theme background, clear header, shorter height */
-.ogaalsan-hero.banner-bg-two {
-  position: relative;
-  min-height: 640px;
-  /* Enough top space to clear absolute header, without making hero too tall */
-  padding: 170px 0 70px;
-  display: flex;
+/* —— Shared brand buttons (no theme arrow/pseudo junk) —— */
+.ogaalsan-btn {
+  display: inline-flex;
   align-items: center;
-  overflow: hidden;
-  background-size: cover;
-  background-position: center;
-}
-
-.ogaalsan-hero .container {
+  justify-content: center;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 14px 28px;
+  border: 2px solid transparent;
+  border-radius: 999px;
+  box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  text-transform: none;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
   position: relative;
   z-index: 1;
 }
 
-.ogaalsan-hero__row {
-  row-gap: 20px;
+.ogaalsan-btn::before,
+.ogaalsan-btn::after {
+  content: none !important;
+  display: none !important;
 }
 
-.ogaalsan-hero__content {
-  max-width: 560px;
+.ogaalsan-btn--primary {
+  background: #3fa9f5 !important;
+  border-color: #3fa9f5 !important;
+  color: #ffffff !important;
+}
+
+.ogaalsan-btn--primary:hover,
+.ogaalsan-btn--primary:focus {
+  background: #22428f !important;
+  border-color: #22428f !important;
+  color: #ffffff !important;
+}
+
+.ogaalsan-btn--secondary {
+  background: #22428f !important;
+  border-color: #22428f !important;
+  color: #ffffff !important;
+}
+
+.ogaalsan-btn--secondary:hover,
+.ogaalsan-btn--secondary:focus {
+  background: #3fa9f5 !important;
+  border-color: #3fa9f5 !important;
+  color: #ffffff !important;
+}
+
+.ogaalsan-btn--outline {
+  background: transparent !important;
+  border-color: rgba(255, 255, 255, 0.85) !important;
+  color: #ffffff !important;
+}
+
+.ogaalsan-btn--outline:hover,
+.ogaalsan-btn--outline:focus {
+  background: #ffffff !important;
+  border-color: #ffffff !important;
+  color: #22428f !important;
+}
+
+/* —— Header: calmer single bar —— */
+.ogaalsan-header.header-style-two {
+  z-index: 20;
+  overflow: visible;
+}
+
+.ogaalsan-header.header-style-two .menu-area {
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
+  overflow: visible;
+}
+
+.ogaalsan-header.header-style-two .menu-wrap,
+.ogaalsan-header.header-style-two .menu-nav,
+.ogaalsan-header.header-style-two .header-action {
+  overflow: visible;
+}
+
+.ogaalsan-header.header-style-two .menu-nav {
+  min-height: 84px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0 8px 0 4px;
+  width: 100%;
+}
+
+.ogaalsan-header.header-style-two .logo {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.ogaalsan-header.header-style-two .logo img {
+  max-height: 46px;
+  width: auto;
+}
+
+.ogaalsan-header.header-style-two .navbar-wrap {
+  display: flex;
+  align-items: center;
+}
+
+.ogaalsan-header.header-style-two .navbar-wrap ul {
   margin: 0;
+  display: flex;
+  align-items: center;
 }
 
-.ogaalsan-hero__brand {
-  margin: 0 0 8px;
+.ogaalsan-header.header-style-two .navbar-wrap ul li a {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 12px;
+  min-height: 84px;
   font-family: "Montserrat", sans-serif;
-  font-size: clamp(1.55rem, 2.1vw, 2rem);
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  line-height: 1.15;
-  background: linear-gradient(90deg, #22428f 0%, #3fa9f5 55%, #22428f 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  -webkit-text-fill-color: transparent;
+  font-size: 0.88rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: #22428f;
+  text-transform: none;
 }
 
-.ogaalsan-hero .sub-title {
-  margin-bottom: 14px;
-}
-
-.ogaalsan-hero .title {
-  font-size: clamp(2.15rem, 3.6vw, 3.1rem);
-  line-height: 1.12;
-  margin-bottom: 14px;
-  color: #1a2b4a;
-}
-
-.ogaalsan-hero .title span {
+.ogaalsan-header.header-style-two .navbar-wrap ul li a:hover,
+.ogaalsan-header.header-style-two .navbar-wrap ul li.active > a {
   color: #3fa9f5;
 }
 
-.ogaalsan-hero__lead {
-  margin-bottom: 16px !important;
-  max-width: 34rem;
-  font-size: 1rem;
-  line-height: 1.65;
-  color: #4a5b73;
+.ogaalsan-header__actions {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
 }
 
-.ogaalsan-hero__features {
+.ogaalsan-header__actions .list-wrap {
   display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin: 0 0 22px;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0;
   padding: 0;
   list-style: none;
+  min-height: 84px;
 }
 
-.ogaalsan-hero__features li {
+.ogaalsan-header__actions .list-wrap > li {
+  margin: 0 !important;
   display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  margin: 0;
-  font-size: 0.95rem;
-  font-weight: 500;
-  color: #2c3e55;
-  line-height: 1.4;
+  align-items: center;
+  height: 36px !important;
+  min-height: 0 !important;
 }
 
-.ogaalsan-hero__features i {
-  flex-shrink: 0;
-  width: 20px;
-  height: 20px;
-  margin-top: 1px;
-  border-radius: 50%;
-  display: inline-flex;
+.ogaalsan-header__actions .list-wrap > li::before {
+  display: none !important;
+}
+
+.ogaalsan-header__tools {
+  display: inline-flex !important;
   align-items: center;
   justify-content: center;
-  font-size: 9px;
-  color: #fff;
+  gap: 2px;
+  height: 36px !important;
+}
+
+.ogaalsan-header__tools .header-search-btn,
+.ogaalsan-header__tools .theme-toggle {
+  width: 36px !important;
+  height: 36px !important;
+  min-width: 36px;
+  min-height: 36px;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  color: #22428f !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  font-size: 1rem !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  line-height: 1 !important;
+  transform: none !important;
+}
+
+.ogaalsan-header__tools .header-search-btn i,
+.ogaalsan-header__tools .theme-toggle i {
+  display: block;
+  font-size: 1rem !important;
+  line-height: 1 !important;
+  width: 1em;
+  height: 1em;
+  text-align: center;
+}
+
+.ogaalsan-header__tools .header-search-btn:hover,
+.ogaalsan-header__tools .theme-toggle:hover {
+  color: #3fa9f5 !important;
+  background: transparent !important;
+  transform: none !important;
+}
+
+.ogaalsan-header__auth {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 0.85rem;
+  height: 36px !important;
+  min-height: 0 !important;
+}
+
+/* Beat theme `.header-style-two .header-action ul>li>a` (min-height:80px) */
+.ogaalsan-header.header-style-two .header-action ul > li > a.ogaalsan-header__text-link,
+.ogaalsan-header.header-style-two .header-action ul > li > button.ogaalsan-header__text-link,
+.ogaalsan-header__text-link {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  height: 36px !important;
+  min-height: 0 !important;
+  max-height: 36px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.84rem !important;
+  font-weight: 600 !important;
+  color: #22428f;
+  background: none !important;
+  border: 0 !important;
+  line-height: 1 !important;
+}
+
+.ogaalsan-header__text-link:hover {
+  color: #3fa9f5;
+}
+
+.ogaalsan-header__cta {
+  display: inline-flex !important;
+  align-items: center;
+  height: 36px !important;
+  min-height: 0 !important;
+}
+
+.ogaalsan-header.header-style-two .header-action ul > li.ogaalsan-header__cta > a.ogaalsan-btn,
+.ogaalsan-header__cta .ogaalsan-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: auto !important;
+  height: 36px !important;
+  min-height: 0 !important;
+  max-height: 36px !important;
+  padding: 0 18px !important;
+  margin: 0 !important;
+  font-size: 0.84rem !important;
+  font-weight: 600 !important;
+  line-height: 1 !important;
+  box-sizing: border-box !important;
+  border-radius: 999px !important;
+}
+
+/* Solid / sticky bar */
+.ogaalsan-header.header-style-two.sticky-menu {
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 1px 0 rgba(34, 66, 143, 0.08);
+  animation: none;
+}
+
+.ogaalsan-header.header-style-two.sticky-menu .menu-area {
+  background: transparent;
+}
+
+/* Transparent over homepage hero */
+.ogaalsan-header.header-style-two.ogaalsan-header--over-hero {
+  background: transparent;
+  box-shadow: none;
+}
+
+.ogaalsan-header.header-style-two.ogaalsan-header--over-hero .menu-area {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+  overflow: visible;
+}
+
+.ogaalsan-header.header-style-two.ogaalsan-header--over-hero .ogaalsan-header__tools .header-search-btn,
+.ogaalsan-header.header-style-two.ogaalsan-header--over-hero .ogaalsan-header__tools .theme-toggle,
+.ogaalsan-header.header-style-two.ogaalsan-header--over-hero .ogaalsan-header__tools .theme-toggle i {
+  color: rgba(255, 255, 255, 0.92) !important;
+  background: transparent !important;
+  border: 0 !important;
+}
+
+.ogaalsan-header.header-style-two.ogaalsan-header--over-hero .ogaalsan-header__tools .header-search-btn:hover,
+.ogaalsan-header.header-style-two.ogaalsan-header--over-hero .ogaalsan-header__tools .theme-toggle:hover {
+  color: #3fa9f5 !important;
+}
+
+.ogaalsan-header.header-style-two.ogaalsan-header--over-hero .logo img {
+  filter: brightness(0) invert(1);
+}
+
+.ogaalsan-header.header-style-two.ogaalsan-header--over-hero .navbar-wrap ul li a,
+.ogaalsan-header.header-style-two.ogaalsan-header--over-hero .header-search-btn,
+.ogaalsan-header.header-style-two.ogaalsan-header--over-hero .theme-toggle,
+.ogaalsan-header.header-style-two.ogaalsan-header--over-hero .theme-toggle i,
+.ogaalsan-header.header-style-two.ogaalsan-header--over-hero .mobile-nav-toggler {
+  color: rgba(255, 255, 255, 0.92) !important;
+}
+
+/* Sign In / Dashboard must beat the base #22428F text-link rule */
+.ogaalsan-header.header-style-two.ogaalsan-header--over-hero .header-action ul > li > a.ogaalsan-header__text-link,
+.ogaalsan-header.header-style-two.ogaalsan-header--over-hero .header-action ul > li > button.ogaalsan-header__text-link,
+.ogaalsan-header.header-style-two.ogaalsan-header--over-hero .ogaalsan-header__text-link {
+  color: #ffffff !important;
+}
+
+.ogaalsan-header.header-style-two.ogaalsan-header--over-hero .navbar-wrap ul li a:hover,
+.ogaalsan-header.header-style-two.ogaalsan-header--over-hero .navbar-wrap ul li.active > a,
+.ogaalsan-header.header-style-two.ogaalsan-header--over-hero .header-action ul > li > a.ogaalsan-header__text-link:hover,
+.ogaalsan-header.header-style-two.ogaalsan-header--over-hero .header-action ul > li > button.ogaalsan-header__text-link:hover,
+.ogaalsan-header.header-style-two.ogaalsan-header--over-hero .ogaalsan-header__text-link:hover,
+.ogaalsan-header.header-style-two.ogaalsan-header--over-hero .header-search-btn:hover,
+.ogaalsan-header.header-style-two.ogaalsan-header--over-hero .theme-toggle:hover {
+  color: #3fa9f5 !important;
+}
+
+.ogaalsan-header.header-style-two.ogaalsan-header--over-hero .ogaalsan-btn--primary {
   background: #3fa9f5;
+  border-color: #3fa9f5;
+  color: #ffffff;
+}
+
+.ogaalsan-header.header-style-two.ogaalsan-header--over-hero .ogaalsan-btn--primary:hover {
+  background: #ffffff;
+  border-color: #ffffff;
+  color: #22428f;
+}
+
+/* —— Homepage hero —— */
+.ogaalsan-hero {
+  position: relative;
+  min-height: min(92vh, 820px);
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  padding: 120px 0 72px;
+  background: #22428f;
+  color: #ffffff;
+}
+
+.ogaalsan-hero__atmosphere {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 65% 55% at 92% 20%, rgba(63, 169, 245, 0.42), transparent 58%),
+    radial-gradient(ellipse 45% 40% at 8% 90%, rgba(26, 50, 104, 0.65), transparent 62%),
+    linear-gradient(135deg, #1a3268 0%, #22428f 46%, #1e4a9e 100%);
+}
+
+.ogaalsan-hero__grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.14;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.5), transparent 90%);
+}
+
+.ogaalsan-hero__container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+}
+
+.ogaalsan-hero__row {
+  row-gap: 2rem;
+}
+
+.ogaalsan-hero__copy {
+  max-width: 40rem;
+}
+
+.ogaalsan-hero__brand {
+  margin: 0 0 1rem;
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(3rem, 7vw, 5.25rem);
+  font-weight: 800;
+  letter-spacing: -0.045em;
+  line-height: 0.95;
+  color: #ffffff;
+}
+
+.ogaalsan-hero__title {
+  margin: 0 0 1.15rem;
+  max-width: 20ch;
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(1.65rem, 3vw, 2.35rem);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.25;
+  color: #ffffff;
+  text-transform: none;
+}
+
+.ogaalsan-hero__lead {
+  margin: 0 0 2.1rem;
+  max-width: 34rem;
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(1.05rem, 1.35vw, 1.2rem);
+  font-weight: 400;
+  line-height: 1.7;
+  color: rgba(230, 238, 255, 0.9);
+  text-transform: none;
 }
 
 .ogaalsan-hero__actions {
-  margin-top: 0 !important;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.9rem 1rem;
+}
+
+.ogaalsan-hero__btn.ogaalsan-btn {
+  min-width: 168px;
+  height: auto;
+  min-height: 0;
+  padding: 14px 28px !important;
+  font-size: 0.95rem !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+  box-shadow: 0 10px 28px rgba(15, 40, 90, 0.28);
+}
+
+.ogaalsan-hero__btn.ogaalsan-btn--outline {
+  box-shadow: none;
+  padding: 14px 28px !important;
 }
 
 .ogaalsan-hero__media {
   position: relative;
-  width: 100%;
-  min-height: 340px;
   display: flex;
   align-items: center;
   justify-content: center;
+  min-height: 320px;
 }
 
 .ogaalsan-hero__image {
   position: relative;
   z-index: 1;
   width: 100%;
-  max-width: 500px;
+  max-width: 520px;
   height: auto;
   object-fit: contain;
-  animation: ogaalsan-hero-float 5.5s ease-in-out infinite;
 }
 
-.ogaalsan-hero .banner-shape-wrap {
-  z-index: 0;
-}
-
-@keyframes ogaalsan-hero-float {
-  0%,
-  100% {
-    transform: translateY(0);
+/* —— Header + hero responsiveness —— */
+@media (max-width: 1399.98px) {
+  .ogaalsan-header.header-style-two .navbar-wrap ul li a {
+    padding: 0 8px;
+    font-size: 0.82rem;
   }
-  50% {
-    transform: translateY(-10px);
+
+  .ogaalsan-header__actions .list-wrap {
+    gap: 0.55rem;
   }
 }
 
-@media (max-width: 1199px) {
-  .ogaalsan-hero.banner-bg-two {
-    min-height: 600px;
-    padding: 160px 0 60px;
+@media (max-width: 1199.98px) {
+  .ogaalsan-header.header-style-two .menu-area > .row > .col-12 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    min-height: 72px;
+    position: relative;
   }
-}
 
-@media (max-width: 991px) {
-  .ogaalsan-hero.banner-bg-two {
+  .ogaalsan-header.header-style-two .menu-wrap {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .ogaalsan-header.header-style-two .menu-nav {
+    min-height: 72px;
+    padding: 0;
+  }
+
+  .ogaalsan-header.header-style-two .logo img {
+    max-height: 40px;
+  }
+
+  .ogaalsan-header.header-style-two .header-action {
+    margin-right: 0 !important;
+  }
+
+  .ogaalsan-header.header-style-two .menu-area .mobile-nav-toggler {
+    display: inline-flex !important;
+    float: none !important;
+    align-items: center;
+    justify-content: center;
+    order: 3;
+    flex-shrink: 0;
+    width: 42px;
+    height: 42px;
+    margin: 0 !important;
+    padding: 0;
+    border: 1.5px solid currentColor;
+    border-radius: 10px;
+    font-size: 1.05rem;
+    line-height: 1;
+    color: #22428f;
+    background: transparent;
+  }
+
+  .ogaalsan-header.header-style-two.ogaalsan-header--over-hero .menu-area .mobile-nav-toggler {
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.55);
+  }
+
+  .ogaalsan-header.header-style-two.sticky-menu .menu-area .mobile-nav-toggler {
+    color: #22428f;
+    border-color: rgba(34, 66, 143, 0.35);
+  }
+
+  .ogaalsan-header__actions .list-wrap {
+    min-height: 72px;
+  }
+
+  .ogaalsan-hero {
     min-height: auto;
-    padding: 150px 0 50px;
+    padding: 110px 0 64px;
   }
 
-  .ogaalsan-hero__content {
-    max-width: 100%;
+  .ogaalsan-hero__brand {
+    font-size: clamp(2.6rem, 6vw, 4rem);
+  }
+
+  .ogaalsan-hero__title {
+    font-size: clamp(1.45rem, 2.6vw, 2rem);
+    max-width: 22ch;
+  }
+
+  .ogaalsan-hero__image {
+    max-width: 440px;
+  }
+}
+
+@media (max-width: 991.98px) {
+  /* Theme forces white header on tablet — keep transparent over hero */
+  .ogaalsan-header.header-style-two.ogaalsan-header--over-hero {
+    background: transparent !important;
+  }
+
+  .ogaalsan-header.header-style-two.sticky-menu {
+    background: rgba(255, 255, 255, 0.96) !important;
+  }
+
+  .ogaalsan-header.header-style-two .menu-area > .row > .col-12 {
+    min-height: 68px;
+  }
+
+  .ogaalsan-header.header-style-two .menu-nav {
+    min-height: 68px;
+  }
+
+  .ogaalsan-header__actions .list-wrap {
+    min-height: 68px;
+    gap: 0.45rem;
+  }
+
+  .ogaalsan-hero {
+    padding: 100px 0 56px;
     text-align: center;
-    margin: 0 auto;
   }
 
+  .ogaalsan-hero__copy {
+    max-width: 36rem;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .ogaalsan-hero__brand,
+  .ogaalsan-hero__title,
   .ogaalsan-hero__lead {
     margin-left: auto;
     margin-right: auto;
   }
 
-  .ogaalsan-hero__features {
-    align-items: center;
-  }
-
-  .ogaalsan-hero__features li {
-    justify-content: center;
-    text-align: left;
+  .ogaalsan-hero__title {
+    max-width: 18ch;
   }
 
   .ogaalsan-hero__actions {
@@ -171,31 +608,123 @@
   }
 
   .ogaalsan-hero__media {
-    min-height: 280px;
-  }
-}
-
-@media (max-width: 767px) {
-  .ogaalsan-hero.banner-bg-two {
-    padding: 140px 0 40px;
-  }
-
-  .ogaalsan-hero__brand {
-    font-size: 1.4rem;
-  }
-
-  .ogaalsan-hero__media {
     min-height: 240px;
+    margin-top: 0.5rem;
   }
 
   .ogaalsan-hero__image {
-    max-width: 320px;
+    max-width: 360px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .ogaalsan-header.header-style-two .menu-area > .row > .col-12 {
+    min-height: 64px;
+    padding: 0 2px;
+  }
+
+  .ogaalsan-header.header-style-two .menu-nav {
+    min-height: 64px;
+  }
+
+  .ogaalsan-header.header-style-two .logo img {
+    max-height: 34px;
+  }
+
+  .ogaalsan-header.header-style-two .menu-area .mobile-nav-toggler {
+    width: 40px;
+    height: 40px;
+    font-size: 0.98rem;
+  }
+
+  /* Desktop tools/auth/cta are md+ / xl+; keep bar clean on phones */
+  .ogaalsan-header__actions {
+    display: none !important;
+  }
+
+  .ogaalsan-hero {
+    padding: 92px 0 48px;
+  }
+
+  .ogaalsan-hero__brand {
+    font-size: clamp(2.35rem, 11vw, 3.1rem);
+    margin-bottom: 0.75rem;
+  }
+
+  .ogaalsan-hero__title {
+    font-size: clamp(1.25rem, 5.2vw, 1.55rem);
+    margin-bottom: 0.85rem;
+    max-width: 16ch;
+  }
+
+  .ogaalsan-hero__lead {
+    font-size: 0.98rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    max-width: 28rem;
+    padding: 0 0.25rem;
+  }
+
+  .ogaalsan-hero__actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+    width: 100%;
+    max-width: 20rem;
+    margin: 0 auto;
+  }
+
+  .ogaalsan-hero__btn.ogaalsan-btn {
+    width: 100%;
+    min-width: 0;
+    padding: 13px 22px !important;
+    font-size: 0.92rem !important;
+  }
+
+  .ogaalsan-hero__media {
+    min-height: 200px;
+  }
+
+  .ogaalsan-hero__image {
+    max-width: 280px;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .ogaalsan-header.header-style-two .custom-container {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .ogaalsan-hero {
+    padding: 84px 0 40px;
+  }
+
+  .ogaalsan-hero__brand {
+    font-size: 2.2rem;
+  }
+
+  .ogaalsan-hero__title {
+    font-size: 1.2rem;
+  }
+
+  .ogaalsan-hero__lead {
+    font-size: 0.94rem;
+  }
+
+  .ogaalsan-hero__image {
+    max-width: 240px;
+  }
+
+  .ogaalsan-hero__media {
+    min-height: 180px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .ogaalsan-hero__image {
-    animation: none;
+  .ogaalsan-btn {
+    transition: none;
   }
 }
 
@@ -1033,13 +1562,86 @@ html[data-theme="dark"] .services-area-two .services-item-two:hover .services-co
   filter: brightness(0) invert(1);
 }
 
-/* Overview — ICT illustration */
+/* Features row — keep tops level, titles equal height */
+.features-area-two .features-item-wrap .row {
+  align-items: flex-start;
+}
+
+.features-area-two .features-item-two {
+  align-items: flex-start;
+  width: 100%;
+  margin-bottom: 0;
+}
+
+.features-area-two .features-icon-two {
+  margin-top: 2px;
+}
+
+.features-area-two .features-content-two {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.features-area-two .features-content-two .title {
+  min-height: 2.6em;
+  margin-bottom: 10px;
+  line-height: 1.3;
+}
+
+.features-area-two .features-content-two p {
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Overview stats — equal full-width cards */
+.overview-area .overview-content {
+  width: 100%;
+  max-width: 100%;
+}
+
+.overview-area .overview-content .content-bottom .list-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 16px;
+  width: 100%;
+}
+
+.overview-area .overview-content .content-bottom .list-wrap li {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+  margin: 0;
+}
+
+/* Overview — ICT illustration (transparent, no card) */
+.overview-area .overview-img-wrap--illustration.ogaalsan-overview-visual {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 0;
+  margin-top: 28px;
+  padding: 0;
+  background: transparent !important;
+  box-shadow: none !important;
+  border: 0 !important;
+}
+
 .ogaalsan-overview-visual,
 .ogaalsan-about-visual {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
+  min-height: 0;
+  padding: 0;
+  background: transparent;
+}
+
+.ogaalsan-about-visual {
   min-height: 420px;
   padding: 20px 0 30px;
 }
@@ -1062,6 +1664,10 @@ html[data-theme="dark"] .services-area-two .services-item-two:hover .services-co
   z-index: 0;
 }
 
+.overview-area .ogaalsan-overview-visual__glow {
+  display: none;
+}
+
 .ogaalsan-overview-visual__img,
 .ogaalsan-about-visual__img {
   position: relative;
@@ -1072,11 +1678,34 @@ html[data-theme="dark"] .services-area-two .services-item-two:hover .services-co
   object-fit: contain;
   display: block;
   margin: 0 auto;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+/* Bigger overview image + kill theme portrait crop / card look */
+.overview-area .overview-img-wrap--illustration img,
+.overview-area .overview-img-wrap--illustration .ogaalsan-overview-visual__img,
+.overview-area .overview-img-wrap img,
+.overview-area .overview-img-wrap img:nth-child(1) {
+  width: 100% !important;
+  max-width: 640px !important;
+  height: auto !important;
+  border-radius: 0 !important;
+  object-fit: contain !important;
+  background: transparent !important;
+  box-shadow: none !important;
 }
 
 .overview-img-wrap--illustration img,
 .about-img-seven-wrap--illustration img {
   border-radius: 0;
+}
+
+@media (min-width: 1200px) {
+  .overview-area .overview-img-wrap--illustration img,
+  .overview-area .overview-img-wrap--illustration .ogaalsan-overview-visual__img {
+    max-width: 720px !important;
+  }
 }
 
 .about-img-seven-wrap--illustration {
