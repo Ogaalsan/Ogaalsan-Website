@@ -111,14 +111,18 @@ export default function CourseCurriculum({ course, canTakeQuizzes = false }) {
               >
                 <span className="course-curriculum__section-label">
                   <span className="course-curriculum__section-index">
-                    Section {sectionIndex + 1}
+                    {String(sectionIndex + 1).padStart(2, "0")}
                   </span>
-                  <strong>{section.title}</strong>
-                  {section.description ? (
-                    <span className="course-curriculum__section-desc">
-                      {section.description}
+                  <span className="course-curriculum__section-copy">
+                    <span className="course-curriculum__section-title">
+                      {section.title}
                     </span>
-                  ) : null}
+                    {section.description ? (
+                      <span className="course-curriculum__section-desc">
+                        {section.description}
+                      </span>
+                    ) : null}
+                  </span>
                 </span>
                 <span className="course-curriculum__section-meta">
                   {lessonCount} {lessonCount === 1 ? "lesson" : "lessons"}
