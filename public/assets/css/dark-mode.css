@@ -219,20 +219,39 @@ html[data-theme="dark"] .extra-info .contact-list a {
   color: #d7e0ef !important;
 }
 
-/* Dark overlays for light photo/bg sections — keep behind content */
-html[data-theme="dark"] [data-background]:not(.choose-area):not(.choose-bg):not(.ogaalsan-hero):not(.banner-bg-two):not(.ogaalsan-vmv) {
+/* Dark overlays for light photo/bg sections — keep behind content.
+   Exclude decorative absolute shapes (e.g. .overview-shape): forcing
+   position:relative pulls them into document flow and adds huge height. */
+html[data-theme="dark"] [data-background]:not(.choose-area):not(.choose-bg):not(.ogaalsan-hero):not(.banner-bg-two):not(.ogaalsan-vmv):not(.overview-shape) {
   background-color: #0f1828 !important;
   position: relative;
   isolation: isolate;
 }
 
-html[data-theme="dark"] [data-background]:not(.choose-area):not(.choose-bg):not(.ogaalsan-hero):not(.banner-bg-two):not(.ogaalsan-vmv)::before {
+html[data-theme="dark"] [data-background]:not(.choose-area):not(.choose-bg):not(.ogaalsan-hero):not(.banner-bg-two):not(.ogaalsan-vmv):not(.overview-shape)::before {
   content: "";
   position: absolute;
   inset: 0;
   background: rgba(8, 14, 26, 0.78);
   z-index: -1;
   pointer-events: none;
+}
+
+/* Keep overview decorative shape absolute + out of flow in dark mode */
+html[data-theme="dark"] .overview-shape {
+  position: absolute !important;
+  right: 0;
+  top: 0;
+  width: 424px;
+  height: 342px;
+  z-index: -1;
+  pointer-events: none;
+  background-image: none !important;
+  background-color: transparent !important;
+}
+
+html[data-theme="dark"] .overview-shape::before {
+  display: none !important;
 }
 
 /* Sections */
@@ -1082,4 +1101,229 @@ html[data-theme="dark"] .ogaalsan-contact .ogaalsan-contact__form-card {
   background: #1a2538 !important;
   border: 1px solid #334766 !important;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* —— Project / Expertise cards (dark mode) —— */
+html[data-theme="dark"] .project-area-two,
+html[data-theme="dark"] .project-bg-two {
+  background-color: #0d1421 !important;
+  background-image: none !important;
+}
+
+html[data-theme="dark"] .project-item-two {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+html[data-theme="dark"] .project-thumb-two {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #2a3a55 !important;
+}
+
+html[data-theme="dark"] .project-thumb-two::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(13, 20, 33, 0.15) 0%,
+    rgba(13, 20, 33, 0.55) 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+html[data-theme="dark"] .project-thumb-two img {
+  filter: brightness(0.72) saturate(0.92);
+  border-radius: 12px;
+}
+
+html[data-theme="dark"] .project-item-two:hover .project-thumb-two img {
+  filter: brightness(0.55) saturate(0.85) grayscale(0.15);
+}
+
+html[data-theme="dark"] .project-content-two {
+  background: rgba(34, 66, 143, 0.88) !important;
+  z-index: 2;
+}
+
+html[data-theme="dark"] .project-content-two .title,
+html[data-theme="dark"] .project-content-two .title a,
+html[data-theme="dark"] .project-content-two span {
+  color: #ffffff !important;
+}
+
+html[data-theme="dark"] .project-content-top p {
+  color: #c2cdda !important;
+}
+
+/* —— Services grid cards (dark mode) —— */
+html[data-theme="dark"] .services-area-two,
+html[data-theme="dark"] .services-bg-two {
+  background-color: #0d1421 !important;
+  background-image: none !important;
+}
+
+html[data-theme="dark"] .services-item-two {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+html[data-theme="dark"] .services-thumb-two {
+  border: 1px solid #2a3a55 !important;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45) !important;
+  background: #121a2a !important;
+}
+
+html[data-theme="dark"] .services-thumb-two img {
+  filter: brightness(0.78) saturate(0.9);
+}
+
+html[data-theme="dark"] .services-thumb-two::before {
+  background: linear-gradient(
+    360deg,
+    rgba(13, 20, 33, 0.92) 12%,
+    rgba(13, 20, 33, 0.35) 55%,
+    rgba(13, 20, 33, 0) 100%
+  ) !important;
+  opacity: 1 !important;
+}
+
+html[data-theme="dark"] .services-content-two {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+html[data-theme="dark"] .services-area-two .view-all-btn .btn {
+  background: #3fa9f5 !important;
+  border-color: #3fa9f5 !important;
+  color: #ffffff !important;
+}
+
+html[data-theme="dark"] .services-area-two .view-all-btn .btn::before,
+html[data-theme="dark"] .services-area-two .view-all-btn .btn::after {
+  display: none !important;
+  content: none !important;
+}
+
+html[data-theme="dark"] .services-area-two .view-all-btn .btn:hover {
+  background: #22428f !important;
+  border-color: #22428f !important;
+  color: #ffffff !important;
+}
+
+/* —— CTA bar (keep brand blue, polish controls) —— */
+html[data-theme="dark"] .cta-area {
+  background-color: #0d1421 !important;
+}
+
+html[data-theme="dark"] .cta-inner-wrap.ogaalsan-cta,
+html[data-theme="dark"] .ogaalsan-cta {
+  background: #22428f !important;
+  border: 1px solid rgba(63, 169, 245, 0.35);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+}
+
+html[data-theme="dark"] .ogaalsan-cta .cta-content .title,
+html[data-theme="dark"] .ogaalsan-cta .cta-info-wrap .content span,
+html[data-theme="dark"] .ogaalsan-cta .cta-info-wrap .content a,
+html[data-theme="dark"] .ogaalsan-cta .cta-info-wrap .icon {
+  color: #ffffff !important;
+}
+
+html[data-theme="dark"] .ogaalsan-cta .btn {
+  background: #3fa9f5 !important;
+  border-color: #3fa9f5 !important;
+  color: #ffffff !important;
+}
+
+html[data-theme="dark"] .ogaalsan-cta .btn::before,
+html[data-theme="dark"] .ogaalsan-cta .btn::after {
+  display: none !important;
+  content: none !important;
+}
+
+html[data-theme="dark"] .ogaalsan-cta .btn:hover {
+  background: #ffffff !important;
+  border-color: #ffffff !important;
+  color: #22428f !important;
+}
+
+/* —— News & Insights / Blog cards (dark mode) —— */
+html[data-theme="dark"] .blog-area-two,
+html[data-theme="dark"] .blog-bg-two {
+  background-color: #0d1421 !important;
+  background-image: none !important;
+}
+
+html[data-theme="dark"] .blog-area-two .section-title-two .title {
+  color: #f0f5ff !important;
+}
+
+html[data-theme="dark"] .blog-area-two .section-title-two p {
+  color: #c2cdda !important;
+}
+
+html[data-theme="dark"] .blog-post-item-two {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+html[data-theme="dark"] .blog-post-thumb-two {
+  border-radius: 12px 12px 0 0;
+  overflow: hidden;
+  background: #121a2a;
+}
+
+html[data-theme="dark"] .blog-post-thumb-two img {
+  filter: brightness(0.8) saturate(0.92);
+}
+
+html[data-theme="dark"] .blog-post-thumb-two .tag {
+  background: #3fa9f5 !important;
+  color: #ffffff !important;
+}
+
+html[data-theme="dark"] .blog-post-thumb-two .tag:hover {
+  background: #22428f !important;
+}
+
+html[data-theme="dark"] .blog-post-content-two {
+  background: #152033 !important;
+  border: 1px solid #2a3a55 !important;
+  border-top: none !important;
+  border-radius: 0 0 12px 12px !important;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35) !important;
+}
+
+html[data-theme="dark"] .blog-post-content-two .title,
+html[data-theme="dark"] .blog-post-content-two .title a {
+  color: #f0f5ff !important;
+}
+
+html[data-theme="dark"] .blog-post-content-two .title a:hover {
+  color: #3fa9f5 !important;
+}
+
+html[data-theme="dark"] .blog-post-content-two p {
+  color: #b7c4d8 !important;
+}
+
+html[data-theme="dark"] .blog-meta .list-wrap li,
+html[data-theme="dark"] .blog-meta .list-wrap li a {
+  color: #9aabbf !important;
+}
+
+html[data-theme="dark"] .blog-meta .list-wrap li i {
+  color: #3fa9f5 !important;
 }

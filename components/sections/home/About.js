@@ -12,8 +12,8 @@ export default function About() {
               <Image
                 src="/assets/img/ogalsan/about-lightbulb.png"
                 alt="About OgaalSan Consultancy"
-                width={499}
-                height={499}
+                width={700}
+                height={700}
                 className="ogaalsan-about-visual__img"
                 data-aos="fade-right"
                 data-aos-delay={0}
