@@ -19,11 +19,14 @@ export default function LearnerPortalBanner({ compact = false }) {
         </p>
       </div>
       <div className="learner-portal-banner__actions">
-        <Link href="/my-courses" className="btn">
+        <Link href="/my-courses" className="ogaalsan-btn ogaalsan-btn--primary learner-portal-banner__btn">
           {isAuthenticated ? "Open My Courses" : "Go to My Courses"}
         </Link>
         {!isAuthenticated && (
-          <Link href="/auth/sign-in?redirect=%2Fmy-courses" className="btn btn-two">
+          <Link
+            href="/auth/sign-in?redirect=%2Fmy-courses"
+            className="ogaalsan-btn ogaalsan-btn--outline learner-portal-banner__btn learner-portal-banner__btn--ghost"
+          >
             Sign In
           </Link>
         )}
