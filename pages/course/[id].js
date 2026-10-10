@@ -1,6 +1,6 @@
 import Layout from "@/components/layout/Layout";
-import ContentLoader from "@/components/common/ContentLoader";
 import CourseCurriculum from "@/components/courses/CourseCurriculum";
+import CourseDetailSkeleton from "@/components/courses/CourseDetailSkeleton";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -88,7 +88,7 @@ export default function CourseDetails() {
   if (!ready || loading) {
     return (
       <Layout breadcrumbTitle="Course Details">
-        <ContentLoader message="Loading course..." />
+        <CourseDetailSkeleton />
       </Layout>
     );
   }
