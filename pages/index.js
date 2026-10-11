@@ -32,21 +32,33 @@ export default function Home() {
 
   return (
     <Layout>
+      {/* Consultancy / digital side */}
       <Banner />
       <Features />
       <About />
-      <section className="pt-20 pb-20">
-        <div className="container">
-          <LearnerPortalBanner />
-        </div>
-      </section>
-      <Courses courses={courses} loading={coursesLoading} />
       <Services services={services} loading={servicesLoading} />
       <Overview />
       <Choose />
       <Project />
-      <Cta />
       <FocusAreas />
+      <Cta />
+
+      {/* Learn / e-learning side */}
+      <section className="ogaalsan-learn-band">
+        <div className="container">
+          <div className="ogaalsan-learn-band__intro">
+            <span className="sub-title">Learn</span>
+            <h2 className="title">Build skills in the learning portal</h2>
+            <p>
+              Separate from our consultancy services — enroll in courses, join
+              open programs, and track your progress as a learner.
+            </p>
+          </div>
+          <LearnerPortalBanner />
+        </div>
+      </section>
+      <Courses courses={courses} loading={coursesLoading} />
+
       <Blog posts={posts} loading={postsLoading} />
     </Layout>
   );

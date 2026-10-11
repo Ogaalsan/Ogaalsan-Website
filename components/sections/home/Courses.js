@@ -9,11 +9,11 @@ export default function Courses({ courses = [], loading = false }) {
         <div className="row align-items-end mb-50">
           <div className="col-lg-7 col-md-8">
             <div className="section-title-two mb-0">
-              <span className="sub-title">Training Programmes</span>
-              <h2 className="title">Courses from OgaalSan</h2>
+              <span className="sub-title">Online Courses</span>
+              <h2 className="title">Featured courses</h2>
               <p className="mb-0">
-                Live catalogue from the admin — enroll in published online and
-                in-person programmes.
+                Published courses from the admin — enroll and continue learning
+                in your portal.
               </p>
             </div>
           </div>

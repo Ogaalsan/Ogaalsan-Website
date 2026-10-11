@@ -4,17 +4,19 @@ import { fetchTrainings } from "@/lib/trainings";
 
 export default function TrainingList({ trainings }) {
   return (
-    <Layout breadcrumbTitle="Training">
+    <Layout>
       <section className="blog-area pt-120 pb-120">
         <div className="container">
           <div className="row justify-content-center">
             <div className="col-lg-8">
               <div className="section-title text-center mb-50">
-                <span className="sub-title">Grow Your Skills</span>
-                <h2 className="title">Our Trainings</h2>
+                <span className="sub-title">Learn · Open Programs</span>
+                <h2 className="title">Open Programs</h2>
                 <p>
-                  Choose a training below and register to join. Each program is
-                  available online or in-person (offline).
+                  Time-bound programs you can register for — online or
+                  in-person. For self-paced courses with lessons and progress
+                  tracking, see{" "}
+                  <Link href="/courses">Online Courses</Link>.
                 </p>
               </div>
             </div>

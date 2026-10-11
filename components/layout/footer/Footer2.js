@@ -78,7 +78,7 @@ export default function Footer2() {
                                         <div className="footer-link">
                                             <ul className="list-wrap">
                                                 <li><Link href="/services/ict">ICT Solutions</Link></li>
-                                                <li><Link href="/services/training">Training & Capacity Building</Link></li>
+                                                <li><Link href="/services/training">Capacity Building</Link></li>
                                                 <li><Link href="/services/business-development">Business Development</Link></li>
                                                 <li><Link href="/contact">Contact Us</Link></li>
                                             </ul>

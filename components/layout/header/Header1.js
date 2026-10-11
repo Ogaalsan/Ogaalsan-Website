@@ -91,6 +91,9 @@ export default function Header1({
                         >
                           <Link href="/services">Services</Link>
                           <ul className="sub-menu">
+                            <li className="sub-menu__hint" aria-hidden="true">
+                              <span>For organisations</span>
+                            </li>
                             <li>
                               <Link href="/services/ict">ICT Solutions</Link>
                             </li>
@@ -101,27 +104,43 @@ export default function Header1({
                             </li>
                             <li>
                               <Link href="/services/training">
-                                Training &amp; Capacity Building
+                                Capacity Building
                               </Link>
                             </li>
                           </ul>
                         </li>
                         <li
-                          className={
+                          className={`menu-item-has-children${
                             navActive(pathname, "/courses") ||
-                            navActive(pathname, "/course")
-                              ? "active"
+                            navActive(pathname, "/course") ||
+                            navActive(pathname, "/training") ||
+                            navActive(pathname, "/my-courses") ||
+                            navActive(pathname, "/student-dashboard") ||
+                            pathname.startsWith("/resources/course-resources")
+                              ? " active"
                               : ""
-                          }
+                          }`}
                         >
-                          <Link href="/courses">Courses</Link>
-                        </li>
-                        <li
-                          className={
-                            navActive(pathname, "/training") ? "active" : ""
-                          }
-                        >
-                          <Link href="/training">Training</Link>
+                          <Link href="/courses">Learn</Link>
+                          <ul className="sub-menu">
+                            <li className="sub-menu__hint" aria-hidden="true">
+                              <span>For learners</span>
+                            </li>
+                            <li>
+                              <Link href="/courses">Online Courses</Link>
+                            </li>
+                            <li>
+                              <Link href="/training">Open Programs</Link>
+                            </li>
+                            <li>
+                              <Link href="/resources/course-resources">
+                                Course Resources
+                              </Link>
+                            </li>
+                            <li>
+                              <Link href="/my-courses">My Learning</Link>
+                            </li>
+                          </ul>
                         </li>
                         <li
                           className={
@@ -131,21 +150,13 @@ export default function Header1({
                           <Link href="/blog">Blog</Link>
                         </li>
                         <li
-                          className={`menu-item-has-children${
-                            pathname.startsWith("/resources") ? " active" : ""
-                          }`}
+                          className={
+                            navActive(pathname, "/resources/reports")
+                              ? "active"
+                              : ""
+                          }
                         >
-                          <Link href="/resources/reports">Resources</Link>
-                          <ul className="sub-menu">
-                            <li>
-                              <Link href="/resources/reports">Reports</Link>
-                            </li>
-                            <li>
-                              <Link href="/resources/course-resources">
-                                Course Resources
-                              </Link>
-                            </li>
-                          </ul>
+                          <Link href="/resources/reports">Reports</Link>
                         </li>
                       </ul>
                     </div>

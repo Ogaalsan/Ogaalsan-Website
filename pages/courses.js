@@ -37,11 +37,12 @@ export default function Courses() {
           <div className="row justify-content-center">
             <div className="col-xl-6 col-lg-8 col-md-10">
               <div className="section-title-two text-center mb-50">
-                <h2 className="title">Training &amp; Capacity Building Programmes</h2>
+                <span className="sub-title">Learn with OgaalSan</span>
+                <h2 className="title">Online Courses</h2>
                 <p>
-                  Practical, hands-on training in entrepreneurship,
-                  professional development, and ICT skills — building the
-                  human capital organizations need for sustainable growth.
+                  Self-paced and instructor-supported courses in ICT, digital
+                  skills, and professional development — track progress in your
+                  learning portal after you enroll.
                 </p>
               </div>
             </div>
