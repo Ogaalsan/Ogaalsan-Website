@@ -7,57 +7,59 @@ export default function Reports() {
   const { data: reports = [], loading } = useClientFetch(fetchActiveReports, []);
 
   return (
-    <Layout breadcrumbTitle="Reports">
-      <section className="blog-area pt-120 pb-120">
+    <Layout>
+      <section className="ogaalsan-reports">
         <div className="container">
-          <div className="row justify-content-center">
-            <div className="col-lg-8">
-              <div className="section-title text-center mb-50">
-                <span className="sub-title">Transparency & Impact</span>
-                <h2 className="title">Reports</h2>
-                <p>
-                  Explore our published reports to see how Ogaalsan is empowering
-                  communities through education, technology, and opportunity.
-                </p>
-              </div>
-            </div>
+          <nav className="ogaalsan-reports__crumbs" aria-label="Breadcrumb">
+            <Link href="/">Home</Link>
+            <span aria-hidden="true">/</span>
+            <span>Reports</span>
+          </nav>
+
+          <div className="ogaalsan-reports__intro">
+            <span className="ogaalsan-reports__eyebrow">Transparency &amp; impact</span>
+            <h1 className="ogaalsan-reports__title">Reports</h1>
+            <p>
+              Published reports on education, technology, and opportunity from
+              OgaalSan Consultancy.
+            </p>
           </div>
 
-          <div className="row justify-content-center">
-            {loading && (
-              <div className="col-12 text-center">
-                <p>Loading reports...</p>
-              </div>
-            )}
+          {loading ? (
+            <p className="ogaalsan-reports__status">Loading reports...</p>
+          ) : null}
 
-            {!loading && reports.length === 0 && (
-              <div className="col-12 text-center">
-                <p>No reports published yet. Check back soon.</p>
-              </div>
-            )}
+          {!loading && reports.length === 0 ? (
+            <p className="ogaalsan-reports__status">
+              No reports published yet. Check back soon.
+            </p>
+          ) : null}
 
-            {!loading &&
-              reports.map((report) => (
-                <div className="col-lg-4 col-md-6" key={report.id}>
-                  <div className="resource-card">
-                    <div className="resource-card__body">
-                      <h4 className="resource-card__title">{report.title}</h4>
+          {!loading && reports.length > 0 ? (
+            <div className="ogaalsan-reports__grid">
+              {reports.map((report) => (
+                <article className="resource-card" key={report.id}>
+                  <div className="resource-card__body">
+                    <h2 className="resource-card__title">{report.title}</h2>
+                    {report.description ? (
                       <p className="resource-card__desc">{report.description}</p>
-                      {report.file && report.file !== "#" ? (
-                        <Link
-                          href={report.file}
-                          className="btn btn-three"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          <i className="fas fa-file-pdf" /> View Report
-                        </Link>
-                      ) : null}
-                    </div>
+                    ) : null}
+                    {report.file && report.file !== "#" ? (
+                      <a
+                        href={report.file}
+                        className="resource-card__link"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        View report
+                        <i className="fas fa-arrow-right" aria-hidden="true" />
+                      </a>
+                    ) : null}
                   </div>
-                </div>
+                </article>
               ))}
-          </div>
+            </div>
+          ) : null}
         </div>
       </section>
     </Layout>
