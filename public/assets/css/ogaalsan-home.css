@@ -170,7 +170,8 @@
   margin: 0;
   padding: 10px 0;
   border: 1px solid #e8eef6;
-  border-radius: 0;
+  border-radius: 8px;
+  overflow: hidden;
   background: #ffffff !important;
   box-shadow: 0 16px 40px rgba(21, 32, 51, 0.12);
   opacity: 0;
@@ -210,6 +211,7 @@
   text-transform: none;
   white-space: nowrap;
   background: transparent !important;
+  transition: all 0.2s ease;
 }
 
 .ogaalsan-header.header-style-two .navbar-wrap > ul > li > .sub-menu > li > a::before {
@@ -230,6 +232,28 @@
 .ogaalsan-header.header-style-two .navbar-wrap > ul > li > .sub-menu > li > a:hover::before,
 .ogaalsan-header.header-style-two .navbar-wrap > ul > li > .sub-menu > li.active > a::before {
   width: 10px;
+}
+
+/* Submenu dark mode */
+html[data-theme="dark"] .ogaalsan-header.header-style-two .navbar-wrap > ul > li > .sub-menu {
+  background: #152033 !important;
+  border: 1px solid #283955 !important;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.05) !important;
+}
+
+html[data-theme="dark"] .ogaalsan-header.header-style-two .navbar-wrap > ul > li > .sub-menu > li > a {
+  color: #e2eaf5 !important;
+  background: transparent !important;
+}
+
+html[data-theme="dark"] .ogaalsan-header.header-style-two .navbar-wrap > ul > li > .sub-menu > li > a:hover,
+html[data-theme="dark"] .ogaalsan-header.header-style-two .navbar-wrap > ul > li > .sub-menu > li.active > a {
+  color: #3fa9f5 !important;
+  background: rgba(63, 169, 245, 0.08) !important;
+}
+
+html[data-theme="dark"] .ogaalsan-header.header-style-two .navbar-wrap > ul > li > .sub-menu > li > a::before {
+  background: #3fa9f5;
 }
 
 .ogaalsan-header__actions {
@@ -387,6 +411,23 @@
   overflow: visible;
 }
 
+/* Explicit dark mode header rules */
+html[data-theme="dark"] .ogaalsan-header.header-style-two .menu-area,
+html[data-theme="dark"] .ogaalsan-header.header-style-two.sticky-menu .menu-area,
+html[data-theme="dark"] .ogaalsan-header.header-style-two.ogaalsan-header--over-hero .menu-area {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+html[data-theme="dark"] .ogaalsan-header.header-style-two.ogaalsan-header--over-hero {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+html[data-theme="dark"] .ogaalsan-header.header-style-two .logo img {
+  filter: brightness(0) invert(1) !important;
+}
+
 .ogaalsan-header.header-style-two.ogaalsan-header--over-hero .ogaalsan-header__tools .header-search-btn,
 .ogaalsan-header.header-style-two.ogaalsan-header--over-hero .ogaalsan-header__tools .theme-toggle,
 .ogaalsan-header.header-style-two.ogaalsan-header--over-hero .ogaalsan-header__tools .theme-toggle i {
@@ -436,13 +477,31 @@
   color: #3fa9f5 !important;
 }
 
-/* Keep submenu readable on white panel even over the hero */
-.ogaalsan-header.header-style-two.ogaalsan-header--over-hero .navbar-wrap > ul > li > .sub-menu > li > a {
+/* Keep submenu readable on white panel even over the hero (light mode) */
+html:not([data-theme="dark"]) .ogaalsan-header.header-style-two.ogaalsan-header--over-hero .navbar-wrap > ul > li > .sub-menu > li > a {
   color: #1f2f4d !important;
 }
 
-.ogaalsan-header.header-style-two.ogaalsan-header--over-hero .navbar-wrap > ul > li > .sub-menu > li > a:hover {
+html:not([data-theme="dark"]) .ogaalsan-header.header-style-two.ogaalsan-header--over-hero .navbar-wrap > ul > li > .sub-menu > li > a:hover {
   color: #3fa9f5 !important;
+}
+
+/* Over hero submenu dark mode */
+html[data-theme="dark"] .ogaalsan-header.header-style-two.ogaalsan-header--over-hero .navbar-wrap > ul > li > .sub-menu {
+  background: #152033 !important;
+  border: 1px solid #283955 !important;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.05) !important;
+}
+
+html[data-theme="dark"] .ogaalsan-header.header-style-two.ogaalsan-header--over-hero .navbar-wrap > ul > li > .sub-menu > li > a {
+  color: #e2eaf5 !important;
+  background: transparent !important;
+}
+
+html[data-theme="dark"] .ogaalsan-header.header-style-two.ogaalsan-header--over-hero .navbar-wrap > ul > li > .sub-menu > li > a:hover,
+html[data-theme="dark"] .ogaalsan-header.header-style-two.ogaalsan-header--over-hero .navbar-wrap > ul > li > .sub-menu > li.active > a {
+  color: #3fa9f5 !important;
+  background: rgba(63, 169, 245, 0.08) !important;
 }
 
 .ogaalsan-header.header-style-two.ogaalsan-header--over-hero .ogaalsan-btn--primary {
