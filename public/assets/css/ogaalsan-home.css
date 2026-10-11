@@ -88,6 +88,7 @@
 }
 
 .ogaalsan-header.header-style-two .menu-nav {
+  position: relative;
   min-height: 84px;
   display: flex;
   align-items: center;
@@ -101,6 +102,7 @@
   display: flex;
   align-items: center;
   flex-shrink: 0;
+  z-index: 2;
 }
 
 .ogaalsan-header.header-style-two .logo img {
@@ -108,9 +110,20 @@
   width: auto;
 }
 
+/* Center desktop nav in the header bar */
 .ogaalsan-header.header-style-two .navbar-wrap {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  transform: translateX(-50%);
   display: flex;
   align-items: center;
+  z-index: 1;
+}
+
+.ogaalsan-header.header-style-two .ogaalsan-header__actions {
+  z-index: 2;
 }
 
 .ogaalsan-header.header-style-two .navbar-wrap > ul {
