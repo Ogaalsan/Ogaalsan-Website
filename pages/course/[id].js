@@ -87,7 +87,7 @@ export default function CourseDetails() {
 
   if (!ready || loading) {
     return (
-      <Layout breadcrumbTitle="Course Details">
+      <Layout>
         <CourseDetailSkeleton />
       </Layout>
     );
@@ -95,7 +95,7 @@ export default function CourseDetails() {
 
   if (!course) {
     return (
-      <Layout breadcrumbTitle="Course Details">
+      <Layout>
         <section className="course-detail pt-100 pb-100">
           <div className="container text-center">
             <h2 className="course-detail__empty-title">Course not found</h2>
@@ -153,7 +153,7 @@ export default function CourseDetails() {
   }
 
   return (
-    <Layout breadcrumbTitle="Course Details">
+    <Layout>
       <section className="course-detail">
         <div className="container">
           <div className="course-detail__grid">

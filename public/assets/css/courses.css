@@ -951,7 +951,9 @@ html[data-theme="dark"] .course-detail-skeleton__includes {
 
 /* —— Professional course detail (e-learning layout) —— */
 .course-detail {
-  padding: 48px 0 80px;
+  /* Clear sticky header (~80px) + breathing room under nav */
+  padding: 128px 0 80px;
+  margin-top: 12px;
   background:
     radial-gradient(ellipse at top left, rgba(63, 169, 245, 0.08), transparent 45%),
     #f7f9fc;
@@ -1377,7 +1379,7 @@ html[data-theme="dark"] .course-detail__cta--whatsapp {
 
 @media (max-width: 575px) {
   .course-detail {
-    padding: 28px 0 56px;
+    padding: 112px 0 56px;
   }
 
   .course-detail__panel {

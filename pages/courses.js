@@ -28,7 +28,7 @@ export default function Courses() {
   );
 
   return (
-    <Layout breadcrumbTitle="Our Courses">
+    <Layout>
       <section
         className="services-area-five inner-services-bg"
         data-background="/assets/img/bg/inner_services_bg.jpg"

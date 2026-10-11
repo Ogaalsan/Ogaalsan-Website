@@ -113,13 +113,18 @@
   align-items: center;
 }
 
-.ogaalsan-header.header-style-two .navbar-wrap ul {
+.ogaalsan-header.header-style-two .navbar-wrap > ul {
   margin: 0;
   display: flex;
   align-items: center;
 }
 
-.ogaalsan-header.header-style-two .navbar-wrap ul li a {
+.ogaalsan-header.header-style-two .navbar-wrap > ul > li {
+  position: relative;
+}
+
+/* Top-level links only — do NOT style .sub-menu links with these rules */
+.ogaalsan-header.header-style-two .navbar-wrap > ul > li > a {
   display: inline-flex;
   align-items: center;
   padding: 0 12px;
@@ -132,9 +137,99 @@
   text-transform: none;
 }
 
-.ogaalsan-header.header-style-two .navbar-wrap ul li a:hover,
-.ogaalsan-header.header-style-two .navbar-wrap ul li.active > a {
+.ogaalsan-header.header-style-two .navbar-wrap > ul > li > a:hover,
+.ogaalsan-header.header-style-two .navbar-wrap > ul > li.active > a {
   color: #3fa9f5;
+}
+
+/* Dropdown chevrons — Services & Resources */
+.ogaalsan-header.header-style-two .navbar-wrap > ul > li.menu-item-has-children > a::after {
+  content: "\f107";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  font-size: 0.7rem;
+  margin-left: 6px;
+  color: inherit;
+  opacity: 0.85;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.ogaalsan-header.header-style-two .navbar-wrap > ul > li.menu-item-has-children:hover > a::after,
+.ogaalsan-header.header-style-two .navbar-wrap > ul > li.menu-item-has-children.active > a::after {
+  opacity: 1;
+  color: #3fa9f5;
+}
+
+/* Submenu panel */
+.ogaalsan-header.header-style-two .navbar-wrap > ul > li > .sub-menu {
+  position: absolute;
+  left: 0;
+  right: auto;
+  top: calc(100% - 6px);
+  min-width: 240px;
+  margin: 0;
+  padding: 10px 0;
+  border: 1px solid #e8eef6;
+  border-radius: 0;
+  background: #ffffff !important;
+  box-shadow: 0 16px 40px rgba(21, 32, 51, 0.12);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+  z-index: 120;
+  pointer-events: none;
+}
+
+.ogaalsan-header.header-style-two .navbar-wrap > ul > li:hover > .sub-menu,
+.ogaalsan-header.header-style-two .navbar-wrap > ul > li:focus-within > .sub-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.ogaalsan-header.header-style-two .navbar-wrap > ul > li > .sub-menu > li {
+  margin: 0;
+  display: block;
+  width: 100%;
+}
+
+.ogaalsan-header.header-style-two .navbar-wrap > ul > li > .sub-menu > li > a {
+  display: flex !important;
+  align-items: center;
+  gap: 8px;
+  min-height: 0 !important;
+  height: auto !important;
+  padding: 10px 18px !important;
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+  line-height: 1.35 !important;
+  color: #1f2f4d !important;
+  text-transform: none;
+  white-space: nowrap;
+  background: transparent !important;
+}
+
+.ogaalsan-header.header-style-two .navbar-wrap > ul > li > .sub-menu > li > a::before {
+  content: "";
+  display: block;
+  width: 0;
+  height: 2px;
+  border-radius: 2px;
+  background: #3fa9f5;
+  transition: width 0.2s ease;
+}
+
+.ogaalsan-header.header-style-two .navbar-wrap > ul > li > .sub-menu > li > a:hover,
+.ogaalsan-header.header-style-two .navbar-wrap > ul > li > .sub-menu > li.active > a {
+  color: #3fa9f5 !important;
+}
+
+.ogaalsan-header.header-style-two .navbar-wrap > ul > li > .sub-menu > li > a:hover::before,
+.ogaalsan-header.header-style-two .navbar-wrap > ul > li > .sub-menu > li.active > a::before {
+  width: 10px;
 }
 
 .ogaalsan-header__actions {
@@ -309,12 +404,17 @@
   filter: brightness(0) invert(1);
 }
 
-.ogaalsan-header.header-style-two.ogaalsan-header--over-hero .navbar-wrap ul li a,
+.ogaalsan-header.header-style-two.ogaalsan-header--over-hero .navbar-wrap > ul > li > a,
 .ogaalsan-header.header-style-two.ogaalsan-header--over-hero .header-search-btn,
 .ogaalsan-header.header-style-two.ogaalsan-header--over-hero .theme-toggle,
 .ogaalsan-header.header-style-two.ogaalsan-header--over-hero .theme-toggle i,
 .ogaalsan-header.header-style-two.ogaalsan-header--over-hero .mobile-nav-toggler {
   color: rgba(255, 255, 255, 0.92) !important;
+}
+
+.ogaalsan-header.header-style-two.ogaalsan-header--over-hero .navbar-wrap > ul > li.menu-item-has-children > a::after {
+  color: rgba(255, 255, 255, 0.92) !important;
+  opacity: 1;
 }
 
 /* Sign In / Dashboard must beat the base #22428F text-link rule */
@@ -324,13 +424,24 @@
   color: #ffffff !important;
 }
 
-.ogaalsan-header.header-style-two.ogaalsan-header--over-hero .navbar-wrap ul li a:hover,
-.ogaalsan-header.header-style-two.ogaalsan-header--over-hero .navbar-wrap ul li.active > a,
+.ogaalsan-header.header-style-two.ogaalsan-header--over-hero .navbar-wrap > ul > li > a:hover,
+.ogaalsan-header.header-style-two.ogaalsan-header--over-hero .navbar-wrap > ul > li.active > a,
+.ogaalsan-header.header-style-two.ogaalsan-header--over-hero .navbar-wrap > ul > li.menu-item-has-children:hover > a::after,
+.ogaalsan-header.header-style-two.ogaalsan-header--over-hero .navbar-wrap > ul > li.menu-item-has-children.active > a::after,
 .ogaalsan-header.header-style-two.ogaalsan-header--over-hero .header-action ul > li > a.ogaalsan-header__text-link:hover,
 .ogaalsan-header.header-style-two.ogaalsan-header--over-hero .header-action ul > li > button.ogaalsan-header__text-link:hover,
 .ogaalsan-header.header-style-two.ogaalsan-header--over-hero .ogaalsan-header__text-link:hover,
 .ogaalsan-header.header-style-two.ogaalsan-header--over-hero .header-search-btn:hover,
 .ogaalsan-header.header-style-two.ogaalsan-header--over-hero .theme-toggle:hover {
+  color: #3fa9f5 !important;
+}
+
+/* Keep submenu readable on white panel even over the hero */
+.ogaalsan-header.header-style-two.ogaalsan-header--over-hero .navbar-wrap > ul > li > .sub-menu > li > a {
+  color: #1f2f4d !important;
+}
+
+.ogaalsan-header.header-style-two.ogaalsan-header--over-hero .navbar-wrap > ul > li > .sub-menu > li > a:hover {
   color: #3fa9f5 !important;
 }
 
