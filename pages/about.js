@@ -105,7 +105,7 @@ export default function About() {
                   <div className="section-title text-center mb-50">
                     <span className="sub-title">Vision, Mission &amp; Values</span>
                     <h2 className="title">
-                      What Drives Our Work Every Day
+                      What drives our work every day
                     </h2>
                   </div>
                 </div>

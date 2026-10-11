@@ -1136,9 +1136,9 @@ html[data-theme="dark"] .ogaalsan-vmv .section-title .title {
 }
 
 html[data-theme="dark"] .ogaalsan-vmv .features-item {
-  background: #1a2740 !important;
-  border: 1px solid rgba(63, 169, 245, 0.28) !important;
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45) !important;
+  background: #152033 !important;
+  border: 1px solid #2a3a55 !important;
+  box-shadow: none !important;
   color: #d7e0ef !important;
 }
 
