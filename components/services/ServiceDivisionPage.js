@@ -9,7 +9,7 @@ export default function ServiceDivisionPage({ division }) {
 
   return (
     <Layout headTitle={division.title}>
-      <section className="services-details-area ogaalsan-page">
+      <section className="ogaalsan-page ogaalsan-service-detail">
         <div className="container">
           <PageIntro
             crumbs={[
@@ -17,93 +17,83 @@ export default function ServiceDivisionPage({ division }) {
               { href: "/services", label: "Services" },
               { label: division.shortTitle || division.title },
             ]}
-            eyebrow="Services"
+            eyebrow={division.eyebrow || "For organisations"}
             title={division.title}
-            description={division.eyebrow}
+            description={division.summary}
           />
-          <div className="row justify-content-center">
-            <div className="col-71 order-0 order-lg-2">
-              <div className="services-details-wrap">
-                <div className="services-details-thumb mb-40">
-                  <Image
-                    src={division.image}
-                    alt={division.title}
-                    width={900}
-                    height={520}
-                    priority
-                    style={{ width: "100%", height: "auto", borderRadius: 4 }}
-                  />
+
+          <div className="ogaalsan-service-detail__grid">
+            <div className="ogaalsan-service-detail__main">
+              <div className="ogaalsan-service-detail__media">
+                <Image
+                  src={division.image}
+                  alt={division.title}
+                  width={900}
+                  height={520}
+                  priority
+                />
+              </div>
+
+              <div className="ogaalsan-service-detail__content">
+                <p>{division.description}</p>
+
+                <h2>What we deliver</h2>
+                <ul className="ogaalsan-service-detail__list">
+                  {division.highlights.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+
+                <h2>Outcomes for your organisation</h2>
+                <div className="ogaalsan-service-detail__outcomes">
+                  {division.outcomes.map((item) => (
+                    <div key={item.title} className="ogaalsan-service-detail__outcome">
+                      <h3>{item.title}</h3>
+                      <p>{item.text}</p>
+                    </div>
+                  ))}
                 </div>
-                <div className="services-details-content">
-                  <span className="sub-title">{division.eyebrow}</span>
-                  <h2 className="title">{division.title}</h2>
-                  <p>{division.description}</p>
 
-                  <h3 className="title-two">What we deliver</h3>
-                  <ul className="list-wrap mb-30">
-                    {division.highlights.map((item) => (
-                      <li key={item}>{item}</li>
-                    ))}
-                  </ul>
-
-                  <h3 className="title-two">Outcomes for your organization</h3>
-                  <div className="row mb-40">
-                    {division.outcomes.map((item) => (
-                      <div key={item.title} className="col-md-4 mb-20">
-                        <h4 className="title" style={{ fontSize: 18 }}>
-                          {item.title}
-                        </h4>
-                        <p style={{ marginBottom: 0 }}>{item.text}</p>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="d-flex flex-wrap gap-3">
-                    <Link href="/contact" className="btn">
-                      Talk to an Expert
-                    </Link>
-                    <Link href="/services" className="btn border-btn">
-                      All Services
-                    </Link>
-                  </div>
+                <div className="ogaalsan-service-detail__actions">
+                  <Link
+                    href="/contact"
+                    className="ogaalsan-btn ogaalsan-btn--primary"
+                  >
+                    Talk to an expert
+                  </Link>
+                  <Link href="/services" className="ogaalsan-services__link">
+                    All services
+                    <i className="fas fa-arrow-right" aria-hidden="true" />
+                  </Link>
                 </div>
               </div>
             </div>
 
-            <div className="col-29">
-              <aside className="services-sidebar">
-                <div className="services-cat-list mb-30">
-                  <ul className="list-wrap">
-                    {SERVICE_DIVISIONS.map((item) => (
-                      <li
-                        key={item.slug}
-                        className={item.slug === division.slug ? "active" : ""}
-                      >
-                        <Link href={`/services/${item.slug}`}>
-                          {item.shortTitle}{" "}
-                          <i className="flaticon-right-arrow" />
-                        </Link>
-                      </li>
-                    ))}
-                    <li>
-                      <Link href="/services">
-                        View all services{" "}
-                        <i className="flaticon-right-arrow" />
-                      </Link>
-                    </li>
-                  </ul>
-                </div>
-                <div className="services-widget">
-                  <h4 className="title" style={{ marginBottom: 12 }}>
-                    Need a tailored plan?
-                  </h4>
-                  <p style={{ marginBottom: 16 }}>{division.summary}</p>
-                  <Link href="/contact" className="btn">
-                    Contact Us
-                  </Link>
-                </div>
-              </aside>
-            </div>
+            <aside className="ogaalsan-service-detail__aside">
+              <h3>Service areas</h3>
+              <ul>
+                {SERVICE_DIVISIONS.map((item) => (
+                  <li key={item.slug}>
+                    <Link
+                      href={`/services/${item.slug}`}
+                      className={
+                        item.slug === division.slug ? "is-active" : undefined
+                      }
+                    >
+                      {item.shortTitle || item.title}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+              <div className="ogaalsan-service-detail__aside-cta">
+                <h4>Need a tailored plan?</h4>
+                <p>Tell us your goals and we will recommend the right approach.</p>
+                <Link href="/contact" className="ogaalsan-services__link">
+                  Contact us
+                  <i className="fas fa-arrow-right" aria-hidden="true" />
+                </Link>
+              </div>
+            </aside>
           </div>
         </div>
       </section>

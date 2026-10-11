@@ -15,7 +15,7 @@ export default function Services() {
 
   return (
     <Layout headTitle="Our Services">
-      <section className="ogaalsan-page">
+      <section className="ogaalsan-page ogaalsan-services">
         <div className="container">
           <PageIntro
             crumbs={[
@@ -24,52 +24,49 @@ export default function Services() {
             ]}
             eyebrow="For organisations"
             title="ICT & digital consultancy services"
-            description="Explore our three core service areas — ICT Solutions, Business Development, and Capacity Building."
+            description="Three core areas we deliver for businesses, institutions, and development partners."
           />
 
-          <div className="row justify-content-center mb-50 align-items-stretch">
+          <div className="ogaalsan-services__divisions">
             {SERVICE_DIVISIONS.map((division) => (
-              <div key={division.slug} className="col-lg-4 col-md-6 mb-30 d-flex">
-                <div className="services-item w-100">
-                  <div className="services-content h-100 d-flex flex-column">
-                    <div className="content-top">
-                      <div className="icon">
-                        <i className={division.icon} />
-                      </div>
-                      <h2 className="title">
-                        <Link href={`/services/${division.slug}`}>
-                          {division.title}
-                        </Link>
-                      </h2>
-                    </div>
-                    <p className="flex-grow-1">{division.summary}</p>
-                    <Link
-                      href={`/services/${division.slug}`}
-                      className="btn transparent-btn mt-auto"
-                    >
-                      Learn More
-                    </Link>
-                  </div>
-                </div>
-              </div>
+              <article
+                key={division.slug}
+                className="ogaalsan-services__division"
+              >
+                <span className="ogaalsan-services__division-label">
+                  {division.eyebrow || "Service area"}
+                </span>
+                <h2 className="ogaalsan-services__division-title">
+                  <Link href={`/services/${division.slug}`}>
+                    {division.shortTitle || division.title}
+                  </Link>
+                </h2>
+                <p>{division.summary}</p>
+                <Link
+                  href={`/services/${division.slug}`}
+                  className="ogaalsan-services__link"
+                >
+                  Learn more
+                  <i className="fas fa-arrow-right" aria-hidden="true" />
+                </Link>
+              </article>
             ))}
           </div>
 
           {loading ? (
             <ContentLoader message="Loading services..." />
           ) : services.length > 0 ? (
-            <>
-              <div className="row justify-content-center">
-                <div className="col-lg-8 text-center mb-40">
-                  <h3 className="title">More from our service catalog</h3>
-                </div>
+            <div className="ogaalsan-services__catalog">
+              <div className="ogaalsan-services__catalog-head">
+                <h2>Service catalog</h2>
+                <p>Additional offerings from the OgaalSan admin catalog.</p>
               </div>
-              <div className="row justify-content-center">
+              <div className="ogaalsan-services__catalog-grid">
                 {services.map((service) => (
                   <ServiceCard key={service.id} service={service} />
                 ))}
               </div>
-            </>
+            </div>
           ) : null}
         </div>
       </section>

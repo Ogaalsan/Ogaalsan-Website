@@ -1,5 +1,5 @@
-import Accordion from "@/components/elements/Accordion";
 import Layout from "@/components/layout/Layout";
+import PageIntro from "@/components/layout/PageIntro";
 import ContentLoader from "@/components/common/ContentLoader";
 import Link from "next/link";
 import Image from "next/image";
@@ -28,7 +28,11 @@ export default function ServiceDetails() {
   if (!ready || serviceLoading || listLoading) {
     return (
       <Layout headTitle="Service Details">
-        <ContentLoader message="Loading service..." />
+        <section className="ogaalsan-page">
+          <div className="container">
+            <ContentLoader message="Loading service..." />
+          </div>
+        </section>
       </Layout>
     );
   }
@@ -36,11 +40,20 @@ export default function ServiceDetails() {
   if (!service) {
     return (
       <Layout headTitle="Service Details">
-        <section className="ogaalsan-page text-center">
+        <section className="ogaalsan-page">
           <div className="container">
-            <h2>Service not found.</h2>
-            <Link href="/services" className="btn mt-30">
-              Back to Services
+            <PageIntro
+              crumbs={[
+                { href: "/", label: "Home" },
+                { href: "/services", label: "Services" },
+                { label: "Not found" },
+              ]}
+              title="Service not found"
+              description="This service may be unpublished or the link is incorrect."
+            />
+            <Link href="/services" className="ogaalsan-services__link">
+              Back to services
+              <i className="fas fa-arrow-right" aria-hidden="true" />
             </Link>
           </div>
         </section>
@@ -50,72 +63,77 @@ export default function ServiceDetails() {
 
   return (
     <Layout headTitle={service.title}>
-      <section className="services-details-area ogaalsan-page">
+      <section className="ogaalsan-page ogaalsan-service-detail">
         <div className="container">
-          <nav className="ogaalsan-page-intro__crumbs" aria-label="Breadcrumb">
-            <Link href="/">Home</Link>
-            <span aria-hidden="true">/</span>
-            <Link href="/services">Services</Link>
-            <span aria-hidden="true">/</span>
-            <span>{service.title}</span>
-          </nav>
-          <div className="row justify-content-center">
-            <div className="col-71 order-0 order-lg-2">
-              <div className="services-details-wrap">
-                <div className="services-details-thumb">
-                  <Image
-                    src={service.image}
-                    alt={service.title}
-                    width={800}
-                    height={600}
-                    loading="lazy"
-                    style={{ width: "100%", height: "auto" }}
-                  />
-                </div>
-                <div className="services-details-content">
-                  <h2 className="title">{service.title}</h2>
-                  <p>{service.description}</p>
+          <PageIntro
+            crumbs={[
+              { href: "/", label: "Home" },
+              { href: "/services", label: "Services" },
+              { label: service.title },
+            ]}
+            eyebrow="Service catalog"
+            title={service.title}
+            description={service.shortDescription || undefined}
+          />
 
-                  {service.highlights?.length > 0 && (
-                    <>
-                      <h3 className="title-two">What we do</h3>
-                      <ul className="list-wrap mb-20">
-                        {service.highlights.map((item) => (
-                          <li key={item}>{item}</li>
-                        ))}
-                      </ul>
-                    </>
-                  )}
+          <div className="ogaalsan-service-detail__grid">
+            <div className="ogaalsan-service-detail__main">
+              <div className="ogaalsan-service-detail__media">
+                <Image
+                  src={service.image}
+                  alt={service.title}
+                  width={900}
+                  height={520}
+                  loading="lazy"
+                />
+              </div>
 
-                  <div className="company-benefit-wrap">
-                    <h2 className="title-two">Why Choose Ogaalsan</h2>
-                    <div className="accordion-wrap-three">
-                      <Accordion />
-                    </div>
-                  </div>
+              <div className="ogaalsan-service-detail__content">
+                <p>{service.description}</p>
+
+                {service.highlights?.length > 0 ? (
+                  <>
+                    <h2>What we do</h2>
+                    <ul className="ogaalsan-service-detail__list">
+                      {service.highlights.map((item) => (
+                        <li key={item}>{item}</li>
+                      ))}
+                    </ul>
+                  </>
+                ) : null}
+
+                <div className="ogaalsan-service-detail__actions">
+                  <Link
+                    href="/contact"
+                    className="ogaalsan-btn ogaalsan-btn--primary"
+                  >
+                    Talk to an expert
+                  </Link>
+                  <Link href="/services" className="ogaalsan-services__link">
+                    All services
+                    <i className="fas fa-arrow-right" aria-hidden="true" />
+                  </Link>
                 </div>
               </div>
             </div>
 
-            <div className="col-29">
-              <aside className="services-sidebar">
-                <div className="services-cat-list mb-30">
-                  <ul className="list-wrap">
-                    {services.map((item) => (
-                      <li
-                        key={item.id}
-                        className={item.slug === service.slug ? "active" : ""}
-                      >
-                        <Link href={`/services/${item.slug}`}>
-                          {item.title}{" "}
-                          <i className="flaticon-right-arrow" />
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </aside>
-            </div>
+            <aside className="ogaalsan-service-detail__aside">
+              <h3>More services</h3>
+              <ul>
+                {services.map((item) => (
+                  <li key={item.id}>
+                    <Link
+                      href={`/services/${item.slug}`}
+                      className={
+                        item.slug === service.slug ? "is-active" : undefined
+                      }
+                    >
+                      {item.title}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </aside>
           </div>
         </div>
       </section>
