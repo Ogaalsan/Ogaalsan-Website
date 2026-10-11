@@ -130,7 +130,7 @@ export default function TakeQuizPage() {
 
   if (error && !quiz) {
     return (
-      <Layout breadcrumbTitle="Quiz">
+      <Layout>
         <div className="container pt-120 pb-120 text-center">
           <h2 style={{ color: "#22428F" }}>Unable to load quiz</h2>
           <p style={{ color: "#334770" }}>
@@ -164,7 +164,7 @@ export default function TakeQuizPage() {
       : "/my-courses";
 
   return (
-    <Layout breadcrumbTitle={quiz.title}>
+    <Layout>
       <section className="pt-60 pb-120">
         <div className="container" style={{ maxWidth: 860 }}>
           <Link

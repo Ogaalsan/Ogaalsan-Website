@@ -1,4 +1,5 @@
 import Layout from "@/components/layout/Layout";
+import PageIntro from "@/components/layout/PageIntro";
 import Link from "next/link";
 import ServiceCard from "@/components/services/ServiceCard";
 import ContentLoader from "@/components/common/ContentLoader";
@@ -13,25 +14,18 @@ export default function Services() {
   );
 
   return (
-    <Layout breadcrumbTitle="Our Services">
-      <section
-        className="services-area-five inner-services-bg"
-        data-background="/assets/img/bg/inner_services_bg.jpg"
-      >
+    <Layout headTitle="Our Services">
+      <section className="ogaalsan-page">
         <div className="container">
-          <div className="row justify-content-center">
-            <div className="col-xl-6 col-lg-8 col-md-10">
-              <div className="section-title-two text-center mb-50">
-                <h2 className="title">
-                  Our ICT &amp; Digital Consultancy Services
-                </h2>
-                <p>
-                  Explore our three core service areas — ICT Solutions,
-                  Business Development, and Training &amp; Capacity Building.
-                </p>
-              </div>
-            </div>
-          </div>
+          <PageIntro
+            crumbs={[
+              { href: "/", label: "Home" },
+              { label: "Services" },
+            ]}
+            eyebrow="For organisations"
+            title="ICT & digital consultancy services"
+            description="Explore our three core service areas — ICT Solutions, Business Development, and Capacity Building."
+          />
 
           <div className="row justify-content-center mb-50 align-items-stretch">
             {SERVICE_DIVISIONS.map((division) => (

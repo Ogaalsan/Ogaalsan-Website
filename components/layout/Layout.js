@@ -3,13 +3,12 @@ import { useEffect, useState } from "react"
 import BackToTop from '../elements/BackToTop'
 import WhatsAppWidget from '../common/WhatsAppWidget'
 import DataBg from "../elements/DataBg"
-import Breadcrumb from './Breadcrumb'
 import PageHead from './PageHead'
 import Footer2 from './footer/Footer2'
 import Header1 from "./header/Header1"
 import SearchPopup from "./SearchPopup"
 
-export default function Layout({ headTitle, breadcrumbTitle, children }) {
+export default function Layout({ headTitle, children }) {
     const [scroll, setScroll] = useState(0)
     const [isMobileMenu, setMobileMenu] = useState(false)
     const handleMobileMenu = () => {
@@ -81,7 +80,6 @@ export default function Layout({ headTitle, breadcrumbTitle, children }) {
             <SearchPopup isSearch={isSearch} handleSearch={handleSearch} />
 
             <main className="fix">
-                {breadcrumbTitle && <Breadcrumb breadcrumbTitle={breadcrumbTitle} />}
                 {children}
             </main>
 

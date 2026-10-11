@@ -1284,6 +1284,96 @@ html[data-theme="dark"] .ogaalsan-header.header-style-two.ogaalsan-header--over-
   }
 }
 
+/* Shared light page intro (replaces dark breadcrumb banners) */
+.ogaalsan-page {
+  padding: 110px 0 80px;
+  background: #f4f6f9;
+}
+
+.ogaalsan-page-intro {
+  max-width: 40rem;
+  margin-bottom: 32px;
+}
+
+.ogaalsan-page-intro--center {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.ogaalsan-page-intro__crumbs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 18px;
+  font-size: 0.8125rem;
+  color: #8b9db5;
+}
+
+.ogaalsan-page-intro--center .ogaalsan-page-intro__crumbs {
+  justify-content: center;
+}
+
+.ogaalsan-page-intro__crumb {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ogaalsan-page-intro__crumbs a {
+  color: #8b9db5 !important;
+  text-decoration: none !important;
+}
+
+.ogaalsan-page-intro__crumbs a:hover {
+  color: #3fa9f5 !important;
+}
+
+.ogaalsan-page-intro__eyebrow {
+  display: inline-block;
+  margin-bottom: 8px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #3fa9f5;
+}
+
+.ogaalsan-page-intro__title {
+  margin: 0 0 10px;
+  color: #152033 !important;
+  font-size: clamp(1.5rem, 2.2vw, 1.85rem) !important;
+  font-weight: 700 !important;
+  line-height: 1.25 !important;
+}
+
+.ogaalsan-page-intro__desc {
+  margin: 0;
+  color: #5a6b84;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+html[data-theme="dark"] .ogaalsan-page {
+  background: #0d1421;
+}
+
+html[data-theme="dark"] .ogaalsan-page-intro__title {
+  color: #e8eef8 !important;
+}
+
+html[data-theme="dark"] .ogaalsan-page-intro__desc,
+html[data-theme="dark"] .ogaalsan-page-intro__crumbs {
+  color: #8b9bb3;
+}
+
+/* Sharper nav dropdowns (less AI pill look) */
+.ogaalsan-header.header-style-two .navbar-wrap > ul > li > .sub-menu {
+  border-radius: 4px;
+  box-shadow: 0 8px 24px rgba(21, 32, 51, 0.1);
+}
+
 /* Contact page — clean, no hero banner / circle ornaments */
 .ogaalsan-contact {
   padding: 110px 0 80px;

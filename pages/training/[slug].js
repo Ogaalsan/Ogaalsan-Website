@@ -101,13 +101,13 @@ export default function TrainingDetail({ training }) {
 
   if (!training) {
     return (
-      <Layout breadcrumbTitle="Training">
-        <section className="blog-area pt-120 pb-120">
+      <Layout headTitle="Open Programs">
+        <section className="ogaalsan-page">
           <div className="container text-center">
-            <h3>Training not found</h3>
-            <p>The training you are looking for is not available.</p>
+            <h3>Program not found</h3>
+            <p>The program you are looking for is not available.</p>
             <Link href="/training" className="btn btn-three mt-20">
-              Back to Trainings
+              Back to Open Programs
             </Link>
           </div>
         </section>
@@ -116,9 +116,16 @@ export default function TrainingDetail({ training }) {
   }
 
   return (
-    <Layout breadcrumbTitle={training.title}>
-      <section className="inner-contact-area pt-120 pb-120">
+    <Layout headTitle={training.title}>
+      <section className="inner-contact-area ogaalsan-page">
         <div className="container">
+          <nav className="ogaalsan-page-intro__crumbs" aria-label="Breadcrumb">
+            <Link href="/">Home</Link>
+            <span aria-hidden="true">/</span>
+            <Link href="/training">Open Programs</Link>
+            <span aria-hidden="true">/</span>
+            <span>{training.title}</span>
+          </nav>
           <div className="row">
             <div className="col-lg-6">
               <div className="training-detail">
@@ -129,7 +136,7 @@ export default function TrainingDetail({ training }) {
                     style={{
                       width: "100%",
                       height: "auto",
-                      borderRadius: "12px",
+                      borderRadius: "4px",
                     }}
                   />
                 </div>

@@ -1,4 +1,5 @@
 import Layout from "@/components/layout/Layout";
+import PageIntro from "@/components/layout/PageIntro";
 import Link from "next/link";
 import Image from "next/image";
 import { SERVICE_DIVISIONS } from "@/lib/serviceDivisions";
@@ -7,9 +8,19 @@ export default function ServiceDivisionPage({ division }) {
   if (!division) return null;
 
   return (
-    <Layout breadcrumbTitle={division.title} headTitle={division.title}>
-      <section className="services-details-area pt-120 pb-120">
+    <Layout headTitle={division.title}>
+      <section className="services-details-area ogaalsan-page">
         <div className="container">
+          <PageIntro
+            crumbs={[
+              { href: "/", label: "Home" },
+              { href: "/services", label: "Services" },
+              { label: division.shortTitle || division.title },
+            ]}
+            eyebrow="Services"
+            title={division.title}
+            description={division.eyebrow}
+          />
           <div className="row justify-content-center">
             <div className="col-71 order-0 order-lg-2">
               <div className="services-details-wrap">
@@ -20,7 +31,7 @@ export default function ServiceDivisionPage({ division }) {
                     width={900}
                     height={520}
                     priority
-                    style={{ width: "100%", height: "auto", borderRadius: 10 }}
+                    style={{ width: "100%", height: "auto", borderRadius: 4 }}
                   />
                 </div>
                 <div className="services-details-content">

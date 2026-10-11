@@ -112,7 +112,7 @@ export default function CourseRegister() {
 
   if (authLoading || !isAuthenticated) {
     return (
-      <Layout breadcrumbTitle="Course Registration">
+      <Layout>
         <ContentLoader message="Checking your account..." />
       </Layout>
     );
@@ -120,7 +120,7 @@ export default function CourseRegister() {
 
   if (!ready || loading) {
     return (
-      <Layout breadcrumbTitle="Course Registration">
+      <Layout>
         <ContentLoader message="Loading course..." />
       </Layout>
     );
@@ -128,7 +128,7 @@ export default function CourseRegister() {
 
   if (!course) {
     return (
-      <Layout breadcrumbTitle="Course Registration">
+      <Layout>
         <section className="pt-120 pb-120 text-center">
           <div className="container">
             <h2>Course not found.</h2>
@@ -151,7 +151,7 @@ export default function CourseRegister() {
   }
 
   return (
-    <Layout breadcrumbTitle="Course Registration">
+    <Layout>
       <section className="inner-contact-area pt-120 pb-120">
         <div className="container">
           <div className="row justify-content-center">

@@ -13,8 +13,20 @@ export default function Blog() {
   return (
     <>
       <Layout headTitle="Latest Blog">
-        <section className="blog-area pt-120 pb-120">
+        <section className="blog-area ogaalsan-page">
           <div className="container">
+            <div className="ogaalsan-page-intro">
+              <nav className="ogaalsan-page-intro__crumbs" aria-label="Breadcrumb">
+                <Link href="/">Home</Link>
+                <span aria-hidden="true">/</span>
+                <span>Blog</span>
+              </nav>
+              <span className="ogaalsan-page-intro__eyebrow">Insights</span>
+              <h1 className="ogaalsan-page-intro__title">Latest from the blog</h1>
+              <p className="ogaalsan-page-intro__desc">
+                Updates, ideas, and stories from OgaalSan Consultancy.
+              </p>
+            </div>
             <div className="inner-blog-wrap">
               <div className="row justify-content-center">
                 <div className="col-71">

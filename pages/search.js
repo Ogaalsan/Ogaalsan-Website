@@ -1,4 +1,5 @@
 import Layout from "@/components/layout/Layout";
+import PageIntro from "@/components/layout/PageIntro";
 import ContentLoader from "@/components/common/ContentLoader";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -41,76 +42,53 @@ export default function SearchPage() {
   }, [router.isReady, query]);
 
   return (
-    <Layout breadcrumbTitle="Search">
-      <section className="blog-area pt-120 pb-120">
+    <Layout headTitle="Search">
+      <section className="ogaalsan-page">
         <div className="container">
-          <div className="row justify-content-center">
-            <div className="col-lg-8">
-              <div className="section-title text-center mb-50">
-                <span className="sub-title">Search Results</span>
-                <h2 className="title">
-                  {query ? `Results for "${query}"` : "Search the website"}
-                </h2>
-                {!query && (
-                  <p>
-                    Use the search icon in the header to find courses,
-                    training, services, blog posts, and reports.
-                  </p>
-                )}
-              </div>
-            </div>
-          </div>
+          <PageIntro
+            crumbs={[
+              { href: "/", label: "Home" },
+              { label: "Search" },
+            ]}
+            eyebrow="Search"
+            title={query ? `Results for “${query}”` : "Search the website"}
+            description={
+              query
+                ? undefined
+                : "Use the search icon in the header to find courses, programs, services, blog posts, and reports."
+            }
+          />
 
-          {loading && (
-            <div className="row justify-content-center">
-              <div className="col-lg-8">
-                <ContentLoader message="Searching..." />
-              </div>
-            </div>
-          )}
+          {loading ? <ContentLoader message="Searching..." /> : null}
 
-          {!loading && query && results.length === 0 && (
-            <div className="row justify-content-center">
-              <div className="col-lg-8 text-center">
-                <p>No results found for &quot;{query}&quot;.</p>
-                <Link href="/contact" className="btn btn-three mt-20">
-                  Contact Us
-                </Link>
-              </div>
-            </div>
-          )}
+          {!loading && query && results.length === 0 ? (
+            <p className="ogaalsan-reports__status">No results found.</p>
+          ) : null}
 
-          {!loading && results.length > 0 && (
-            <div className="row justify-content-center">
-              <div className="col-lg-8">
-                <ul className="list-wrap ogaalsan-search-results">
-                  {results.map((item) => (
-                    <li key={`${item.type}-${item.href}-${item.title}`}>
-                      <span className="ogaalsan-search-results__type">
-                        {item.type}
-                      </span>
-                      <h3 className="ogaalsan-search-results__title">
-                        {item.external ? (
-                          <a
-                            href={item.href}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            {item.title}
-                          </a>
-                        ) : (
-                          <Link href={item.href}>{item.title}</Link>
-                        )}
-                      </h3>
-                      {item.description ? (
-                        <p>{item.description}</p>
-                      ) : null}
-                    </li>
-                  ))}
-                </ul>
-              </div>
+          {!loading && results.length > 0 ? (
+            <div className="ogaalsan-reports__grid">
+              {results.map((item) => (
+                <article className="resource-card" key={`${item.type}-${item.title}`}>
+                  <div className="resource-card__body">
+                    <span className="ogaalsan-page-intro__eyebrow">{item.type}</span>
+                    <h2 className="resource-card__title">{item.title}</h2>
+                    {item.description ? (
+                      <p className="resource-card__desc">{item.description}</p>
+                    ) : null}
+                    <Link
+                      href={item.href}
+                      className="resource-card__link"
+                      target={item.external ? "_blank" : undefined}
+                      rel={item.external ? "noopener noreferrer" : undefined}
+                    >
+                      Open
+                      <i className="fas fa-arrow-right" aria-hidden="true" />
+                    </Link>
+                  </div>
+                </article>
+              ))}
             </div>
-          )}
+          ) : null}
         </div>
       </section>
     </Layout>

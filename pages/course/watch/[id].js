@@ -188,7 +188,7 @@ export default function CourseWatch() {
     : null;
 
   return (
-    <Layout breadcrumbTitle={course.title}>
+    <Layout>
       <section className="course-watch-area pt-60 pb-120">
         <div className="container-fluid" style={{ maxWidth: "1600px" }}>
           {!access?.canAccess && (

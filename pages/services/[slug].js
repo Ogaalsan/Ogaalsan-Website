@@ -27,7 +27,7 @@ export default function ServiceDetails() {
 
   if (!ready || serviceLoading || listLoading) {
     return (
-      <Layout breadcrumbTitle="Service Details">
+      <Layout headTitle="Service Details">
         <ContentLoader message="Loading service..." />
       </Layout>
     );
@@ -35,8 +35,8 @@ export default function ServiceDetails() {
 
   if (!service) {
     return (
-      <Layout breadcrumbTitle="Service Details">
-        <section className="pt-120 pb-120 text-center">
+      <Layout headTitle="Service Details">
+        <section className="ogaalsan-page text-center">
           <div className="container">
             <h2>Service not found.</h2>
             <Link href="/services" className="btn mt-30">
@@ -49,9 +49,16 @@ export default function ServiceDetails() {
   }
 
   return (
-    <Layout breadcrumbTitle="Service Details">
-      <section className="services-details-area pt-120 pb-120">
+    <Layout headTitle={service.title}>
+      <section className="services-details-area ogaalsan-page">
         <div className="container">
+          <nav className="ogaalsan-page-intro__crumbs" aria-label="Breadcrumb">
+            <Link href="/">Home</Link>
+            <span aria-hidden="true">/</span>
+            <Link href="/services">Services</Link>
+            <span aria-hidden="true">/</span>
+            <span>{service.title}</span>
+          </nav>
           <div className="row justify-content-center">
             <div className="col-71 order-0 order-lg-2">
               <div className="services-details-wrap">
