@@ -60,22 +60,35 @@ export default function CourseCurriculum({ course, canTakeQuizzes = false }) {
   };
 
   if (!isOnline) {
+    const topicCount = sections.length;
+
     return (
       <div className="course-curriculum course-curriculum--offline">
-        <h3 className="course-curriculum__heading">What Will Be Covered</h3>
-        <p className="course-curriculum__intro">
-          Topics and sessions for this instructor-led course, managed from the
-          admin curriculum.
-        </p>
+        <div className="course-curriculum__header">
+          <div>
+            <h3 className="course-curriculum__heading">What will be covered</h3>
+            <p className="course-curriculum__intro">
+              {topicCount} {topicCount === 1 ? "topic" : "topics"} for this
+              professional training course
+            </p>
+          </div>
+          {/* <span className="course-curriculum__format-badge">Instructor-led</span> */}
+        </div>
         <ol className="course-curriculum__topics">
           {sections.map((section, index) => (
             <li key={section.id || index} className="course-curriculum__topic">
               <span className="course-curriculum__topic-index">
                 {String(index + 1).padStart(2, "0")}
               </span>
-              <div>
-                <strong>{section.title}</strong>
-                {section.description ? <p>{section.description}</p> : null}
+              <div className="course-curriculum__topic-body">
+                <strong className="course-curriculum__topic-title">
+                  {section.title}
+                </strong>
+                {section.description ? (
+                  <p className="course-curriculum__topic-desc">
+                    {section.description}
+                  </p>
+                ) : null}
               </div>
             </li>
           ))}
@@ -149,9 +162,8 @@ export default function CourseCurriculum({ course, canTakeQuizzes = false }) {
                     section.lessons.map((lesson, lessonIndex) => (
                       <Fragment key={lesson.id || lessonIndex}>
                         <li
-                          className={`course-curriculum__lesson${
-                            lesson.isFreePreview ? " is-preview" : ""
-                          }${lesson.isLocked ? " is-locked" : ""}`}
+                          className={`course-curriculum__lesson${lesson.isFreePreview ? " is-preview" : ""
+                            }${lesson.isLocked ? " is-locked" : ""}`}
                         >
                           <span className="course-curriculum__lesson-icon">
                             <i
