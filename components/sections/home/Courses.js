@@ -12,8 +12,7 @@ export default function Courses({ courses = [], loading = false }) {
               <span className="sub-title">Online Courses</span>
               <h2 className="title">Featured courses</h2>
               <p className="mb-0">
-                Published courses from the admin — enroll and continue learning
-                in your portal.
+                Published courses from the admin — enroll and start learning.
               </p>
             </div>
           </div>

@@ -263,57 +263,12 @@
   color: #8b9db5 !important;
 }
 
-/* Homepage Learn band — separates e-learning from consultancy */
-.ogaalsan-learn-band {
-  padding: 72px 0 28px;
-  background: #f3f7fb;
-}
-
-.ogaalsan-learn-band__intro {
-  max-width: 40rem;
-  margin-bottom: 28px;
-}
-
-.ogaalsan-learn-band__intro .sub-title {
-  display: inline-block;
-  margin-bottom: 8px;
-  color: #3fa9f5;
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-.ogaalsan-learn-band__intro .title {
-  margin: 0 0 10px;
-  color: #152033;
-  font-size: clamp(1.45rem, 2.2vw, 1.9rem);
-  font-weight: 700;
-}
-
-.ogaalsan-learn-band__intro p {
-  margin: 0;
-  color: #5a6b84;
-  font-size: 0.975rem;
-  line-height: 1.65;
-}
-
 .ogaalsan-home-courses {
   background: #f3f7fb;
-  padding-top: 40px !important;
 }
 
-html[data-theme="dark"] .ogaalsan-learn-band,
 html[data-theme="dark"] .ogaalsan-home-courses {
   background: #0f1828;
-}
-
-html[data-theme="dark"] .ogaalsan-learn-band__intro .title {
-  color: #e8eef8;
-}
-
-html[data-theme="dark"] .ogaalsan-learn-band__intro p {
-  color: #a8b4c8;
 }
 
 html[data-theme="dark"] .ogaalsan-header.header-style-two .navbar-wrap > ul > li > .sub-menu > li.sub-menu__hint span,

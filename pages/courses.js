@@ -1,6 +1,5 @@
 import Layout from "@/components/layout/Layout";
 import CourseCard from "@/components/courses/CourseCard";
-import LearnerPortalBanner from "@/components/courses/LearnerPortalBanner";
 import ContentLoader from "@/components/common/ContentLoader";
 import Link from "next/link";
 import { fetchPublishedCourses } from "@/lib/courses";
@@ -44,15 +43,8 @@ export default function Courses() {
             <h1 className="ogaalsan-page-intro__title">Online Courses</h1>
             <p className="ogaalsan-page-intro__desc">
               Self-paced and instructor-supported courses in ICT, digital
-              skills, and professional development — track progress in your
-              learning portal after you enroll.
+              skills, and professional development.
             </p>
-          </div>
-
-          <div className="row justify-content-center mb-40">
-            <div className="col-xl-10">
-              <LearnerPortalBanner compact />
-            </div>
           </div>
 
           {loading ? (
