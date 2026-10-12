@@ -1,4 +1,5 @@
 import { useEffect, useState, Fragment } from "react";
+import { createPortal } from "react-dom";
 import Link from "next/link";
 import { extractYouTubeId } from "@/lib/courses";
 
@@ -15,12 +16,17 @@ export default function CourseCurriculum({ course, canTakeQuizzes = false }) {
   const sections = course?.sections || [];
   const isOnline = course?.format === "online";
   const [previewLesson, setPreviewLesson] = useState(null);
+  const [mounted, setMounted] = useState(false);
   const [openIds, setOpenIds] = useState(() =>
     sections.length ? [sections[0].id] : []
   );
   const previewVideoId = extractYouTubeId(
     previewLesson?.videoUrl || previewLesson?.video_url
   );
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     if (!previewLesson) return undefined;
@@ -271,52 +277,60 @@ export default function CourseCurriculum({ course, canTakeQuizzes = false }) {
         </div>
       )}
 
-      {previewLesson && (
-        <div
-          className="course-preview-modal"
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="course-preview-modal-title"
-          onClick={() => setPreviewLesson(null)}
-        >
+      {mounted &&
+        previewLesson &&
+        createPortal(
           <div
-            className="course-preview-modal__content"
-            onClick={(event) => event.stopPropagation()}
+            className="course-preview-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="course-preview-modal-title"
+            onClick={() => setPreviewLesson(null)}
           >
-            <div className="course-preview-modal__header">
-              <div>
-                <span className="course-preview-modal__eyebrow">Free preview</span>
-                <h4 id="course-preview-modal-title" className="course-preview-modal__title">
-                  {previewLesson.title}
-                </h4>
+            <div
+              className="course-preview-modal__content"
+              onClick={(event) => event.stopPropagation()}
+            >
+              <div className="course-preview-modal__header">
+                <div>
+                  <span className="course-preview-modal__eyebrow">
+                    Free preview
+                  </span>
+                  <h4
+                    id="course-preview-modal-title"
+                    className="course-preview-modal__title"
+                  >
+                    {previewLesson.title}
+                  </h4>
+                </div>
+                <button
+                  type="button"
+                  className="course-preview-modal__close"
+                  aria-label="Close preview"
+                  onClick={() => setPreviewLesson(null)}
+                >
+                  <i className="fas fa-times" aria-hidden="true" />
+                </button>
               </div>
-              <button
-                type="button"
-                className="course-preview-modal__close"
-                aria-label="Close preview"
-                onClick={() => setPreviewLesson(null)}
-              >
-                <i className="fas fa-times" aria-hidden="true" />
-              </button>
+              {previewVideoId ? (
+                <div className="course-preview-modal__frame">
+                  <iframe
+                    src={`https://www.youtube.com/embed/${previewVideoId}?autoplay=1&rel=0&modestbranding=1`}
+                    title={previewLesson.title}
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                </div>
+              ) : (
+                <div className="course-preview-modal__empty">
+                  Preview video is not available for this lesson yet.
+                </div>
+              )}
             </div>
-            {previewVideoId ? (
-              <div className="course-preview-modal__frame">
-                <iframe
-                  src={`https://www.youtube.com/embed/${previewVideoId}?autoplay=1&rel=0&modestbranding=1`}
-                  title={previewLesson.title}
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                />
-              </div>
-            ) : (
-              <div className="course-preview-modal__empty">
-                Preview video is not available for this lesson yet.
-              </div>
-            )}
-          </div>
-        </div>
-      )}
+          </div>,
+          document.body
+        )}
     </div>
   );
 }

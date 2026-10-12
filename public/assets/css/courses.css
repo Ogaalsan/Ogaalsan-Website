@@ -480,6 +480,107 @@
   color: #22428f;
 }
 
+.course-preview-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(15, 28, 48, 0.62);
+}
+
+.course-preview-modal__content {
+  width: min(920px, 100%);
+  background: #fff;
+  border: 1px solid #e6eef6;
+  border-radius: 4px;
+  box-shadow: 0 24px 64px rgba(21, 32, 51, 0.28);
+  overflow: hidden;
+}
+
+.course-preview-modal__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 20px 14px;
+}
+
+.course-preview-modal__eyebrow {
+  display: inline-block;
+  margin-bottom: 6px;
+  color: #3fa9f5;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.course-preview-modal__title {
+  margin: 0;
+  color: #152033;
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.course-preview-modal__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  border: 1px solid #e6eef6;
+  border-radius: 4px;
+  background: #f4f6f9;
+  color: #334770;
+  cursor: pointer;
+}
+
+.course-preview-modal__close:hover,
+.course-preview-modal__close:focus {
+  background: #3fa9f5;
+  border-color: #3fa9f5;
+  color: #fff;
+}
+
+.course-preview-modal__frame {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: #0d1421;
+  border-top: 1px solid #e6eef6;
+}
+
+.course-preview-modal__frame iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.course-preview-modal__empty {
+  padding: 40px 24px;
+  text-align: center;
+  color: #5a6b84;
+  background: #f4f6f9;
+  border-top: 1px solid #e6eef6;
+}
+
+@media (max-width: 640px) {
+  .course-preview-modal {
+    padding: 12px;
+    align-items: flex-end;
+  }
+
+  .course-preview-modal__header {
+    padding: 14px 14px 12px;
+  }
+}
+
 .course-curriculum__locked-hint {
   color: #a0aec0;
   font-size: 0.75rem;
