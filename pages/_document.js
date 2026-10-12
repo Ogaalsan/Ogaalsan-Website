@@ -16,7 +16,7 @@ export default function Document() {
         />
         <link rel="preconnect" href="https://fonts.bunny.net" />
         <link
-          href="https://fonts.bunny.net/css?family=plus-jakarta-sans:300,400,500,600|urbanist:300,400,500,600,700,800"
+          href="https://fonts.bunny.net/css?family=montserrat:300,400,500,600,700,800"
           rel="stylesheet"
         />
         {/* Critical CSS - load first */}

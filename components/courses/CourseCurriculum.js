@@ -1,4 +1,6 @@
 import { useEffect, useState, Fragment } from "react";
+import { createPortal } from "react-dom";
+import Link from "next/link";
 import { extractYouTubeId } from "@/lib/courses";
 
 function LessonMeta({ lesson }) {
@@ -10,16 +12,21 @@ function LessonMeta({ lesson }) {
   return bits.length ? bits.join(" · ") : "Lesson";
 }
 
-export default function CourseCurriculum({ course }) {
+export default function CourseCurriculum({ course, canTakeQuizzes = false }) {
   const sections = course?.sections || [];
   const isOnline = course?.format === "online";
   const [previewLesson, setPreviewLesson] = useState(null);
+  const [mounted, setMounted] = useState(false);
   const [openIds, setOpenIds] = useState(() =>
     sections.length ? [sections[0].id] : []
   );
   const previewVideoId = extractYouTubeId(
     previewLesson?.videoUrl || previewLesson?.video_url
   );
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     if (!previewLesson) return undefined;
@@ -53,22 +60,35 @@ export default function CourseCurriculum({ course }) {
   };
 
   if (!isOnline) {
+    const topicCount = sections.length;
+
     return (
       <div className="course-curriculum course-curriculum--offline">
-        <h3 className="course-curriculum__heading">What Will Be Covered</h3>
-        <p className="course-curriculum__intro">
-          Topics and sessions for this instructor-led course, managed from the
-          admin curriculum.
-        </p>
+        <div className="course-curriculum__header">
+          <div>
+            <h3 className="course-curriculum__heading">What will be covered</h3>
+            <p className="course-curriculum__intro">
+              {topicCount} {topicCount === 1 ? "topic" : "topics"} for this
+              professional training course
+            </p>
+          </div>
+          {/* <span className="course-curriculum__format-badge">Instructor-led</span> */}
+        </div>
         <ol className="course-curriculum__topics">
           {sections.map((section, index) => (
             <li key={section.id || index} className="course-curriculum__topic">
               <span className="course-curriculum__topic-index">
                 {String(index + 1).padStart(2, "0")}
               </span>
-              <div>
-                <strong>{section.title}</strong>
-                {section.description ? <p>{section.description}</p> : null}
+              <div className="course-curriculum__topic-body">
+                <strong className="course-curriculum__topic-title">
+                  {section.title}
+                </strong>
+                {section.description ? (
+                  <p className="course-curriculum__topic-desc">
+                    {section.description}
+                  </p>
+                ) : null}
               </div>
             </li>
           ))}
@@ -110,14 +130,18 @@ export default function CourseCurriculum({ course }) {
               >
                 <span className="course-curriculum__section-label">
                   <span className="course-curriculum__section-index">
-                    Section {sectionIndex + 1}
+                    {String(sectionIndex + 1).padStart(2, "0")}
                   </span>
-                  <strong>{section.title}</strong>
-                  {section.description ? (
-                    <span className="course-curriculum__section-desc">
-                      {section.description}
+                  <span className="course-curriculum__section-copy">
+                    <span className="course-curriculum__section-title">
+                      {section.title}
                     </span>
-                  ) : null}
+                    {section.description ? (
+                      <span className="course-curriculum__section-desc">
+                        {section.description}
+                      </span>
+                    ) : null}
+                  </span>
                 </span>
                 <span className="course-curriculum__section-meta">
                   {lessonCount} {lessonCount === 1 ? "lesson" : "lessons"}
@@ -138,9 +162,8 @@ export default function CourseCurriculum({ course }) {
                     section.lessons.map((lesson, lessonIndex) => (
                       <Fragment key={lesson.id || lessonIndex}>
                         <li
-                          className={`course-curriculum__lesson${
-                            lesson.isFreePreview ? " is-preview" : ""
-                          }${lesson.isLocked ? " is-locked" : ""}`}
+                          className={`course-curriculum__lesson${lesson.isFreePreview ? " is-preview" : ""
+                            }${lesson.isLocked ? " is-locked" : ""}`}
                         >
                           <span className="course-curriculum__lesson-icon">
                             <i
@@ -188,10 +211,17 @@ export default function CourseCurriculum({ course }) {
                             </span>
                             <div className="course-curriculum__lesson-body">
                               <div className="course-curriculum__lesson-title">
-                                {quiz.title}
+                                {canTakeQuizzes ? (
+                                  <Link href={`/course/quiz/${quiz.id}`}>
+                                    {quiz.title}
+                                  </Link>
+                                ) : (
+                                  quiz.title
+                                )}
                               </div>
                               <div className="course-curriculum__lesson-meta">
                                 Lesson quiz · {quiz.questionCount} questions · Pass {quiz.passingScore}%
+                                {canTakeQuizzes ? " · Take quiz" : ""}
                               </div>
                             </div>
                           </li>
@@ -209,10 +239,17 @@ export default function CourseCurriculum({ course }) {
                       </span>
                       <div className="course-curriculum__lesson-body">
                         <div className="course-curriculum__lesson-title">
-                          {quiz.title}
+                          {canTakeQuizzes ? (
+                            <Link href={`/course/quiz/${quiz.id}`}>
+                              {quiz.title}
+                            </Link>
+                          ) : (
+                            quiz.title
+                          )}
                         </div>
                         <div className="course-curriculum__lesson-meta">
                           Section quiz · {quiz.questionCount} questions · Pass {quiz.passingScore}%
+                          {canTakeQuizzes ? " · Take quiz" : ""}
                         </div>
                       </div>
                     </li>
@@ -234,9 +271,16 @@ export default function CourseCurriculum({ course }) {
                   <i className="fas fa-flag-checkered" aria-hidden="true" />
                 </span>
                 <div className="course-curriculum__lesson-body">
-                  <div className="course-curriculum__lesson-title">{quiz.title}</div>
+                  <div className="course-curriculum__lesson-title">
+                    {canTakeQuizzes ? (
+                      <Link href={`/course/quiz/${quiz.id}`}>{quiz.title}</Link>
+                    ) : (
+                      quiz.title
+                    )}
+                  </div>
                   <div className="course-curriculum__lesson-meta">
                     Course quiz · {quiz.questionCount} questions · Pass {quiz.passingScore}%
+                    {canTakeQuizzes ? " · Take quiz" : ""}
                   </div>
                 </div>
               </li>
@@ -245,52 +289,60 @@ export default function CourseCurriculum({ course }) {
         </div>
       )}
 
-      {previewLesson && (
-        <div
-          className="course-preview-modal"
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="course-preview-modal-title"
-          onClick={() => setPreviewLesson(null)}
-        >
+      {mounted &&
+        previewLesson &&
+        createPortal(
           <div
-            className="course-preview-modal__content"
-            onClick={(event) => event.stopPropagation()}
+            className="course-preview-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="course-preview-modal-title"
+            onClick={() => setPreviewLesson(null)}
           >
-            <div className="course-preview-modal__header">
-              <div>
-                <span className="course-preview-modal__eyebrow">Free preview</span>
-                <h4 id="course-preview-modal-title" className="course-preview-modal__title">
-                  {previewLesson.title}
-                </h4>
+            <div
+              className="course-preview-modal__content"
+              onClick={(event) => event.stopPropagation()}
+            >
+              <div className="course-preview-modal__header">
+                <div>
+                  <span className="course-preview-modal__eyebrow">
+                    Free preview
+                  </span>
+                  <h4
+                    id="course-preview-modal-title"
+                    className="course-preview-modal__title"
+                  >
+                    {previewLesson.title}
+                  </h4>
+                </div>
+                <button
+                  type="button"
+                  className="course-preview-modal__close"
+                  aria-label="Close preview"
+                  onClick={() => setPreviewLesson(null)}
+                >
+                  <i className="fas fa-times" aria-hidden="true" />
+                </button>
               </div>
-              <button
-                type="button"
-                className="course-preview-modal__close"
-                aria-label="Close preview"
-                onClick={() => setPreviewLesson(null)}
-              >
-                <i className="fas fa-times" aria-hidden="true" />
-              </button>
+              {previewVideoId ? (
+                <div className="course-preview-modal__frame">
+                  <iframe
+                    src={`https://www.youtube.com/embed/${previewVideoId}?autoplay=1&rel=0&modestbranding=1`}
+                    title={previewLesson.title}
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                </div>
+              ) : (
+                <div className="course-preview-modal__empty">
+                  Preview video is not available for this lesson yet.
+                </div>
+              )}
             </div>
-            {previewVideoId ? (
-              <div className="course-preview-modal__frame">
-                <iframe
-                  src={`https://www.youtube.com/embed/${previewVideoId}?autoplay=1&rel=0&modestbranding=1`}
-                  title={previewLesson.title}
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                />
-              </div>
-            ) : (
-              <div className="course-preview-modal__empty">
-                Preview video is not available for this lesson yet.
-              </div>
-            )}
-          </div>
-        </div>
-      )}
+          </div>,
+          document.body
+        )}
     </div>
   );
 }

@@ -1,23 +1,36 @@
 import Link from "next/link";
 
-export default function AuthCard({
-  title,
-  subtitle,
-  children,
-  footer,
-}) {
+export default function AuthCard({ title, subtitle, children, footer }) {
   return (
-    <section className="inner-contact-area pt-120 pb-120">
+    <section className="auth-page">
       <div className="container">
-        <div className="row justify-content-center">
-          <div className="col-lg-6 col-md-8">
-            <div className="inner-contact-info">
-              <h2 className="title">{title}</h2>
-              {subtitle && <p>{subtitle}</p>}
-              <div className="contact-form contact-form-inner">{children}</div>
-              {footer && <div className="auth-card-footer mt-20">{footer}</div>}
+        <div className="auth-layout">
+          <div className="auth-layout__intro">
+            <Link href="/" className="auth-shell__logo">
+              <img
+                src="/assets/img/logo/logo-ogalsan.png"
+                alt="OgaalSan Consultancy"
+              />
+            </Link>
+            <p className="auth-layout__brand">OgaalSan Learn</p>
+            <h1 className="auth-shell__title">{title}</h1>
+            {subtitle ? (
+              <p className="auth-shell__subtitle">{subtitle}</p>
+            ) : null}
+          </div>
+
+          <div className="auth-shell auth-shell--form-only">
+            <div className="auth-shell__panel">
+              <div className="auth-shell__body">{children}</div>
+              {footer ? (
+                <div className="auth-card-footer">{footer}</div>
+              ) : null}
             </div>
           </div>
+
+          <p className="auth-back-link">
+            <Link href="/">Back to main site</Link>
+          </p>
         </div>
       </div>
     </section>
@@ -26,10 +39,8 @@ export default function AuthCard({
 
 export function AuthFooterLink({ href, children }) {
   return (
-    <p className="mb-0 text-center">
-      <Link href={href} style={{ color: "#3FA9F5", fontWeight: 600 }}>
-        {children}
-      </Link>
+    <p className="auth-footer-link mb-0">
+      <Link href={href}>{children}</Link>
     </p>
   );
 }

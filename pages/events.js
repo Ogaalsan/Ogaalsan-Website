@@ -71,9 +71,9 @@ export default function Events() {
 
   return (
     <>
-      <Layout breadcrumbTitle="Events & Opportunities">
+      <Layout headTitle="Events & Opportunities">
         <div>
-          <section className="inner-contact-area pt-120 pb-120">
+          <section className="inner-contact-area ogaalsan-page">
             <div className="container">
               <div className="row align-items-center">
                 <div className="col-lg-6">

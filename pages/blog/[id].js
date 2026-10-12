@@ -1,5 +1,5 @@
 import Layout from "@/components/layout/Layout";
-import ContentLoader from "@/components/common/ContentLoader";
+import BlogDetailSkeleton from "@/components/blog/BlogDetailSkeleton";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -30,15 +30,15 @@ export default function BlogDetails() {
 
   if (!ready || postLoading) {
     return (
-      <Layout breadcrumbTitle="Blog Details">
-        <ContentLoader message="Loading blog post..." />
+      <Layout headTitle="Blog Details">
+        <BlogDetailSkeleton />
       </Layout>
     );
   }
 
   if (!blogPost) {
     return (
-      <Layout breadcrumbTitle="Blog Details">
+      <Layout headTitle="Blog Details">
         <section className="pt-120 pb-120 text-center">
           <div className="container">
             <h2>Post not found.</h2>
@@ -53,7 +53,7 @@ export default function BlogDetails() {
 
   return (
     <>
-      <Layout breadcrumbTitle="Blog Details">
+      <Layout headTitle={blogPost?.title || "Blog Details"}>
         <section className="blog-details-area pt-120 pb-120">
               <div className="container">
                 <div className="blog-details-wrap">

@@ -1,56 +1,118 @@
+/* Reports page */
+.ogaalsan-reports {
+  padding: 110px 0 80px;
+  background: #f4f6f9;
+}
+
+.ogaalsan-reports__crumbs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 28px;
+  font-size: 0.8125rem;
+  color: #8b9db5;
+}
+
+.ogaalsan-reports__crumbs a {
+  color: #8b9db5 !important;
+  text-decoration: none !important;
+}
+
+.ogaalsan-reports__crumbs a:hover {
+  color: #3fa9f5 !important;
+}
+
+.ogaalsan-reports__intro {
+  max-width: 36rem;
+  margin-bottom: 32px;
+}
+
+.ogaalsan-reports__eyebrow {
+  display: inline-block;
+  margin-bottom: 8px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #3fa9f5;
+}
+
+.ogaalsan-reports__title {
+  margin: 0 0 10px;
+  color: #152033 !important;
+  font-size: 1.75rem !important;
+  font-weight: 700 !important;
+  line-height: 1.25 !important;
+}
+
+.ogaalsan-reports__intro p {
+  margin: 0;
+  color: #5a6b84;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.ogaalsan-reports__status {
+  margin: 0;
+  color: #667085;
+  font-size: 0.95rem;
+}
+
+.ogaalsan-reports__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
 .resource-card {
   position: relative;
   display: flex;
   flex-direction: column;
   height: 100%;
-  margin-bottom: 30px;
+  margin-bottom: 0;
   background: #ffffff;
-  border: 1px solid var(--tg-border-color, #e1e5ee);
-  border-radius: 14px;
+  border: 1px solid #e6eef6;
+  border-radius: 4px;
   overflow: hidden;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: none;
+  transition: border-color 0.2s ease;
 }
 
 .resource-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 20px 45px rgba(34, 66, 143, 0.12);
+  transform: none;
+  box-shadow: none;
+  border-color: #3fa9f5;
 }
 
 .resource-card__icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 64px;
-  height: 64px;
-  margin: 28px auto 0;
-  border-radius: 50%;
-  font-size: 26px;
-  color: #3fa9f5;
-  background: rgba(63, 169, 245, 0.12);
+  display: none;
 }
 
 .resource-card--icon {
-  text-align: center;
+  text-align: left;
 }
 
 .resource-card__body {
   display: flex;
   flex-direction: column;
   flex: 1;
-  padding: 24px 24px 28px;
+  padding: 22px 22px 24px;
 }
 
 .resource-card__title {
-  margin-bottom: 12px;
-  font-size: 20px;
-  color: var(--tg-heading-font-color, #22428f);
+  margin: 0 0 10px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: #152033;
 }
 
 .resource-card__desc {
-  margin-bottom: 20px;
-  font-size: 15px;
-  line-height: 1.6;
-  color: var(--tg-paragraph-color, #334770);
+  margin: 0 0 18px;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: #5a6b84;
   flex: 1;
 }
 
@@ -58,18 +120,61 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  margin-top: auto;
+  font-size: 0.875rem;
   font-weight: 600;
-  color: #3fa9f5;
-  transition: gap 0.2s ease;
+  color: #3fa9f5 !important;
+  text-decoration: none !important;
 }
 
 .resource-card__link:hover {
-  color: #22428f;
-  gap: 12px;
+  color: #22428f !important;
+}
+
+.resource-card__link i {
+  font-size: 0.7rem;
 }
 
 .resource-card .btn i {
   margin-right: 8px;
+}
+
+@media (max-width: 991px) {
+  .ogaalsan-reports__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 575px) {
+  .ogaalsan-reports {
+    padding: 96px 0 56px;
+  }
+
+  .ogaalsan-reports__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+html[data-theme="dark"] .ogaalsan-reports {
+  background: #0d1421;
+}
+
+html[data-theme="dark"] .ogaalsan-reports__title {
+  color: #e8eef8 !important;
+}
+
+html[data-theme="dark"] .ogaalsan-reports__intro p,
+html[data-theme="dark"] .ogaalsan-reports__status,
+html[data-theme="dark"] .ogaalsan-reports__crumbs {
+  color: #8b9bb3;
+}
+
+html[data-theme="dark"] .resource-card__title {
+  color: #e8eef8 !important;
+}
+
+html[data-theme="dark"] .resource-card__desc {
+  color: #a8b4c8 !important;
 }
 
 .mt-30 {

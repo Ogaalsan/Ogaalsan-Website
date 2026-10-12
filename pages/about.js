@@ -5,10 +5,15 @@ import Image from "next/image";
 export default function About() {
   return (
     <>
-      <Layout breadcrumbTitle="About Us">
+      <Layout headTitle="About Us">
         <div>
-          <section className="about-area-seven pt-120 pb-120">
+          <section className="about-area-seven ogaalsan-page pb-120">
             <div className="container">
+              <nav className="ogaalsan-page-intro__crumbs" aria-label="Breadcrumb">
+                <Link href="/">Home</Link>
+                <span aria-hidden="true">/</span>
+                <span>About</span>
+              </nav>
               <div className="row align-items-center justify-content-center">
                 <div className="col-lg-6 col-md-9 order-0 order-lg-2">
                   <div className="about-img-seven-wrap about-img-seven-wrap--illustration ogaalsan-about-visual">
@@ -100,7 +105,7 @@ export default function About() {
                   <div className="section-title text-center mb-50">
                     <span className="sub-title">Vision, Mission &amp; Values</span>
                     <h2 className="title">
-                      What Drives Our Work Every Day
+                      What drives our work every day
                     </h2>
                   </div>
                 </div>

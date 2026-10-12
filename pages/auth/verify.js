@@ -58,38 +58,40 @@ export default function VerifyEmail() {
   };
 
   return (
-    <Layout breadcrumbTitle="Verify Email">
+    <Layout>
       <AuthCard
         title="Verify your email"
         subtitle="Enter the 4-digit code we sent to your email address."
         footer={
-          <AuthFooterLink href="/auth/sign-in">
-            Back to sign in
-          </AuthFooterLink>
+          <AuthFooterLink href="/auth/sign-in">Back to sign in</AuthFooterLink>
         }
       >
-        {error && (
+        {error ? (
           <div className="auth-alert auth-alert--error">{error}</div>
-        )}
-        {message && (
+        ) : null}
+        {message ? (
           <div className="auth-alert auth-alert--success">{message}</div>
-        )}
-        <form onSubmit={handleVerify}>
-          <div className="form-grp">
+        ) : null}
+        <form className="auth-form" onSubmit={handleVerify}>
+          <div className="auth-field">
+            <label htmlFor="verify-email">Email address</label>
             <input
+              id="verify-email"
               type="email"
               name="email"
-              placeholder="Email address *"
+              placeholder="you@example.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
             />
           </div>
-          <div className="form-grp">
+          <div className="auth-field">
+            <label htmlFor="verify-code">Verification code</label>
             <input
+              id="verify-code"
               type="text"
               name="code"
-              placeholder="Verification code *"
+              placeholder="4-digit code"
               value={code}
               onChange={(e) => setCode(e.target.value)}
               required
@@ -100,20 +102,20 @@ export default function VerifyEmail() {
           </div>
           <button
             type="submit"
-            className="btn btn-three"
+            className="ogaalsan-btn ogaalsan-btn--primary auth-form__submit"
             disabled={submitting}
           >
             {submitting ? "Verifying..." : "Verify Email"}
           </button>
+          <button
+            type="button"
+            className="ogaalsan-btn ogaalsan-btn--outline auth-form__secondary"
+            onClick={handleResend}
+            disabled={resending}
+          >
+            {resending ? "Sending..." : "Resend code"}
+          </button>
         </form>
-        <button
-          type="button"
-          className="btn btn-two mt-15"
-          onClick={handleResend}
-          disabled={resending}
-        >
-          {resending ? "Sending..." : "Resend code"}
-        </button>
       </AuthCard>
     </Layout>
   );

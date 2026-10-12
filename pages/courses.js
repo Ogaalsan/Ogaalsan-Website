@@ -1,7 +1,7 @@
 import Layout from "@/components/layout/Layout";
 import CourseCard from "@/components/courses/CourseCard";
-import LearnerPortalBanner from "@/components/courses/LearnerPortalBanner";
-import ContentLoader from "@/components/common/ContentLoader";
+import CourseListSkeleton from "@/components/courses/CourseListSkeleton";
+import Link from "next/link";
 import { fetchPublishedCourses } from "@/lib/courses";
 import { fetchMyCourses } from "@/lib/learner";
 import { useAuth } from "@/context/AuthContext";
@@ -28,33 +28,27 @@ export default function Courses() {
   );
 
   return (
-    <Layout breadcrumbTitle="Our Courses">
-      <section
-        className="services-area-five inner-services-bg"
-        data-background="/assets/img/bg/inner_services_bg.jpg"
-      >
+    <Layout headTitle="Online Courses">
+      <section className="ogaalsan-page">
         <div className="container">
-          <div className="row justify-content-center">
-            <div className="col-xl-6 col-lg-8 col-md-10">
-              <div className="section-title-two text-center mb-50">
-                <h2 className="title">Training &amp; Capacity Building Programmes</h2>
-                <p>
-                  Practical, hands-on training in entrepreneurship,
-                  professional development, and ICT skills — building the
-                  human capital organizations need for sustainable growth.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="row justify-content-center mb-40">
-            <div className="col-xl-10">
-              <LearnerPortalBanner compact />
-            </div>
+          <div className="ogaalsan-page-intro">
+            <nav className="ogaalsan-page-intro__crumbs" aria-label="Breadcrumb">
+              <Link href="/">Home</Link>
+              <span aria-hidden="true">/</span>
+              <Link href="/courses">Learn</Link>
+              <span aria-hidden="true">/</span>
+              <span>Online Courses</span>
+            </nav>
+            <span className="ogaalsan-page-intro__eyebrow">Learn</span>
+            <h1 className="ogaalsan-page-intro__title">Online Courses</h1>
+            <p className="ogaalsan-page-intro__desc">
+              Self-paced and instructor-supported courses in ICT, digital
+              skills, and professional development.
+            </p>
           </div>
 
           {loading ? (
-            <ContentLoader message="Loading courses..." />
+            <CourseListSkeleton count={6} />
           ) : courses.length > 0 ? (
             <div className="row justify-content-center g-4">
               {courses.map((course) => (

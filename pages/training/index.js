@@ -4,20 +4,24 @@ import { fetchTrainings } from "@/lib/trainings";
 
 export default function TrainingList({ trainings }) {
   return (
-    <Layout breadcrumbTitle="Training">
-      <section className="blog-area pt-120 pb-120">
+    <Layout headTitle="Open Programs">
+      <section className="ogaalsan-page">
         <div className="container">
-          <div className="row justify-content-center">
-            <div className="col-lg-8">
-              <div className="section-title text-center mb-50">
-                <span className="sub-title">Grow Your Skills</span>
-                <h2 className="title">Our Trainings</h2>
-                <p>
-                  Choose a training below and register to join. Each program is
-                  available online or in-person (offline).
-                </p>
-              </div>
-            </div>
+          <div className="ogaalsan-page-intro">
+            <nav className="ogaalsan-page-intro__crumbs" aria-label="Breadcrumb">
+              <Link href="/">Home</Link>
+              <span aria-hidden="true">/</span>
+              <Link href="/courses">Learn</Link>
+              <span aria-hidden="true">/</span>
+              <span>Open Programs</span>
+            </nav>
+            <span className="ogaalsan-page-intro__eyebrow">Learn</span>
+            <h1 className="ogaalsan-page-intro__title">Open Programs</h1>
+            <p className="ogaalsan-page-intro__desc">
+              Time-bound programs you can register for — online or in-person.
+              For self-paced courses with lessons and progress tracking, see{" "}
+              <Link href="/courses">Online Courses</Link>.
+            </p>
           </div>
 
           {trainings.length === 0 ? (

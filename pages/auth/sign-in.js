@@ -50,44 +50,46 @@ export default function SignIn() {
   };
 
   return (
-    <Layout breadcrumbTitle="Sign In">
+    <Layout>
       <AuthCard
         title="Welcome back"
-        subtitle="Sign in to open your learning dashboard, My Courses, and progress."
+        subtitle="Sign in to continue learning"
         footer={
-          <>
-            <AuthFooterLink
-              href={`/auth/sign-up${
-                typeof router.query.redirect === "string"
-                  ? `?redirect=${encodeURIComponent(router.query.redirect)}`
-                  : ""
-              }`}
-            >
-              Don&apos;t have an account? Create one
-            </AuthFooterLink>
-          </>
+          <AuthFooterLink
+            href={`/auth/sign-up${
+              typeof router.query.redirect === "string"
+                ? `?redirect=${encodeURIComponent(router.query.redirect)}`
+                : ""
+            }`}
+          >
+            Don&apos;t have an account? Create one
+          </AuthFooterLink>
         }
       >
-        {error && (
+        {error ? (
           <div className="auth-alert auth-alert--error">{error}</div>
-        )}
-        <form onSubmit={handleSubmit}>
-          <div className="form-grp">
+        ) : null}
+        <form className="auth-form" onSubmit={handleSubmit}>
+          <div className="auth-field">
+            <label htmlFor="sign-in-email">Email address</label>
             <input
+              id="sign-in-email"
               type="email"
               name="email"
-              placeholder="Email address *"
+              placeholder="you@example.com"
               value={form.email}
               onChange={handleChange}
               required
               autoComplete="email"
             />
           </div>
-          <div className="form-grp">
+          <div className="auth-field">
+            <label htmlFor="sign-in-password">Password</label>
             <input
+              id="sign-in-password"
               type="password"
               name="password"
-              placeholder="Password *"
+              placeholder="Enter your password"
               value={form.password}
               onChange={handleChange}
               required
@@ -96,7 +98,7 @@ export default function SignIn() {
           </div>
           <button
             type="submit"
-            className="btn btn-three"
+            className="ogaalsan-btn ogaalsan-btn--primary auth-form__submit"
             disabled={submitting || authLoading}
           >
             {submitting ? "Signing in..." : "Sign In"}

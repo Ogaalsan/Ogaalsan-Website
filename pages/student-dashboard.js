@@ -4,7 +4,12 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useState, useMemo, useEffect } from "react";
 import { useAuth } from "@/context/AuthContext";
-import { fetchMyCourses } from "@/lib/learner";
+import {
+  fetchMyCourses,
+  fetchMyQuizAttempts,
+  fetchMyCertificates,
+  openCertificateDownload,
+} from "@/lib/learner";
 import { useClientFetch } from "@/hooks/useClientFetch";
 import ContentLoader from "@/components/common/ContentLoader";
 import ThemeToggle from "@/components/common/ThemeToggle";
@@ -39,6 +44,38 @@ export default function StudentDashboard() {
       enabled: isAuthenticated && !authLoading,
       initialData: null,
       cacheKey: `student-dashboard-${user?.id || "guest"}`,
+    },
+  );
+
+  const {
+    data: quizData,
+    loading: quizLoading,
+  } = useClientFetch(
+    () => fetchMyQuizAttempts(),
+    [user?.id, activeTab],
+    {
+      enabled:
+        isAuthenticated &&
+        !authLoading &&
+        (activeTab === "quizzes" || activeTab === "dashboard"),
+      initialData: null,
+      cacheKey: `student-quiz-attempts-${user?.id || "guest"}`,
+    },
+  );
+
+  const {
+    data: certificateData,
+    loading: certificateLoading,
+  } = useClientFetch(
+    () => fetchMyCertificates(),
+    [user?.id, activeTab],
+    {
+      enabled:
+        isAuthenticated &&
+        !authLoading &&
+        (activeTab === "certificates" || activeTab === "dashboard"),
+      initialData: null,
+      cacheKey: `student-certificates-${user?.id || "guest"}`,
     },
   );
 
@@ -406,35 +443,221 @@ export default function StudentDashboard() {
             ) : null}
 
             {activeTab === "certificates" && (
-              <div className="portal-section-card text-center py-5">
-                <div className="portal-empty-icon">
-                  <i className="fas fa-award" />
+              <div className="portal-section-card">
+                <div className="mb-4">
+                  <h3 className="portal-empty-title mb-1">My Certificates</h3>
+                  <p className="portal-empty-desc mb-0">
+                    Certificates are issued automatically when you complete all
+                    lessons and pass required final quizzes.
+                  </p>
                 </div>
-                <h3 className="portal-empty-title">My Certificates</h3>
-                <p className="portal-empty-desc">
-                  Complete 100% of your course lessons and quizzes to earn
-                  verified certificates.
-                </p>
-                <button
-                  type="button"
-                  className="portal-action-btn"
-                  onClick={() => setActiveTab("courses")}
-                >
-                  View Course Progress
-                </button>
+
+                {certificateLoading ? (
+                  <ContentLoader message="Loading certificates..." />
+                ) : !(certificateData?.certificates || []).length ? (
+                  <div className="text-center py-5">
+                    <div className="portal-empty-icon">
+                      <i className="fas fa-award" />
+                    </div>
+                    <h3 className="portal-empty-title">No certificates yet</h3>
+                    <p className="portal-empty-desc">
+                      Finish your enrolled courses to unlock downloadable
+                      certificates here.
+                    </p>
+                    <button
+                      type="button"
+                      className="portal-action-btn"
+                      onClick={() => setActiveTab("courses")}
+                    >
+                      View Course Progress
+                    </button>
+                  </div>
+                ) : (
+                  <div className="row g-3">
+                    {certificateData.certificates.map((certificate) => (
+                      <div className="col-md-6" key={certificate.id}>
+                        <div
+                          style={{
+                            border: "1px solid #e8eef6",
+                            borderRadius: 14,
+                            padding: "18px 20px",
+                            background: "#f9fbff",
+                            height: "100%",
+                          }}
+                        >
+                          <div
+                            style={{
+                              color: "#3FA9F5",
+                              fontSize: 22,
+                              marginBottom: 10,
+                            }}
+                          >
+                            <i className="fas fa-award" />
+                          </div>
+                          <h4
+                            style={{
+                              color: "#22428F",
+                              fontSize: 18,
+                              marginBottom: 6,
+                            }}
+                          >
+                            {certificate.course?.title || "Course certificate"}
+                          </h4>
+                          <p
+                            style={{
+                              margin: "0 0 6px",
+                              color: "#667085",
+                              fontSize: 13,
+                            }}
+                          >
+                            Code: {certificate.code}
+                          </p>
+                          <p
+                            style={{
+                              margin: "0 0 14px",
+                              color: "#8b9db5",
+                              fontSize: 13,
+                            }}
+                          >
+                            Issued{" "}
+                            {certificate.issuedAt
+                              ? new Date(
+                                  certificate.issuedAt
+                                ).toLocaleDateString()
+                              : "—"}
+                          </p>
+                          <button
+                            type="button"
+                            className="portal-action-btn"
+                            onClick={() =>
+                              openCertificateDownload(certificate.id).catch(
+                                (err) =>
+                                  window.alert(
+                                    err.message ||
+                                      "Unable to open certificate"
+                                  )
+                              )
+                            }
+                          >
+                            Download / Print
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             )}
 
             {activeTab === "quizzes" && (
-              <div className="portal-section-card text-center py-5">
-                <div className="portal-empty-icon">
-                  <i className="fas fa-clipboard-check" />
+              <div className="portal-section-card">
+                <div className="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
+                  <div>
+                    <h3 className="portal-empty-title mb-1">Quiz Attempts</h3>
+                    <p className="portal-empty-desc mb-0">
+                      Track your scores across lesson, section, and final quizzes.
+                    </p>
+                  </div>
+                  {quizData?.summary && (
+                    <div className="d-flex gap-3" style={{ fontSize: 14 }}>
+                      <span>
+                        Total: <strong>{quizData.summary.total}</strong>
+                      </span>
+                      <span style={{ color: "#16a34a" }}>
+                        Passed: <strong>{quizData.summary.passed}</strong>
+                      </span>
+                      <span style={{ color: "#b45309" }}>
+                        Failed: <strong>{quizData.summary.failed}</strong>
+                      </span>
+                    </div>
+                  )}
                 </div>
-                <h3 className="portal-empty-title">Quiz Attempts</h3>
-                <p className="portal-empty-desc">
-                  Your quiz scores and attempt history will appear here once you
-                  take module quizzes.
-                </p>
+
+                {quizLoading ? (
+                  <ContentLoader message="Loading quiz attempts..." />
+                ) : !(quizData?.attempts || []).length ? (
+                  <div className="text-center py-5">
+                    <div className="portal-empty-icon">
+                      <i className="fas fa-clipboard-check" />
+                    </div>
+                    <h3 className="portal-empty-title">No attempts yet</h3>
+                    <p className="portal-empty-desc">
+                      Open an enrolled course and take a quiz from the player
+                      sidebar to see your history here.
+                    </p>
+                    <button
+                      type="button"
+                      className="portal-action-btn"
+                      onClick={() => setActiveTab("courses")}
+                    >
+                      Go to My Courses
+                    </button>
+                  </div>
+                ) : (
+                  <div className="table-responsive">
+                    <table className="table align-middle mb-0">
+                      <thead>
+                        <tr>
+                          <th>Quiz</th>
+                          <th>Course</th>
+                          <th>Score</th>
+                          <th>Result</th>
+                          <th>Date</th>
+                          <th />
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {quizData.attempts.map((attempt) => (
+                          <tr key={attempt.id}>
+                            <td>
+                              <strong>{attempt.quiz?.title || "Quiz"}</strong>
+                              <div
+                                style={{
+                                  fontSize: 12,
+                                  color: "#8b9db5",
+                                  textTransform: "capitalize",
+                                }}
+                              >
+                                {attempt.quiz?.type || "quiz"}
+                              </div>
+                            </td>
+                            <td>{attempt.course?.title || "—"}</td>
+                            <td>
+                              {attempt.score}% ({attempt.correctCount}/
+                              {attempt.totalQuestions})
+                            </td>
+                            <td>
+                              <span
+                                style={{
+                                  color: attempt.passed ? "#16a34a" : "#b45309",
+                                  fontWeight: 600,
+                                }}
+                              >
+                                {attempt.passed ? "Passed" : "Failed"}
+                              </span>
+                            </td>
+                            <td>
+                              {attempt.submittedAt
+                                ? new Date(attempt.submittedAt).toLocaleString()
+                                : "—"}
+                            </td>
+                            <td className="text-end">
+                              {attempt.quizId ? (
+                                <Link
+                                  href={`/course/quiz/${attempt.quizId}`}
+                                  className="portal-action-btn"
+                                  style={{ padding: "6px 12px", fontSize: 13 }}
+                                >
+                                  Retake
+                                </Link>
+                              ) : null}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
               </div>
             )}
 

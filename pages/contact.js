@@ -1,5 +1,4 @@
 import Layout from "@/components/layout/Layout";
-import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { useOrganization } from "@/context/OrganizationContext";
@@ -71,74 +70,54 @@ export default function Contact() {
   };
 
   return (
-    <>
-      <Layout breadcrumbTitle="Contact Us">
-        <section className="ogaalsan-contact inner-contact-area pt-120 pb-120">
-          <div className="container">
-            <div className="ogaalsan-contact__intro">
-              <div className="ogaalsan-contact__mark">
-                <Image
-                  src="/assets/img/logo/ogaalsan version 4-03.png"
-                  alt="OgaalSan Consultancy"
-                  width={96}
-                  height={96}
-                  className="ogaalsan-contact__logo"
-                />
-              </div>
-              <h2 className="title">Get in Touch With OgaalSan</h2>
-              <p>
-                Share your ICT, Training, or Business Development needs and our
-                team will get back to you as soon as possible.
+    <Layout>
+      <section className="ogaalsan-contact">
+        <div className="container">
+          <nav className="ogaalsan-contact__crumbs" aria-label="Breadcrumb">
+            <Link href="/">Home</Link>
+            <span aria-hidden="true">/</span>
+            <span>Contact</span>
+          </nav>
+
+          <div className="ogaalsan-contact__layout">
+            <aside className="ogaalsan-contact__aside">
+              <span className="ogaalsan-contact__eyebrow">Contact</span>
+              <h1 className="ogaalsan-contact__title">Get in touch</h1>
+              <p className="ogaalsan-contact__lead">
+                Tell us about your ICT, capacity building, or business
+                development needs — we&apos;ll respond as soon as we can.
               </p>
-            </div>
 
-            <div className="row ogaalsan-contact__cards">
-              <div className="col-lg-4 col-md-6">
-                <div className="ogaalsan-contact__card">
-                  <span className="ogaalsan-contact__icon" aria-hidden="true">
-                    <i className="flaticon-location" />
-                  </span>
-                  <span className="ogaalsan-contact__label">Address</span>
-                  <p>{fullAddress}</p>
-                </div>
-              </div>
-              <div className="col-lg-4 col-md-6">
-                <div className="ogaalsan-contact__card">
-                  <span className="ogaalsan-contact__icon" aria-hidden="true">
-                    <i className="flaticon-mail" />
-                  </span>
-                  <span className="ogaalsan-contact__label">Email</span>
-                  <p>
-                    <Link href={`mailto:${email}`}>{email}</Link>
-                  </p>
-                </div>
-              </div>
-              <div className="col-lg-4 col-md-6">
-                <div className="ogaalsan-contact__card">
-                  <span className="ogaalsan-contact__icon" aria-hidden="true">
-                    <i className="flaticon-phone-call" />
-                  </span>
-                  <span className="ogaalsan-contact__label">Phone</span>
-                  <p>
-                    <Link href={phoneHref}>{phoneLabel}</Link>
-                  </p>
-                  <Link
-                    href={whatsappUrl(
-                      "Hello! I would like to know more about OgaalSan services."
-                    )}
-                    className="ogaalsan-contact__whatsapp"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Chat on WhatsApp
-                  </Link>
-                </div>
-              </div>
-            </div>
+              <ul className="ogaalsan-contact__list">
+                <li>
+                  <strong>Address</strong>
+                  <span>{fullAddress}</span>
+                </li>
+                <li>
+                  <strong>Email</strong>
+                  <a href={`mailto:${email}`}>{email}</a>
+                </li>
+                <li>
+                  <strong>Phone</strong>
+                  <a href={phoneHref}>{phoneLabel}</a>
+                </li>
+              </ul>
 
-            <div className="ogaalsan-contact__form-card inner-contact-info">
-              <h3 className="ogaalsan-contact__form-title">Send a message</h3>
-              {submitStatus && (
+              <a
+                href={whatsappUrl(
+                  "Hello! I would like to know more about OgaalSan services."
+                )}
+                className="ogaalsan-contact__whatsapp"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Chat on WhatsApp
+              </a>
+            </aside>
+
+            <div className="ogaalsan-contact__form-wrap">
+              <h2 className="ogaalsan-contact__form-title">Send a message</h2>
+              {submitStatus ? (
                 <div
                   className={`auth-alert ${
                     submitStatus.type === "success"
@@ -148,83 +127,83 @@ export default function Contact() {
                 >
                   {submitStatus.message}
                 </div>
-              )}
-              <div className="contact-form contact-form-inner">
-                <form onSubmit={handleSubmit}>
-                  <div className="row">
-                    <div className="col-md-6">
-                      <div className="form-grp">
-                        <input
-                          type="text"
-                          name="name"
-                          placeholder="Name *"
-                          value={formData.name}
-                          onChange={handleChange}
-                          required
-                        />
-                      </div>
-                    </div>
-                    <div className="col-md-6">
-                      <div className="form-grp">
-                        <input
-                          type="email"
-                          name="email"
-                          placeholder="E-mail *"
-                          value={formData.email}
-                          onChange={handleChange}
-                          required
-                        />
-                      </div>
-                    </div>
-                    <div className="col-md-6">
-                      <div className="form-grp">
-                        <input
-                          type="text"
-                          name="phone"
-                          placeholder="Phone / WhatsApp *"
-                          value={formData.phone}
-                          onChange={handleChange}
-                          required
-                        />
-                      </div>
-                    </div>
-                    <div className="col-md-6">
-                      <div className="form-grp">
-                        <input
-                          type="text"
-                          name="subject"
-                          placeholder="Subject *"
-                          value={formData.subject}
-                          onChange={handleChange}
-                          required
-                        />
-                      </div>
-                    </div>
-                    <div className="col-md-12">
-                      <div className="form-grp">
-                        <textarea
-                          name="message"
-                          placeholder="How can we help you? *"
-                          value={formData.message}
-                          onChange={handleChange}
-                          required
-                        />
-                      </div>
-                    </div>
+              ) : null}
+
+              <form className="ogaalsan-contact__form" onSubmit={handleSubmit}>
+                <div className="ogaalsan-contact__grid">
+                  <div className="ogaalsan-contact__field">
+                    <label htmlFor="contact-name">Name</label>
+                    <input
+                      id="contact-name"
+                      type="text"
+                      name="name"
+                      placeholder="Your name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      required
+                    />
                   </div>
-                  <button
-                    type="submit"
-                    className="btn btn-three"
-                    disabled={isSubmitting}
-                  >
-                    {isSubmitting ? "Sending..." : "Send Message"}
-                  </button>
-                </form>
-              </div>
+                  <div className="ogaalsan-contact__field">
+                    <label htmlFor="contact-email">Email</label>
+                    <input
+                      id="contact-email"
+                      type="email"
+                      name="email"
+                      placeholder="you@example.com"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                  <div className="ogaalsan-contact__field">
+                    <label htmlFor="contact-phone">Phone / WhatsApp</label>
+                    <input
+                      id="contact-phone"
+                      type="text"
+                      name="phone"
+                      placeholder="+252 ..."
+                      value={formData.phone}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                  <div className="ogaalsan-contact__field">
+                    <label htmlFor="contact-subject">Subject</label>
+                    <input
+                      id="contact-subject"
+                      type="text"
+                      name="subject"
+                      placeholder="What is this about?"
+                      value={formData.subject}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                </div>
+                <div className="ogaalsan-contact__field">
+                  <label htmlFor="contact-message">Message</label>
+                  <textarea
+                    id="contact-message"
+                    name="message"
+                    placeholder="How can we help you?"
+                    value={formData.message}
+                    onChange={handleChange}
+                    required
+                    rows={5}
+                  />
+                </div>
+                <button
+                  type="submit"
+                  className="ogaalsan-btn ogaalsan-btn--primary ogaalsan-contact__submit"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? "Sending..." : "Send Message"}
+                </button>
+              </form>
             </div>
           </div>
-        </section>
-      </Layout>
-    </>
+        </div>
+      </section>
+    </Layout>
   );
 }

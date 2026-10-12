@@ -59,7 +59,7 @@ export default function Project() {
                 <div className="project-content-two">
                   <h2 className="title">
                     <Link href="/services/training">
-                      Training & Capacity Building
+                      Capacity Building
                     </Link>
                   </h2>
                   <span>Professional Development Programs</span>
