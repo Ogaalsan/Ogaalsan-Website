@@ -1,6 +1,6 @@
 import Link from "next/link";
 import CourseCard from "@/components/courses/CourseCard";
-import ContentLoader from "@/components/common/ContentLoader";
+import CourseListSkeleton from "@/components/courses/CourseListSkeleton";
 
 export default function Courses({ courses = [], loading = false }) {
   return (
@@ -24,7 +24,7 @@ export default function Courses({ courses = [], loading = false }) {
         </div>
 
         {loading ? (
-          <ContentLoader message="Loading courses..." />
+          <CourseListSkeleton count={3} />
         ) : courses.length > 0 ? (
           <div className="row justify-content-center g-4">
             {courses.slice(0, 3).map((course) => (

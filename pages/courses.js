@@ -1,6 +1,6 @@
 import Layout from "@/components/layout/Layout";
 import CourseCard from "@/components/courses/CourseCard";
-import ContentLoader from "@/components/common/ContentLoader";
+import CourseListSkeleton from "@/components/courses/CourseListSkeleton";
 import Link from "next/link";
 import { fetchPublishedCourses } from "@/lib/courses";
 import { fetchMyCourses } from "@/lib/learner";
@@ -48,7 +48,7 @@ export default function Courses() {
           </div>
 
           {loading ? (
-            <ContentLoader message="Loading courses..." />
+            <CourseListSkeleton count={6} />
           ) : courses.length > 0 ? (
             <div className="row justify-content-center g-4">
               {courses.map((course) => (

@@ -801,6 +801,86 @@ html[data-theme="dark"] .course-curriculum__section-desc {
   border-top: 1px solid #eef2f7;
 }
 
+/* —— Course list skeleton —— */
+.course-card--skeleton {
+  pointer-events: none;
+}
+
+.course-card--skeleton:hover {
+  border-color: #e6eef6;
+  transform: none;
+}
+
+.course-list-skeleton__media {
+  position: relative;
+  overflow: hidden;
+}
+
+.course-list-skeleton__media::after {
+  display: none;
+}
+
+.skeleton-bone--course-media {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border-radius: 0;
+}
+
+.course-list-skeleton__meta {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.skeleton-bone--course-meta {
+  width: 88px;
+  height: 12px;
+  border-radius: 999px;
+}
+
+.skeleton-bone--course-title {
+  width: 88%;
+  height: 18px;
+  margin-bottom: 8px;
+}
+
+.skeleton-bone--course-title-sm {
+  width: 62%;
+  height: 18px;
+  margin-bottom: 14px;
+}
+
+.course-list-skeleton__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid #eef2f7;
+}
+
+.skeleton-bone--course-instructor {
+  width: 120px;
+  height: 14px;
+}
+
+.skeleton-bone--course-btn {
+  width: 108px;
+  height: 36px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+html[data-theme="dark"] .course-card--skeleton {
+  background: #152033;
+  border-color: #2a3a55;
+}
+
+html[data-theme="dark"] .course-list-skeleton__footer {
+  border-top-color: #2a3a55;
+}
+
 .course-detail .visually-hidden {
   position: absolute;
   width: 1px;

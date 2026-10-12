@@ -2,7 +2,7 @@ import Layout from "@/components/layout/Layout";
 import PageIntro from "@/components/layout/PageIntro";
 import Link from "next/link";
 import ServiceCard from "@/components/services/ServiceCard";
-import ContentLoader from "@/components/common/ContentLoader";
+import ServiceListSkeleton from "@/components/services/ServiceListSkeleton";
 import { fetchActiveServices } from "@/lib/services";
 import { SERVICE_DIVISIONS } from "@/lib/serviceDivisions";
 import { useClientFetch } from "@/hooks/useClientFetch";
@@ -53,19 +53,21 @@ export default function Services() {
             ))}
           </div>
 
-          {loading ? (
-            <ContentLoader message="Loading services..." />
-          ) : services.length > 0 ? (
+          {loading || services.length > 0 ? (
             <div className="ogaalsan-services__catalog">
               <div className="ogaalsan-services__catalog-head">
                 <h2>Service catalog</h2>
                 <p>Additional offerings from the OgaalSan admin catalog.</p>
               </div>
-              <div className="ogaalsan-services__catalog-grid">
-                {services.map((service) => (
-                  <ServiceCard key={service.id} service={service} />
-                ))}
-              </div>
+              {loading ? (
+                <ServiceListSkeleton count={3} />
+              ) : (
+                <div className="ogaalsan-services__catalog-grid">
+                  {services.map((service) => (
+                    <ServiceCard key={service.id} service={service} />
+                  ))}
+                </div>
+              )}
             </div>
           ) : null}
         </div>

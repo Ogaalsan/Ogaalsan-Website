@@ -1,6 +1,6 @@
 import Layout from "@/components/layout/Layout";
 import PageIntro from "@/components/layout/PageIntro";
-import ContentLoader from "@/components/common/ContentLoader";
+import ServiceDetailSkeleton from "@/components/services/ServiceDetailSkeleton";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -28,11 +28,7 @@ export default function ServiceDetails() {
   if (!ready || serviceLoading || listLoading) {
     return (
       <Layout headTitle="Service Details">
-        <section className="ogaalsan-page">
-          <div className="container">
-            <ContentLoader message="Loading service..." />
-          </div>
-        </section>
+        <ServiceDetailSkeleton />
       </Layout>
     );
   }
