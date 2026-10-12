@@ -1,3 +1,4 @@
+import nodemailer from "nodemailer";
 import { fetchOrganization } from "@/lib/organization";
 import {
   brandedEmailAttachments,
@@ -42,8 +43,6 @@ Submitted on: ${submittedOn}
     let emailSent = false;
 
     try {
-      const nodemailer = require("nodemailer");
-
       if (process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD) {
         const transporter = nodemailer.createTransport({
           service: "gmail",
@@ -79,7 +78,7 @@ Submitted on: ${submittedOn}
         emailSent = true;
       }
     } catch (nodemailerError) {
-      console.log("Nodemailer not configured, using alternative method");
+      console.log("Nodemailer send failed, using alternative method", nodemailerError);
     }
 
     if (!emailSent) {

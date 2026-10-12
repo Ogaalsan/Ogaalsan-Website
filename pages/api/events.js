@@ -1,3 +1,4 @@
+import nodemailer from "nodemailer";
 import {
   brandedEmailAttachments,
   brandedEmailHtml,
@@ -48,8 +49,6 @@ Submitted on: ${submittedOn}
     let emailSent = false;
 
     try {
-      const nodemailer = require("nodemailer");
-
       if (process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD) {
         const transporter = nodemailer.createTransport({
           service: "gmail",
@@ -87,7 +86,7 @@ Submitted on: ${submittedOn}
         emailSent = true;
       }
     } catch (error) {
-      console.log("Nodemailer not configured for events form.");
+      console.log("Nodemailer send failed for events form.", error);
     }
 
     if (!emailSent) {
