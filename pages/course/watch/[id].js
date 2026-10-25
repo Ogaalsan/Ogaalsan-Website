@@ -280,6 +280,14 @@ export default function CourseWatch() {
             <h2>Course content</h2>
             {chapters.map((chapter) => {
               const isOpen = openChapters.includes(chapter.title);
+              const chapterQuizzes = quizzes.filter(
+                (quiz) =>
+                  quiz.type === "section" &&
+                  chapter.lessons.some(
+                    (lesson) =>
+                      Number(quiz.syllabusId) === Number(lesson.syllabusId)
+                  )
+              );
               return (
                 <div key={chapter.title} className="learn-portal__chapter">
                   <button
@@ -302,8 +310,16 @@ export default function CourseWatch() {
                         );
                         const isActive = activeLessonIndex === index;
                         const locked = !lesson.is_unlocked;
+                        const lessonQuizzesForItem = quizzes.filter(
+                          (quiz) =>
+                            quiz.lessonId != null &&
+                            Number(quiz.lessonId) === Number(lesson.id)
+                        );
                         return (
-                          <li key={lesson.id || `${chapter.title}-${index}`}>
+                          <li
+                            key={lesson.id || `${chapter.title}-${index}`}
+                            className="learn-portal__lesson-group"
+                          >
                             <button
                               type="button"
                               className={`learn-portal__lesson-item${
@@ -329,19 +345,75 @@ export default function CourseWatch() {
                                 {index + 1}. {lesson.title}
                               </span>
                             </button>
+                            {lessonQuizzesForItem.map((quiz) => (
+                              <Link
+                                key={quiz.id}
+                                href={
+                                  quiz.canTake
+                                    ? `/course/quiz/${quiz.id}`
+                                    : `/course/${course.slug || course.id}/register`
+                                }
+                                className="learn-portal__quiz-link learn-portal__quiz-link--lesson"
+                              >
+                                <i
+                                  className={
+                                    quiz.passed
+                                      ? "fas fa-check-circle"
+                                      : "fas fa-clipboard-list"
+                                  }
+                                  aria-hidden="true"
+                                />
+                                <span>
+                                  {quiz.title}
+                                  <small>
+                                    Lesson quiz · Pass {quiz.passingScore}%
+                                    {quiz.bestScore != null
+                                      ? ` · Best ${quiz.bestScore}%`
+                                      : ""}
+                                  </small>
+                                </span>
+                              </Link>
+                            ))}
                           </li>
                         );
                       })}
+                      {chapterQuizzes.map((quiz) => (
+                        <li key={quiz.id}>
+                          <Link
+                            href={
+                              quiz.canTake
+                                ? `/course/quiz/${quiz.id}`
+                                : `/course/${course.slug || course.id}/register`
+                            }
+                            className="learn-portal__quiz-link"
+                          >
+                            <i
+                              className={
+                                quiz.passed
+                                  ? "fas fa-check-circle"
+                                  : "fas fa-clipboard-list"
+                              }
+                              aria-hidden="true"
+                            />
+                            <span>
+                              {quiz.title}
+                              <small>
+                                Section quiz · Pass {quiz.passingScore}%
+                              </small>
+                            </span>
+                          </Link>
+                        </li>
+                      ))}
                     </ul>
                   )}
                 </div>
               );
             })}
 
-            {quizzes.length > 0 && (
+            {(course.finalQuizzes || []).length > 0 && (
               <div className="learn-portal__sidebar-block">
-                <h3>Quizzes</h3>
-                {quizzes.map((quiz) => (
+                <h3>Final quiz</h3>
+                {course.finalQuizzes.map((quiz) => (
                   <Link
                     key={quiz.id}
                     href={
@@ -355,7 +427,7 @@ export default function CourseWatch() {
                       className={
                         quiz.passed
                           ? "fas fa-check-circle"
-                          : "fas fa-question-circle"
+                          : "fas fa-flag-checkered"
                       }
                       aria-hidden="true"
                     />
@@ -418,7 +490,7 @@ export default function CourseWatch() {
             {[
               { id: "summary", label: "Summary", icon: "fas fa-align-left" },
               { id: "resources", label: "Resources", icon: "fas fa-folder-open" },
-              { id: "quizzes", label: "Quizzes", icon: "fas fa-question-circle" },
+              { id: "quizzes", label: "Quizzes", icon: "fas fa-clipboard-list" },
             ].map((tab) => (
               <button
                 key={tab.id}
@@ -530,7 +602,7 @@ export default function CourseWatch() {
                       }
                       className="learn-portal__resource-card"
                     >
-                      <i className="fas fa-question-circle" aria-hidden="true" />
+                      <i className="fas fa-clipboard-list" aria-hidden="true" />
                       <span>
                         <strong>{quiz.title}</strong>
                         <small>

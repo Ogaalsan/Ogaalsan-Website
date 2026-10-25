@@ -1758,6 +1758,11 @@ html[data-theme="dark"] .course-detail__cta--whatsapp {
   border-top: 1px solid #eef2f7;
 }
 
+.learn-portal__lesson-group {
+  display: flex;
+  flex-direction: column;
+}
+
 .learn-portal__quiz-link {
   display: flex;
   gap: 10px;
@@ -1767,27 +1772,51 @@ html[data-theme="dark"] .course-detail__cta--whatsapp {
   font-size: 0.85rem;
 }
 
+.learn-portal__quiz-link--lesson {
+  margin: 0 0 4px 12px;
+  padding: 8px 10px;
+  border-radius: 4px;
+  background: #f7fafc;
+}
+
+.learn-portal__quiz-link--lesson:hover {
+  background: rgba(63, 169, 245, 0.1);
+}
+
+.learn-portal__quiz-link i {
+  color: #3fa9f5;
+  margin-top: 2px;
+}
+
+.learn-portal__quiz-link .fa-check-circle {
+  color: #16a34a;
+}
+
 .learn-portal__quiz-link small {
   display: block;
   margin-top: 2px;
   color: #8b9db5;
 }
 
+html[data-theme="dark"] .learn-portal__quiz-link--lesson {
+  background: #121a2a;
+}
+
 .learn-portal__main {
   min-width: 0;
-  padding: 18px 22px 40px;
+  padding: 0 0 28px;
 }
 
 .learn-portal__main-toolbar {
-  display: flex;
+  display: none;
   align-items: center;
-  justify-content: space-between;
   gap: 12px;
-  margin-bottom: 14px;
+  margin: 0;
+  padding: 10px 12px 0;
 }
 
 .learn-portal__sidebar-toggle {
-  display: none;
+  display: inline-flex;
   align-items: center;
   gap: 8px;
   border: 1px solid #e6eef6;
@@ -1822,14 +1851,16 @@ html[data-theme="dark"] .course-detail__cta--whatsapp {
 
 .learn-portal__player {
   overflow: hidden;
-  border-radius: 4px;
+  border-radius: 0;
   background: #0d1421;
-  border: 1px solid #e6eef6;
+  border: 0;
 }
 
 .learn-portal__player-frame {
   position: relative;
-  aspect-ratio: 16 / 9;
+  width: 100%;
+  height: 720px;
+  background: #000;
 }
 
 .learn-portal__player-frame iframe {
@@ -1841,7 +1872,7 @@ html[data-theme="dark"] .course-detail__cta--whatsapp {
 }
 
 .learn-portal__player-empty {
-  min-height: 360px;
+  height: 720px;
   display: grid;
   place-content: center;
   gap: 12px;
@@ -1859,8 +1890,8 @@ html[data-theme="dark"] .course-detail__cta--whatsapp {
   display: flex;
   flex-wrap: wrap;
   gap: 4px;
-  margin-top: 16px;
-  padding-bottom: 2px;
+  margin-top: 0;
+  padding: 0 16px;
   border-bottom: 1px solid #e6eef6;
 }
 
@@ -1884,7 +1915,7 @@ html[data-theme="dark"] .course-detail__cta--whatsapp {
 }
 
 .learn-portal__panel {
-  padding-top: 20px;
+  padding: 20px 16px 0;
 }
 
 .learn-portal__lesson-head h2 {
@@ -2025,8 +2056,13 @@ html[data-theme="dark"] .course-detail__cta--whatsapp {
     transform: translateX(0);
   }
 
-  .learn-portal__sidebar-toggle {
-    display: inline-flex;
+  .learn-portal__main-toolbar {
+    display: flex;
+  }
+
+  .learn-portal__player-frame,
+  .learn-portal__player-empty {
+    height: min(52vw, 360px);
   }
 
   .learn-portal__sidebar-backdrop {
