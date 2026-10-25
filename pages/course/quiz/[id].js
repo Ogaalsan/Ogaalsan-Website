@@ -43,18 +43,24 @@ export default function TakeQuizPage() {
     fetchLearnerQuiz(quizId)
       .then((data) => {
         if (!active) return;
+        const courseKey = data.quiz?.course?.slug || data.quiz?.course?.id;
+        if (courseKey) {
+          router.replace(
+            `/course/watch/${courseKey}?quiz=${encodeURIComponent(quizId)}`
+          );
+          return;
+        }
         setQuiz(data.quiz);
         setBestAttempt(data.bestAttempt);
         setAnswers({});
+        setLoading(false);
       })
       .catch((err) => {
         if (active) {
           setError(err);
           setQuiz(null);
+          setLoading(false);
         }
-      })
-      .finally(() => {
-        if (active) setLoading(false);
       });
 
     return () => {

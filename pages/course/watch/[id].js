@@ -1,5 +1,6 @@
 import LearnLayout from "@/components/layout/LearnLayout";
 import ContentLoader from "@/components/common/ContentLoader";
+import CourseQuizPanel from "@/components/courses/CourseQuizPanel";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useMemo, useState } from "react";
@@ -33,6 +34,7 @@ export default function CourseWatch() {
   const router = useRouter();
   const identifier = router.query.id;
   const lessonQuery = router.query.lesson;
+  const quizQuery = router.query.quiz;
   const ready = router.isReady && Boolean(identifier);
   const { isAuthenticated, loading: authLoading } = useAuth();
 
@@ -44,6 +46,8 @@ export default function CourseWatch() {
   const [error, setError] = useState(null);
   const [savingProgress, setSavingProgress] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const activeQuizId = ready && quizQuery ? String(quizQuery) : null;
 
   const returnPath =
     ready && identifier ? `/course/watch/${identifier}` : "/my-courses";
@@ -118,6 +122,16 @@ export default function CourseWatch() {
     [quizzes, activeLesson?.id]
   );
 
+  const buildWatchUrl = ({ lessonId, quizId } = {}) => {
+    const params = new URLSearchParams();
+    if (lessonId) params.set("lesson", String(lessonId));
+    if (quizId) params.set("quiz", String(quizId));
+    const qs = params.toString();
+    return qs
+      ? `/course/watch/${identifier}?${qs}`
+      : `/course/watch/${identifier}`;
+  };
+
   const selectLesson = (index) => {
     setActiveLessonIndex(index);
     setSidebarOpen(false);
@@ -129,10 +143,62 @@ export default function CourseWatch() {
           pathname: "/course/watch/[id]",
           query: { id: identifier, lesson: lesson.id },
         },
-        `/course/watch/${identifier}?lesson=${lesson.id}`,
+        buildWatchUrl({ lessonId: lesson.id }),
         { shallow: true }
       );
     }
+  };
+
+  const openQuiz = (quiz) => {
+    if (!quiz?.id || !ready) return;
+    if (!quiz.canTake) {
+      router.push(`/course/${course?.slug || course?.id}/register`);
+      return;
+    }
+    setSidebarOpen(false);
+    const lessonId = activeLesson?.id;
+    const query = { id: identifier, quiz: quiz.id };
+    if (lessonId) query.lesson = lessonId;
+    router.replace(
+      { pathname: "/course/watch/[id]", query },
+      buildWatchUrl({ lessonId, quizId: quiz.id }),
+      { shallow: true }
+    );
+  };
+
+  const closeQuiz = () => {
+    if (!ready) return;
+    const lessonId = activeLesson?.id;
+    const query = { id: identifier };
+    if (lessonId) query.lesson = lessonId;
+    router.replace(
+      { pathname: "/course/watch/[id]", query },
+      buildWatchUrl({ lessonId }),
+      { shallow: true }
+    );
+  };
+
+  const handleQuizCompleted = (response) => {
+    if (!activeQuizId || !response?.result) return;
+    setPayload((prev) => {
+      if (!prev) return prev;
+      const patchQuiz = (quiz) =>
+        String(quiz.id) === String(activeQuizId)
+          ? {
+              ...quiz,
+              bestScore: response.result.score,
+              passed: Boolean(response.result.passed) || Boolean(quiz.passed),
+            }
+          : quiz;
+      return {
+        ...prev,
+        course: {
+          ...prev.course,
+          quizzes: (prev.course.quizzes || []).map(patchQuiz),
+          finalQuizzes: (prev.course.finalQuizzes || []).map(patchQuiz),
+        },
+      };
+    });
   };
 
   const refreshProgressLocal = (lessonId, completed) => {
@@ -346,14 +412,15 @@ export default function CourseWatch() {
                               </span>
                             </button>
                             {lessonQuizzesForItem.map((quiz) => (
-                              <Link
+                              <button
                                 key={quiz.id}
-                                href={
-                                  quiz.canTake
-                                    ? `/course/quiz/${quiz.id}`
-                                    : `/course/${course.slug || course.id}/register`
-                                }
-                                className="learn-portal__quiz-link learn-portal__quiz-link--lesson"
+                                type="button"
+                                className={`learn-portal__quiz-link learn-portal__quiz-link--lesson${
+                                  String(activeQuizId) === String(quiz.id)
+                                    ? " is-active"
+                                    : ""
+                                }`}
+                                onClick={() => openQuiz(quiz)}
                               >
                                 <i
                                   className={
@@ -372,20 +439,21 @@ export default function CourseWatch() {
                                       : ""}
                                   </small>
                                 </span>
-                              </Link>
+                              </button>
                             ))}
                           </li>
                         );
                       })}
                       {chapterQuizzes.map((quiz) => (
                         <li key={quiz.id}>
-                          <Link
-                            href={
-                              quiz.canTake
-                                ? `/course/quiz/${quiz.id}`
-                                : `/course/${course.slug || course.id}/register`
-                            }
-                            className="learn-portal__quiz-link"
+                          <button
+                            type="button"
+                            className={`learn-portal__quiz-link${
+                              String(activeQuizId) === String(quiz.id)
+                                ? " is-active"
+                                : ""
+                            }`}
+                            onClick={() => openQuiz(quiz)}
                           >
                             <i
                               className={
@@ -401,7 +469,7 @@ export default function CourseWatch() {
                                 Section quiz · Pass {quiz.passingScore}%
                               </small>
                             </span>
-                          </Link>
+                          </button>
                         </li>
                       ))}
                     </ul>
@@ -414,14 +482,15 @@ export default function CourseWatch() {
               <div className="learn-portal__sidebar-block">
                 <h3>Final quiz</h3>
                 {course.finalQuizzes.map((quiz) => (
-                  <Link
+                  <button
                     key={quiz.id}
-                    href={
-                      quiz.canTake
-                        ? `/course/quiz/${quiz.id}`
-                        : `/course/${course.slug || course.id}/register`
-                    }
-                    className="learn-portal__quiz-link"
+                    type="button"
+                    className={`learn-portal__quiz-link${
+                      String(activeQuizId) === String(quiz.id)
+                        ? " is-active"
+                        : ""
+                    }`}
+                    onClick={() => openQuiz(quiz)}
                   >
                     <i
                       className={
@@ -440,7 +509,7 @@ export default function CourseWatch() {
                           : ""}
                       </small>
                     </span>
-                  </Link>
+                  </button>
                 ))}
               </div>
             )}
@@ -459,8 +528,18 @@ export default function CourseWatch() {
             </button>
           </div>
 
-          <div className="learn-portal__player">
-            {!activeLesson?.is_unlocked ? (
+          <div
+            className={`learn-portal__player${
+              activeQuizId ? " learn-portal__player--quiz" : ""
+            }`}
+          >
+            {activeQuizId ? (
+              <CourseQuizPanel
+                quizId={activeQuizId}
+                onClose={closeQuiz}
+                onCompleted={handleQuizCompleted}
+              />
+            ) : !activeLesson?.is_unlocked ? (
               <div className="learn-portal__player-empty">
                 <i className="fas fa-lock" aria-hidden="true" />
                 <p>This lesson is locked until your enrollment is confirmed.</p>
@@ -486,140 +565,156 @@ export default function CourseWatch() {
             )}
           </div>
 
-          <nav className="learn-portal__tabs" aria-label="Lesson tools">
-            {[
-              { id: "summary", label: "Summary", icon: "fas fa-align-left" },
-              { id: "resources", label: "Resources", icon: "fas fa-folder-open" },
-              { id: "quizzes", label: "Quizzes", icon: "fas fa-clipboard-list" },
-            ].map((tab) => (
-              <button
-                key={tab.id}
-                type="button"
-                className={`learn-portal__tab${
-                  activeTab === tab.id ? " is-active" : ""
-                }`}
-                onClick={() => setActiveTab(tab.id)}
-              >
-                <i className={tab.icon} aria-hidden="true" />
-                {tab.label}
-              </button>
-            ))}
-          </nav>
-
-          <div className="learn-portal__panel">
-            {activeTab === "summary" && (
-              <>
-                <div className="learn-portal__lesson-head">
-                  {course.category ? (
-                    <span className="learn-portal__chip">{course.category}</span>
-                  ) : null}
-                  <h2>{activeLesson?.title || course.title}</h2>
-                  {activeLesson?.chapterTitle ? (
-                    <p>
-                      Chapter: {activeLesson.chapterTitle}
-                      {activeLesson?.content
-                        ? ` — ${String(activeLesson.content).slice(0, 90)}${
-                            String(activeLesson.content).length > 90 ? "…" : ""
-                          }`
-                        : ""}
-                    </p>
-                  ) : null}
-                </div>
-
-                {activeLesson?.is_unlocked && (
+          {!activeQuizId ? (
+            <>
+              <nav className="learn-portal__tabs" aria-label="Lesson tools">
+                {[
+                  { id: "summary", label: "Summary", icon: "fas fa-align-left" },
+                  {
+                    id: "resources",
+                    label: "Resources",
+                    icon: "fas fa-folder-open",
+                  },
+                  {
+                    id: "quizzes",
+                    label: "Quizzes",
+                    icon: "fas fa-clipboard-list",
+                  },
+                ].map((tab) => (
                   <button
+                    key={tab.id}
                     type="button"
-                    className={`learn-portal__complete-btn${
-                      activeLesson.is_completed ? " is-done" : ""
+                    className={`learn-portal__tab${
+                      activeTab === tab.id ? " is-active" : ""
                     }`}
-                    onClick={handleToggleComplete}
-                    disabled={savingProgress}
+                    onClick={() => setActiveTab(tab.id)}
                   >
-                    {savingProgress
-                      ? "Saving..."
-                      : activeLesson.is_completed
-                        ? "Completed — Undo"
-                        : "Mark as Complete"}
+                    <i className={tab.icon} aria-hidden="true" />
+                    {tab.label}
                   </button>
+                ))}
+              </nav>
+
+              <div className="learn-portal__panel">
+                {activeTab === "summary" && (
+                  <>
+                    <div className="learn-portal__lesson-head">
+                      {course.category ? (
+                        <span className="learn-portal__chip">
+                          {course.category}
+                        </span>
+                      ) : null}
+                      <h2>{activeLesson?.title || course.title}</h2>
+                      {activeLesson?.chapterTitle ? (
+                        <p>
+                          Chapter: {activeLesson.chapterTitle}
+                          {activeLesson?.content
+                            ? ` — ${String(activeLesson.content).slice(0, 90)}${
+                                String(activeLesson.content).length > 90
+                                  ? "…"
+                                  : ""
+                              }`
+                            : ""}
+                        </p>
+                      ) : null}
+                    </div>
+
+                    {activeLesson?.is_unlocked && (
+                      <button
+                        type="button"
+                        className={`learn-portal__complete-btn${
+                          activeLesson.is_completed ? " is-done" : ""
+                        }`}
+                        onClick={handleToggleComplete}
+                        disabled={savingProgress}
+                      >
+                        {savingProgress
+                          ? "Saving..."
+                          : activeLesson.is_completed
+                            ? "Completed — Undo"
+                            : "Mark as Complete"}
+                      </button>
+                    )}
+
+                    {activeLesson?.content ? (
+                      <div className="learn-portal__notes">
+                        <h3>Lesson notes</h3>
+                        <p>{activeLesson.content}</p>
+                      </div>
+                    ) : (
+                      <p className="learn-portal__muted">
+                        No written summary for this lesson yet.
+                      </p>
+                    )}
+
+                    <div className="learn-portal__instructor">
+                      <div className="learn-portal__instructor-avatar">
+                        <i className="fas fa-user-tie" aria-hidden="true" />
+                      </div>
+                      <div>
+                        <strong>{course.instructor}</strong>
+                        <span>Instructor</span>
+                      </div>
+                    </div>
+                  </>
                 )}
 
-                {activeLesson?.content ? (
-                  <div className="learn-portal__notes">
-                    <h3>Lesson notes</h3>
-                    <p>{activeLesson.content}</p>
+                {activeTab === "resources" && (
+                  <div className="learn-portal__resources">
+                    {documentHref ? (
+                      <a
+                        href={documentHref}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="learn-portal__resource-card"
+                      >
+                        <i className="fas fa-file-alt" aria-hidden="true" />
+                        <span>
+                          <strong>Lesson document</strong>
+                          <small>Open or download PDF / file</small>
+                        </span>
+                      </a>
+                    ) : (
+                      <p className="learn-portal__muted">
+                        No resources attached to this lesson.
+                      </p>
+                    )}
                   </div>
-                ) : (
-                  <p className="learn-portal__muted">
-                    No written summary for this lesson yet.
-                  </p>
                 )}
 
-                <div className="learn-portal__instructor">
-                  <div className="learn-portal__instructor-avatar">
-                    <i className="fas fa-user-tie" aria-hidden="true" />
+                {activeTab === "quizzes" && (
+                  <div className="learn-portal__resources">
+                    {lessonQuizzes.length > 0 ? (
+                      lessonQuizzes.map((quiz) => (
+                        <button
+                          key={quiz.id}
+                          type="button"
+                          className="learn-portal__resource-card"
+                          onClick={() => openQuiz(quiz)}
+                        >
+                          <i
+                            className="fas fa-clipboard-list"
+                            aria-hidden="true"
+                          />
+                          <span>
+                            <strong>{quiz.title}</strong>
+                            <small>
+                              {quiz.questionCount} questions · Pass{" "}
+                              {quiz.passingScore}%
+                            </small>
+                          </span>
+                        </button>
+                      ))
+                    ) : (
+                      <p className="learn-portal__muted">
+                        No quizzes for this lesson.
+                      </p>
+                    )}
                   </div>
-                  <div>
-                    <strong>{course.instructor}</strong>
-                    <span>Instructor</span>
-                  </div>
-                </div>
-              </>
-            )}
-
-            {activeTab === "resources" && (
-              <div className="learn-portal__resources">
-                {documentHref ? (
-                  <a
-                    href={documentHref}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="learn-portal__resource-card"
-                  >
-                    <i className="fas fa-file-alt" aria-hidden="true" />
-                    <span>
-                      <strong>Lesson document</strong>
-                      <small>Open or download PDF / file</small>
-                    </span>
-                  </a>
-                ) : (
-                  <p className="learn-portal__muted">
-                    No resources attached to this lesson.
-                  </p>
                 )}
               </div>
-            )}
-
-            {activeTab === "quizzes" && (
-              <div className="learn-portal__resources">
-                {lessonQuizzes.length > 0 ? (
-                  lessonQuizzes.map((quiz) => (
-                    <Link
-                      key={quiz.id}
-                      href={
-                        quiz.canTake
-                          ? `/course/quiz/${quiz.id}`
-                          : `/course/${course.slug || course.id}/register`
-                      }
-                      className="learn-portal__resource-card"
-                    >
-                      <i className="fas fa-clipboard-list" aria-hidden="true" />
-                      <span>
-                        <strong>{quiz.title}</strong>
-                        <small>
-                          {quiz.questionCount} questions · Pass{" "}
-                          {quiz.passingScore}%
-                        </small>
-                      </span>
-                    </Link>
-                  ))
-                ) : (
-                  <p className="learn-portal__muted">
-                    No quizzes for this lesson.
-                  </p>
-                )}
-              </div>
-            )}
-          </div>
+            </>
+          ) : null}
         </main>
       </div>
 
