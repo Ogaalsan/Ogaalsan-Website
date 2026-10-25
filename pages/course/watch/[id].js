@@ -1,4 +1,4 @@
-import Layout from "@/components/layout/Layout";
+import LearnLayout from "@/components/layout/LearnLayout";
 import ContentLoader from "@/components/common/ContentLoader";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -12,17 +12,38 @@ import {
 } from "@/lib/learner";
 import { resolveMediaUrl } from "@/lib/media";
 
+function groupLessonsByChapter(lessons) {
+  const groups = [];
+  const map = new Map();
+
+  lessons.forEach((lesson) => {
+    const key = lesson.chapterTitle || "Course Content";
+    if (!map.has(key)) {
+      const group = { title: key, lessons: [] };
+      map.set(key, group);
+      groups.push(group);
+    }
+    map.get(key).lessons.push(lesson);
+  });
+
+  return groups;
+}
+
 export default function CourseWatch() {
   const router = useRouter();
   const identifier = router.query.id;
+  const lessonQuery = router.query.lesson;
   const ready = router.isReady && Boolean(identifier);
   const { isAuthenticated, loading: authLoading } = useAuth();
 
   const [activeLessonIndex, setActiveLessonIndex] = useState(0);
+  const [openChapters, setOpenChapters] = useState([]);
+  const [activeTab, setActiveTab] = useState("summary");
   const [payload, setPayload] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [savingProgress, setSavingProgress] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const returnPath =
     ready && identifier ? `/course/watch/${identifier}` : "/my-courses";
@@ -45,17 +66,22 @@ export default function CourseWatch() {
 
     fetchLearnerCourse(identifier)
       .then((result) => {
-        if (active) {
-          setPayload(result);
-          const firstUnlocked = result.course.lessons?.findIndex(
-            (lesson) => lesson.is_unlocked
+        if (!active) return;
+        setPayload(result);
+        const list = result.course.lessons || [];
+        let index = 0;
+        if (lessonQuery) {
+          const byId = list.findIndex(
+            (lesson) => String(lesson.id) === String(lessonQuery)
           );
-          setActiveLessonIndex(
-            firstUnlocked !== undefined && firstUnlocked >= 0
-              ? firstUnlocked
-              : 0
-          );
+          if (byId >= 0) index = byId;
+        } else {
+          const firstUnlocked = list.findIndex((lesson) => lesson.is_unlocked);
+          index = firstUnlocked >= 0 ? firstUnlocked : 0;
         }
+        setActiveLessonIndex(index);
+        const chapters = groupLessonsByChapter(list).map((g) => g.title);
+        setOpenChapters(chapters);
       })
       .catch((err) => {
         if (active) {
@@ -70,7 +96,7 @@ export default function CourseWatch() {
     return () => {
       active = false;
     };
-  }, [ready, identifier, isAuthenticated, authLoading]);
+  }, [ready, identifier, isAuthenticated, authLoading, lessonQuery]);
 
   const course = payload?.course;
   const access = payload?.access;
@@ -78,6 +104,7 @@ export default function CourseWatch() {
 
   const lessons = useMemo(() => course?.lessons || [], [course]);
   const quizzes = useMemo(() => course?.quizzes || [], [course]);
+  const chapters = useMemo(() => groupLessonsByChapter(lessons), [lessons]);
   const activeLesson = lessons[activeLessonIndex] || lessons[0];
   const activeVideo = extractYouTubeId(activeLesson?.video_url);
   const lessonQuizzes = useMemo(
@@ -90,6 +117,23 @@ export default function CourseWatch() {
       ),
     [quizzes, activeLesson?.id]
   );
+
+  const selectLesson = (index) => {
+    setActiveLessonIndex(index);
+    setSidebarOpen(false);
+    setActiveTab("summary");
+    const lesson = lessons[index];
+    if (lesson?.id && ready) {
+      router.replace(
+        {
+          pathname: "/course/watch/[id]",
+          query: { id: identifier, lesson: lesson.id },
+        },
+        `/course/watch/${identifier}?lesson=${lesson.id}`,
+        { shallow: true }
+      );
+    }
+  };
 
   const refreshProgressLocal = (lessonId, completed) => {
     setPayload((prev) => {
@@ -138,586 +182,383 @@ export default function CourseWatch() {
     }
   };
 
+  const toggleChapter = (title) => {
+    setOpenChapters((current) =>
+      current.includes(title)
+        ? current.filter((item) => item !== title)
+        : [...current, title]
+    );
+  };
+
   if (authLoading || !isAuthenticated) {
     return (
-      <Layout>
-        <ContentLoader message="Checking your account..." />
-      </Layout>
+      <LearnLayout>
+        <div className="learn-portal__loading">
+          <ContentLoader message="Checking your account..." />
+        </div>
+      </LearnLayout>
     );
   }
 
   if (!ready || loading) {
     return (
-      <Layout>
-        <ContentLoader message="Loading your course..." />
-      </Layout>
+      <LearnLayout>
+        <div className="learn-portal__loading">
+          <ContentLoader message="Loading your course..." />
+        </div>
+      </LearnLayout>
     );
   }
 
   if (error && !course) {
     return (
-      <Layout>
-        <div className="container pt-120 pb-120 text-center">
-          <h2 style={{ color: "#22428F" }}>Unable to load course</h2>
-          <p style={{ color: "#334770" }}>
-            {error.message || "Please try again."}
-          </p>
-          <Link href="/my-courses" className="btn mt-30">
+      <LearnLayout>
+        <div className="learn-portal__empty">
+          <h2>Unable to load course</h2>
+          <p>{error.message || "Please try again."}</p>
+          <Link href="/my-courses" className="learn-portal__primary-btn">
             Back to My Courses
           </Link>
         </div>
-      </Layout>
+      </LearnLayout>
     );
   }
 
   if (!course) {
     return (
-      <Layout>
-        <div className="container pt-120 pb-120 text-center">
-          <h2>Course not found.</h2>
-          <Link href="/my-courses" className="btn mt-30">
+      <LearnLayout>
+        <div className="learn-portal__empty">
+          <h2>Course not found</h2>
+          <Link href="/my-courses" className="learn-portal__primary-btn">
             Back to My Courses
           </Link>
         </div>
-      </Layout>
+      </LearnLayout>
     );
   }
 
   const documentHref = activeLesson?.document_url
     ? resolveMediaUrl(activeLesson.document_url)
     : null;
+  const percent = progress?.percent ?? 0;
+  const completed = progress?.completedLessons ?? 0;
+  const total = progress?.totalLessons ?? lessons.length;
 
   return (
-    <Layout>
-      <section className="course-watch-area pt-60 pb-120">
-        <div className="container-fluid" style={{ maxWidth: "1600px" }}>
-          {!access?.canAccess && (
-            <div
-              className="mb-30"
-              style={{
-                background: "rgba(217,119,6,0.12)",
-                border: "1px solid rgba(217,119,6,0.25)",
-                color: "#92400e",
-                padding: "14px 18px",
-                borderRadius: 10,
-              }}
-            >
-              <strong style={{ display: "block", marginBottom: 4 }}>
-                Limited access
-              </strong>
-              {access?.message ||
-                "Your registration is pending. Free preview lessons are available."}
-              {!access?.registered && (
-                <div className="mt-2">
-                  <Link
-                    href={`/course/${course.slug || course.id}/register`}
-                    style={{ color: "#22428F", fontWeight: 600 }}
-                  >
-                    Register for full access →
-                  </Link>
-                </div>
-              )}
-            </div>
+    <LearnLayout
+      headTitle={course.title}
+      courseTitle={course.title}
+    >
+      {!access?.canAccess && (
+        <div className="learn-portal__banner">
+          <strong>Limited access.</strong>{" "}
+          {access?.message ||
+            "Your enrollment is pending confirmation. Free preview lessons are available meanwhile."}
+          {!access?.registered && (
+            <Link href={`/course/${course.slug || course.id}/register`}>
+              Register for full access →
+            </Link>
           )}
+        </div>
+      )}
 
-          <div className="row mb-20 align-items-center">
-            <div className="col-md-8">
-              <Link
-                href="/my-courses"
-                style={{
-                  color: "#3FA9F5",
-                  fontWeight: 600,
-                  fontSize: 14,
-                  textDecoration: "none",
-                }}
-              >
-                ← My Courses
-              </Link>
-              <h2
-                style={{
-                  color: "#22428F",
-                  fontWeight: 700,
-                  marginTop: 8,
-                  marginBottom: 0,
-                  fontSize: 28,
-                }}
-              >
-                {course.title}
-              </h2>
+      <div className={`learn-portal__shell${sidebarOpen ? " is-sidebar-open" : ""}`}>
+        <aside className="learn-portal__sidebar">
+          <div className="learn-portal__progress-card">
+            <div className="learn-portal__progress-label">
+              {percent}% Completed ({completed}/{total} items)
             </div>
-            <div className="col-md-4 text-md-end mt-3 mt-md-0">
-              <div style={{ fontSize: 13, color: "#667085", marginBottom: 6 }}>
-                Progress: {progress?.percent ?? 0}% (
-                {progress?.completedLessons ?? 0}/
-                {progress?.totalLessons ?? lessons.length})
-              </div>
-              <div
-                style={{
-                  width: "100%",
-                  maxWidth: 220,
-                  marginLeft: "auto",
-                  height: 8,
-                  borderRadius: 999,
-                  background: "#e8eef6",
-                  overflow: "hidden",
-                }}
-              >
-                <div
-                  style={{
-                    width: `${progress?.percent ?? 0}%`,
-                    height: "100%",
-                    background: "#3FA9F5",
-                  }}
-                />
-              </div>
+            <div className="learn-portal__progress-track">
+              <span style={{ width: `${percent}%` }} />
             </div>
+            <Link href="/my-courses" className="learn-portal__back-link">
+              ← My Courses
+            </Link>
           </div>
 
-          <div className="row">
-            <div className="col-lg-8 mb-40">
-              <div
-                className="video-player-container"
-                style={{
-                  backgroundColor: "#000",
-                  borderRadius: "10px",
-                  overflow: "hidden",
-                  boxShadow: "0px 10px 30px rgba(0, 0, 0, 0.1)",
-                }}
-              >
-                {!activeLesson?.is_unlocked ? (
-                  <div
-                    style={{
-                      minHeight: "420px",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      color: "#fff",
-                      padding: "40px",
-                      textAlign: "center",
-                    }}
+          <div className="learn-portal__curriculum">
+            <h2>Course content</h2>
+            {chapters.map((chapter) => {
+              const isOpen = openChapters.includes(chapter.title);
+              return (
+                <div key={chapter.title} className="learn-portal__chapter">
+                  <button
+                    type="button"
+                    className="learn-portal__chapter-toggle"
+                    onClick={() => toggleChapter(chapter.title)}
+                    aria-expanded={isOpen}
                   >
-                    <div>
-                      <i
-                        className="fas fa-lock"
-                        style={{ fontSize: "42px", marginBottom: "16px" }}
-                      />
-                      <p style={{ margin: 0 }}>
-                        This lesson is locked until your enrollment is
-                        confirmed.
-                      </p>
-                    </div>
-                  </div>
-                ) : activeVideo ? (
-                  <div
-                    style={{
-                      position: "relative",
-                      paddingBottom: "56.25%",
-                      height: 0,
-                    }}
-                  >
-                    <iframe
-                      src={`https://www.youtube.com/embed/${activeVideo}?rel=0&modestbranding=1&autoplay=0`}
-                      title="Course Video Player"
-                      frameBorder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                      style={{
-                        position: "absolute",
-                        top: 0,
-                        left: 0,
-                        width: "100%",
-                        height: "100%",
-                      }}
+                    <span>{chapter.title}</span>
+                    <i
+                      className={`fas fa-chevron-${isOpen ? "up" : "down"}`}
+                      aria-hidden="true"
                     />
-                  </div>
-                ) : (
-                  <div
-                    style={{
-                      minHeight: "420px",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      color: "#fff",
-                      padding: "40px",
-                      textAlign: "center",
-                    }}
+                  </button>
+                  {isOpen && (
+                    <ul className="learn-portal__lesson-list">
+                      {chapter.lessons.map((lesson) => {
+                        const index = lessons.findIndex(
+                          (item) => item.id === lesson.id
+                        );
+                        const isActive = activeLessonIndex === index;
+                        const locked = !lesson.is_unlocked;
+                        return (
+                          <li key={lesson.id || `${chapter.title}-${index}`}>
+                            <button
+                              type="button"
+                              className={`learn-portal__lesson-item${
+                                isActive ? " is-active" : ""
+                              }${locked ? " is-locked" : ""}${
+                                lesson.is_completed ? " is-done" : ""
+                              }`}
+                              onClick={() => selectLesson(index)}
+                            >
+                              <i
+                                className={
+                                  locked
+                                    ? "fas fa-lock"
+                                    : lesson.is_completed
+                                      ? "fas fa-check-circle"
+                                      : isActive
+                                        ? "fas fa-play-circle"
+                                        : "far fa-circle"
+                                }
+                                aria-hidden="true"
+                              />
+                              <span>
+                                {index + 1}. {lesson.title}
+                              </span>
+                            </button>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  )}
+                </div>
+              );
+            })}
+
+            {quizzes.length > 0 && (
+              <div className="learn-portal__sidebar-block">
+                <h3>Quizzes</h3>
+                {quizzes.map((quiz) => (
+                  <Link
+                    key={quiz.id}
+                    href={
+                      quiz.canTake
+                        ? `/course/quiz/${quiz.id}`
+                        : `/course/${course.slug || course.id}/register`
+                    }
+                    className="learn-portal__quiz-link"
                   >
-                    <div>
-                      <i
-                        className="fas fa-video-slash"
-                        style={{ fontSize: "42px", marginBottom: "16px" }}
-                      />
-                      <p style={{ margin: 0 }}>
-                        {activeLesson?.document_url || activeLesson?.content
-                          ? "This lesson uses reading materials below."
-                          : "Video content for this lesson will be available soon."}
-                      </p>
-                    </div>
-                  </div>
-                )}
+                    <i
+                      className={
+                        quiz.passed
+                          ? "fas fa-check-circle"
+                          : "fas fa-question-circle"
+                      }
+                      aria-hidden="true"
+                    />
+                    <span>
+                      {quiz.title}
+                      <small>
+                        Pass {quiz.passingScore}%
+                        {quiz.bestScore != null
+                          ? ` · Best ${quiz.bestScore}%`
+                          : ""}
+                      </small>
+                    </span>
+                  </Link>
+                ))}
               </div>
+            )}
+          </div>
+        </aside>
 
-              <div className="course-info mt-40">
-                <span
-                  style={{
-                    backgroundColor: "rgba(63, 169, 245, 0.1)",
-                    color: "#3FA9F5",
-                    padding: "5px 15px",
-                    borderRadius: "20px",
-                    fontSize: "14px",
-                    fontWeight: "600",
-                    marginBottom: "15px",
-                    display: "inline-block",
-                  }}
-                >
-                  {course.category}
-                </span>
-                <h2
-                  style={{
-                    color: "#22428F",
-                    fontWeight: "700",
-                    marginBottom: "12px",
-                  }}
-                >
-                  {activeLesson?.title || course.title}
-                </h2>
+        <main className="learn-portal__main">
+          <div className="learn-portal__main-toolbar">
+            <button
+              type="button"
+              className="learn-portal__sidebar-toggle"
+              onClick={() => setSidebarOpen((open) => !open)}
+            >
+              <i className="fas fa-bars" aria-hidden="true" />
+              Content
+            </button>
+          </div>
 
-                {activeLesson?.chapterTitle && (
-                  <p style={{ color: "#8b9db5", marginBottom: 16 }}>
-                    Chapter: {activeLesson.chapterTitle}
-                  </p>
-                )}
+          <div className="learn-portal__player">
+            {!activeLesson?.is_unlocked ? (
+              <div className="learn-portal__player-empty">
+                <i className="fas fa-lock" aria-hidden="true" />
+                <p>This lesson is locked until your enrollment is confirmed.</p>
+              </div>
+            ) : activeVideo ? (
+              <div className="learn-portal__player-frame">
+                <iframe
+                  src={`https://www.youtube.com/embed/${activeVideo}?rel=0&modestbranding=1`}
+                  title={activeLesson?.title || "Course video"}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              </div>
+            ) : (
+              <div className="learn-portal__player-empty">
+                <i className="fas fa-video-slash" aria-hidden="true" />
+                <p>
+                  {activeLesson?.document_url || activeLesson?.content
+                    ? "This lesson uses reading materials below."
+                    : "Video content for this lesson will be available soon."}
+                </p>
+              </div>
+            )}
+          </div>
+
+          <nav className="learn-portal__tabs" aria-label="Lesson tools">
+            {[
+              { id: "summary", label: "Summary", icon: "fas fa-align-left" },
+              { id: "resources", label: "Resources", icon: "fas fa-folder-open" },
+              { id: "quizzes", label: "Quizzes", icon: "fas fa-question-circle" },
+            ].map((tab) => (
+              <button
+                key={tab.id}
+                type="button"
+                className={`learn-portal__tab${
+                  activeTab === tab.id ? " is-active" : ""
+                }`}
+                onClick={() => setActiveTab(tab.id)}
+              >
+                <i className={tab.icon} aria-hidden="true" />
+                {tab.label}
+              </button>
+            ))}
+          </nav>
+
+          <div className="learn-portal__panel">
+            {activeTab === "summary" && (
+              <>
+                <div className="learn-portal__lesson-head">
+                  {course.category ? (
+                    <span className="learn-portal__chip">{course.category}</span>
+                  ) : null}
+                  <h2>{activeLesson?.title || course.title}</h2>
+                  {activeLesson?.chapterTitle ? (
+                    <p>
+                      Chapter: {activeLesson.chapterTitle}
+                      {activeLesson?.content
+                        ? ` — ${String(activeLesson.content).slice(0, 90)}${
+                            String(activeLesson.content).length > 90 ? "…" : ""
+                          }`
+                        : ""}
+                    </p>
+                  ) : null}
+                </div>
 
                 {activeLesson?.is_unlocked && (
                   <button
                     type="button"
+                    className={`learn-portal__complete-btn${
+                      activeLesson.is_completed ? " is-done" : ""
+                    }`}
                     onClick={handleToggleComplete}
                     disabled={savingProgress}
-                    style={{
-                      backgroundColor: activeLesson.is_completed
-                        ? "#16a34a"
-                        : "#22428F",
-                      color: "#fff",
-                      border: "none",
-                      borderRadius: 8,
-                      padding: "10px 16px",
-                      fontWeight: 600,
-                      marginBottom: 20,
-                      cursor: savingProgress ? "wait" : "pointer",
-                    }}
                   >
                     {savingProgress
                       ? "Saving..."
                       : activeLesson.is_completed
-                        ? "✓ Completed — Undo"
+                        ? "Completed — Undo"
                         : "Mark as Complete"}
                   </button>
                 )}
 
-                {activeLesson?.content && (
-                  <>
-                    <h4 style={{ color: "#22428F", marginBottom: "15px" }}>
-                      Lesson Notes
-                    </h4>
-                    <p
-                      style={{
-                        color: "#334770",
-                        lineHeight: "1.8",
-                        fontSize: "16px",
-                        whiteSpace: "pre-wrap",
-                      }}
-                    >
-                      {activeLesson.content}
-                    </p>
-                  </>
+                {activeLesson?.content ? (
+                  <div className="learn-portal__notes">
+                    <h3>Lesson notes</h3>
+                    <p>{activeLesson.content}</p>
+                  </div>
+                ) : (
+                  <p className="learn-portal__muted">
+                    No written summary for this lesson yet.
+                  </p>
                 )}
 
-                {documentHref && (
+                <div className="learn-portal__instructor">
+                  <div className="learn-portal__instructor-avatar">
+                    <i className="fas fa-user-tie" aria-hidden="true" />
+                  </div>
+                  <div>
+                    <strong>{course.instructor}</strong>
+                    <span>Instructor</span>
+                  </div>
+                </div>
+              </>
+            )}
+
+            {activeTab === "resources" && (
+              <div className="learn-portal__resources">
+                {documentHref ? (
                   <a
                     href={documentHref}
                     target="_blank"
                     rel="noopener noreferrer"
-                    style={{
-                      display: "inline-flex",
-                      alignItems: "center",
-                      gap: 8,
-                      marginTop: 16,
-                      color: "#3FA9F5",
-                      fontWeight: 600,
-                    }}
+                    className="learn-portal__resource-card"
                   >
-                    <i className="fas fa-file-alt" />
-                    Download / open lesson document
+                    <i className="fas fa-file-alt" aria-hidden="true" />
+                    <span>
+                      <strong>Lesson document</strong>
+                      <small>Open or download PDF / file</small>
+                    </span>
                   </a>
+                ) : (
+                  <p className="learn-portal__muted">
+                    No resources attached to this lesson.
+                  </p>
                 )}
+              </div>
+            )}
 
-                {lessonQuizzes.length > 0 && (
-                  <div className="mt-30">
-                    <h4 style={{ color: "#22428F", marginBottom: 12 }}>
-                      Lesson quizzes
-                    </h4>
-                    <div className="d-flex flex-column gap-2">
-                      {lessonQuizzes.map((quiz) => (
-                        <Link
-                          key={quiz.id}
-                          href={
-                            quiz.canTake
-                              ? `/course/quiz/${quiz.id}`
-                              : `/course/${course.slug || course.id}/register`
-                          }
-                          style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            gap: 12,
-                            padding: "12px 14px",
-                            borderRadius: 10,
-                            border: "1px solid #e2e8f0",
-                            textDecoration: "none",
-                            color: "#22428F",
-                            background: "#f9fbff",
-                          }}
-                        >
-                          <span>
-                            <strong>{quiz.title}</strong>
-                            <span
-                              style={{
-                                display: "block",
-                                fontSize: 13,
-                                color: "#8b9db5",
-                                marginTop: 2,
-                              }}
-                            >
-                              {quiz.questionCount} questions · Pass{" "}
-                              {quiz.passingScore}%
-                              {quiz.bestScore != null
-                                ? ` · Best ${quiz.bestScore}%`
-                                : ""}
-                            </span>
-                          </span>
-                          <span style={{ color: "#3FA9F5", fontWeight: 600 }}>
-                            {quiz.canTake
-                              ? quiz.passed
-                                ? "Retake →"
-                                : "Take quiz →"
-                              : "Enroll →"}
-                          </span>
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                <div
-                  className="mt-30 pt-30"
-                  style={{ borderTop: "1px solid #eef2f6" }}
-                >
-                  <div className="d-flex align-items-center gap-3">
-                    <div
-                      style={{
-                        width: "50px",
-                        height: "50px",
-                        borderRadius: "50%",
-                        backgroundColor: "#eef2f6",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                      }}
+            {activeTab === "quizzes" && (
+              <div className="learn-portal__resources">
+                {lessonQuizzes.length > 0 ? (
+                  lessonQuizzes.map((quiz) => (
+                    <Link
+                      key={quiz.id}
+                      href={
+                        quiz.canTake
+                          ? `/course/quiz/${quiz.id}`
+                          : `/course/${course.slug || course.id}/register`
+                      }
+                      className="learn-portal__resource-card"
                     >
-                      <i
-                        className="fas fa-user-tie"
-                        style={{ color: "#3FA9F5", fontSize: "20px" }}
-                      />
-                    </div>
-                    <div>
-                      <h5 style={{ margin: 0, color: "#22428F" }}>
-                        {course.instructor}
-                      </h5>
-                      <span style={{ fontSize: "14px", color: "#334770" }}>
-                        Instructor
+                      <i className="fas fa-question-circle" aria-hidden="true" />
+                      <span>
+                        <strong>{quiz.title}</strong>
+                        <small>
+                          {quiz.questionCount} questions · Pass{" "}
+                          {quiz.passingScore}%
+                        </small>
                       </span>
-                    </div>
-                  </div>
-                </div>
+                    </Link>
+                  ))
+                ) : (
+                  <p className="learn-portal__muted">
+                    No quizzes for this lesson.
+                  </p>
+                )}
               </div>
-            </div>
-
-            <div className="col-lg-4">
-              <div
-                className="course-content-sidebar"
-                style={{
-                  backgroundColor: "#fff",
-                  border: "1px solid #eef2f6",
-                  borderRadius: "10px",
-                  boxShadow: "0px 5px 20px rgba(0, 0, 0, 0.05)",
-                  overflow: "hidden",
-                }}
-              >
-                <div
-                  style={{
-                    padding: "20px 25px",
-                    borderBottom: "1px solid #eef2f6",
-                    backgroundColor: "#f9fbff",
-                  }}
-                >
-                  <h4 style={{ margin: 0, color: "#22428F", fontSize: "20px" }}>
-                    Course Content
-                  </h4>
-                  <span style={{ fontSize: "14px", color: "#334770" }}>
-                    {lessons.length} lessons
-                    {quizzes.length ? ` • ${quizzes.length} quizzes` : ""} •{" "}
-                    {course.duration}
-                  </span>
-                </div>
-
-                <div
-                  className="syllabus-list"
-                  style={{ maxHeight: "700px", overflowY: "auto" }}
-                >
-                  {lessons.map((lesson, index) => {
-                    const isActive = activeLessonIndex === index;
-                    const locked = !lesson.is_unlocked;
-
-                    return (
-                      <div
-                        key={lesson.id || index}
-                        onClick={() => setActiveLessonIndex(index)}
-                        style={{
-                          padding: "20px 25px",
-                          borderBottom: "1px solid #eef2f6",
-                          cursor: "pointer",
-                          backgroundColor: isActive
-                            ? "rgba(63, 169, 245, 0.05)"
-                            : "#fff",
-                          display: "flex",
-                          alignItems: "flex-start",
-                          gap: "15px",
-                          opacity: locked ? 0.65 : 1,
-                        }}
-                      >
-                        <div
-                          style={{
-                            marginTop: "3px",
-                            color: lesson.is_completed
-                              ? "#16a34a"
-                              : isActive
-                                ? "#3FA9F5"
-                                : "#a1b1c5",
-                          }}
-                        >
-                          <i
-                            className={
-                              locked
-                                ? "fas fa-lock"
-                                : lesson.is_completed
-                                  ? "fas fa-check-circle"
-                                  : isActive
-                                    ? "fas fa-play-circle"
-                                    : "far fa-play-circle"
-                            }
-                            style={{ fontSize: "18px" }}
-                          />
-                        </div>
-                        <div>
-                          <h6
-                            style={{
-                              margin: 0,
-                              color: isActive ? "#3FA9F5" : "#22428F",
-                              fontSize: "15px",
-                              lineHeight: "1.4",
-                            }}
-                          >
-                            {index + 1}. {lesson.title}
-                          </h6>
-                          <span style={{ fontSize: "13px", color: "#8b9db5" }}>
-                            {locked
-                              ? "Locked"
-                              : lesson.is_free_preview
-                                ? "Free preview"
-                                : lesson.video_url
-                                  ? "Video lesson"
-                                  : "Reading material"}
-                          </span>
-                        </div>
-                      </div>
-                    );
-                  })}
-
-                  {quizzes.length > 0 && (
-                    <div
-                      style={{
-                        padding: "16px 25px 8px",
-                        borderTop: "1px solid #eef2f6",
-                        background: "#f9fbff",
-                      }}
-                    >
-                      <h5
-                        style={{
-                          margin: "0 0 10px",
-                          color: "#22428F",
-                          fontSize: 14,
-                          textTransform: "uppercase",
-                          letterSpacing: "0.04em",
-                        }}
-                      >
-                        Quizzes
-                      </h5>
-                      {quizzes.map((quiz) => (
-                        <Link
-                          key={quiz.id}
-                          href={
-                            quiz.canTake
-                              ? `/course/quiz/${quiz.id}`
-                              : `/course/${course.slug || course.id}/register`
-                          }
-                          style={{
-                            display: "flex",
-                            alignItems: "flex-start",
-                            gap: 12,
-                            padding: "12px 0",
-                            borderBottom: "1px solid #eef2f6",
-                            textDecoration: "none",
-                          }}
-                        >
-                          <i
-                            className={
-                              quiz.passed
-                                ? "fas fa-check-circle"
-                                : "fas fa-question-circle"
-                            }
-                            style={{
-                              marginTop: 3,
-                              color: quiz.passed ? "#16a34a" : "#3FA9F5",
-                            }}
-                          />
-                          <div>
-                            <h6
-                              style={{
-                                margin: 0,
-                                color: "#22428F",
-                                fontSize: 14,
-                                lineHeight: 1.4,
-                              }}
-                            >
-                              {quiz.title}
-                            </h6>
-                            <span style={{ fontSize: 12, color: "#8b9db5" }}>
-                              {quiz.type} · Pass {quiz.passingScore}%
-                              {quiz.bestScore != null
-                                ? ` · Best ${quiz.bestScore}%`
-                                : ""}
-                            </span>
-                          </div>
-                        </Link>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
+            )}
           </div>
-        </div>
-      </section>
-    </Layout>
+        </main>
+      </div>
+
+      {sidebarOpen && (
+        <button
+          type="button"
+          className="learn-portal__sidebar-backdrop"
+          aria-label="Close course content"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+    </LearnLayout>
   );
 }
