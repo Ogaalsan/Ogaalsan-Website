@@ -269,5 +269,88 @@ html[data-theme="dark"] .resource-card__desc {
 
 .training-topics li i {
   margin-top: 4px;
-  color: #219653;
+  color: #3fa9f5;
+}
+
+.training-register-success {
+  padding: 28px 8px 8px;
+  text-align: center;
+}
+
+.training-register-success__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  margin-bottom: 16px;
+  border-radius: 50%;
+  background: rgba(63, 169, 245, 0.12);
+  color: #3fa9f5;
+  font-size: 1.75rem;
+}
+
+.training-register-success .title {
+  margin-bottom: 10px;
+  color: #22428f;
+}
+
+.training-register-success__lead {
+  margin: 0 0 18px;
+  color: #334770;
+  font-size: 1.05rem;
+  line-height: 1.55;
+}
+
+.training-register-success__steps {
+  margin: 0 0 24px;
+  padding: 16px 18px;
+  list-style: none;
+  text-align: left;
+  background: #f8faff;
+  border: 1px solid #e6eef6;
+  border-radius: 4px;
+}
+
+.training-register-success__steps li {
+  position: relative;
+  padding-left: 18px;
+  margin-bottom: 10px;
+  color: #334770;
+  line-height: 1.5;
+}
+
+.training-register-success__steps li:last-child {
+  margin-bottom: 0;
+}
+
+.training-register-success__steps li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #3fa9f5;
+}
+
+.training-register-success__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
+
+.training-register-success__actions .btn {
+  margin: 0;
+}
+
+.training-register-error {
+  padding: 14px 16px;
+  margin-bottom: 18px;
+  border-radius: 4px;
+  background: rgba(220, 38, 38, 0.08);
+  border: 1px solid rgba(220, 38, 38, 0.25);
+  color: #b91c1c;
 }

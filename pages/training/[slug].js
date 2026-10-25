@@ -84,10 +84,12 @@ export default function TrainingDetail({ training }) {
 
       setSubmitStatus({
         type: "success",
-        message:
-          "Thank you! Your training registration has been received. Check your email for confirmation.",
+        trainingMode: formData.trainingMode,
+        email: formData.email,
       });
-      setFormData(buildFormFromUser(user));
+      if (typeof window !== "undefined") {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
     } catch (error) {
       setSubmitStatus({
         type: "error",
@@ -166,180 +168,203 @@ export default function TrainingDetail({ training }) {
 
             <div className="col-lg-6">
               <div className="inner-contact-info">
-                <h2 className="title">Register for this workshop</h2>
-                <p>
-                  Fill in your details and choose whether you want to attend
-                  online or in person.
-                </p>
-
-                {authLoading ? (
-                  <ContentLoader message="Checking your account..." />
-                ) : !isAuthenticated ? (
-                  <ContentLoader message="Redirecting to sign in..." />
+                {submitStatus?.type === "success" ? (
+                  <div className="training-register-success" role="status">
+                    <div className="training-register-success__icon" aria-hidden="true">
+                      <i className="fas fa-check-circle" />
+                    </div>
+                    <h2 className="title">Registration received</h2>
+                    <p className="training-register-success__lead">
+                      You’re registered for <strong>{training.title}</strong>.
+                    </p>
+                    <ul className="training-register-success__steps">
+                      <li>
+                        Confirmation sent to{" "}
+                        <strong>{submitStatus.email || "your email"}</strong>.
+                      </li>
+                      <li>
+                        Our team will follow up with next steps (schedule,
+                        payment, or meeting link).
+                      </li>
+                      <li>
+                        Attendance preference:{" "}
+                        <strong>
+                          {submitStatus.trainingMode === "offline"
+                            ? "Offline (In-person)"
+                            : "Online"}
+                        </strong>
+                      </li>
+                    </ul>
+                    <div className="training-register-success__actions">
+                      <Link href="/training" className="btn btn-three">
+                        Browse more workshops
+                      </Link>
+                      <Link href="/student-dashboard" className="btn">
+                        Go to dashboard
+                      </Link>
+                    </div>
+                  </div>
                 ) : (
                   <>
-                    {submitStatus && (
-                      <div
-                        style={{
-                          padding: "15px",
-                          marginBottom: "20px",
-                          borderRadius: "5px",
-                          backgroundColor:
-                            submitStatus.type === "success"
-                              ? "#d4edda"
-                              : "#f8d7da",
-                          color:
-                            submitStatus.type === "success"
-                              ? "#155724"
-                              : "#721c24",
-                          border: `1px solid ${
-                            submitStatus.type === "success"
-                              ? "#c3e6cb"
-                              : "#f5c6cb"
-                          }`,
-                        }}
-                      >
-                        {submitStatus.message}
-                      </div>
-                    )}
+                    <h2 className="title">Register for this workshop</h2>
+                    <p>
+                      Fill in your details and choose whether you want to attend
+                      online or in person.
+                    </p>
 
-                    <div className="contact-form contact-form-inner">
-                      <form onSubmit={handleSubmit}>
-                        <div className="form-grp">
-                          <input
-                            type="text"
-                            name="name"
-                            placeholder="Full name *"
-                            value={formData.name}
-                            onChange={handleChange}
-                            required
-                          />
-                        </div>
-                        <div className="form-grp">
-                          <input
-                            type="email"
-                            name="email"
-                            placeholder="E-mail *"
-                            value={formData.email}
-                            onChange={handleChange}
-                            required
-                          />
-                        </div>
-                        <div className="form-grp">
-                          <input
-                            type="tel"
-                            name="phone"
-                            placeholder="Phone number *"
-                            value={formData.phone}
-                            onChange={handleChange}
-                            required
-                          />
-                        </div>
-                        <div className="form-grp">
-                          <input
-                            type="text"
-                            name="organization"
-                            placeholder="Organization (optional)"
-                            value={formData.organization}
-                            onChange={handleChange}
-                          />
-                        </div>
-                        <div className="form-grp">
-                          <input
-                            type="text"
-                            name="location"
-                            placeholder="Location (Country & City) *"
-                            value={formData.location}
-                            onChange={handleChange}
-                            required
-                          />
-                        </div>
-                        <div className="form-grp">
-                          <input
-                            type="text"
-                            name="background"
-                            placeholder="Background / Education Level *"
-                            value={formData.background}
-                            onChange={handleChange}
-                            required
-                          />
-                        </div>
-                        <div className="form-grp">
-                          <label
-                            style={{
-                              display: "block",
-                              marginBottom: "10px",
-                              fontWeight: 600,
-                              color: "#22428F",
-                            }}
-                          >
-                            How would you like to attend? *
-                          </label>
-                          <div
-                            style={{
-                              display: "flex",
-                              gap: "24px",
-                              flexWrap: "wrap",
-                            }}
-                          >
-                            <label
-                              style={{
-                                display: "flex",
-                                alignItems: "center",
-                                gap: "8px",
-                                cursor: "pointer",
-                                fontWeight: 500,
-                              }}
-                            >
-                              <input
-                                type="radio"
-                                name="trainingMode"
-                                value="online"
-                                checked={formData.trainingMode === "online"}
-                                onChange={handleChange}
-                              />
-                              Online
-                            </label>
-                            <label
-                              style={{
-                                display: "flex",
-                                alignItems: "center",
-                                gap: "8px",
-                                cursor: "pointer",
-                                fontWeight: 500,
-                              }}
-                            >
-                              <input
-                                type="radio"
-                                name="trainingMode"
-                                value="offline"
-                                checked={formData.trainingMode === "offline"}
-                                onChange={handleChange}
-                              />
-                              Offline (In-person)
-                            </label>
+                    {authLoading ? (
+                      <ContentLoader message="Checking your account..." />
+                    ) : !isAuthenticated ? (
+                      <ContentLoader message="Redirecting to sign in..." />
+                    ) : (
+                      <>
+                        {submitStatus?.type === "error" ? (
+                          <div className="training-register-error" role="alert">
+                            {submitStatus.message}
                           </div>
+                        ) : null}
+
+                        <div className="contact-form contact-form-inner">
+                          <form onSubmit={handleSubmit}>
+                            <div className="form-grp">
+                              <input
+                                type="text"
+                                name="name"
+                                placeholder="Full name *"
+                                value={formData.name}
+                                onChange={handleChange}
+                                required
+                              />
+                            </div>
+                            <div className="form-grp">
+                              <input
+                                type="email"
+                                name="email"
+                                placeholder="E-mail *"
+                                value={formData.email}
+                                onChange={handleChange}
+                                required
+                              />
+                            </div>
+                            <div className="form-grp">
+                              <input
+                                type="tel"
+                                name="phone"
+                                placeholder="Phone number *"
+                                value={formData.phone}
+                                onChange={handleChange}
+                                required
+                              />
+                            </div>
+                            <div className="form-grp">
+                              <input
+                                type="text"
+                                name="organization"
+                                placeholder="Organization (optional)"
+                                value={formData.organization}
+                                onChange={handleChange}
+                              />
+                            </div>
+                            <div className="form-grp">
+                              <input
+                                type="text"
+                                name="location"
+                                placeholder="Location (Country & City) *"
+                                value={formData.location}
+                                onChange={handleChange}
+                                required
+                              />
+                            </div>
+                            <div className="form-grp">
+                              <input
+                                type="text"
+                                name="background"
+                                placeholder="Background / Education Level *"
+                                value={formData.background}
+                                onChange={handleChange}
+                                required
+                              />
+                            </div>
+                            <div className="form-grp">
+                              <label
+                                style={{
+                                  display: "block",
+                                  marginBottom: "10px",
+                                  fontWeight: 600,
+                                  color: "#22428F",
+                                }}
+                              >
+                                How would you like to attend? *
+                              </label>
+                              <div
+                                style={{
+                                  display: "flex",
+                                  gap: "24px",
+                                  flexWrap: "wrap",
+                                }}
+                              >
+                                <label
+                                  style={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                    gap: "8px",
+                                    cursor: "pointer",
+                                    fontWeight: 500,
+                                  }}
+                                >
+                                  <input
+                                    type="radio"
+                                    name="trainingMode"
+                                    value="online"
+                                    checked={formData.trainingMode === "online"}
+                                    onChange={handleChange}
+                                  />
+                                  Online
+                                </label>
+                                <label
+                                  style={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                    gap: "8px",
+                                    cursor: "pointer",
+                                    fontWeight: 500,
+                                  }}
+                                >
+                                  <input
+                                    type="radio"
+                                    name="trainingMode"
+                                    value="offline"
+                                    checked={
+                                      formData.trainingMode === "offline"
+                                    }
+                                    onChange={handleChange}
+                                  />
+                                  Offline (In-person)
+                                </label>
+                              </div>
+                            </div>
+                            <div className="form-grp">
+                              <textarea
+                                name="skills"
+                                placeholder="Skills (ICT, digital, languages, etc.) *"
+                                value={formData.skills}
+                                onChange={handleChange}
+                                required
+                              />
+                            </div>
+                            <button
+                              type="submit"
+                              className="btn btn-three w-100"
+                              disabled={isSubmitting}
+                            >
+                              {isSubmitting
+                                ? "Submitting..."
+                                : "Submit Registration"}
+                            </button>
+                          </form>
                         </div>
-                        <div className="form-grp">
-                          <textarea
-                            name="skills"
-                            placeholder="Skills (ICT, digital, languages, etc.) *"
-                            value={formData.skills}
-                            onChange={handleChange}
-                            required
-                          />
-                        </div>
-                        <button
-                          type="submit"
-                          className="btn btn-three w-100"
-                          disabled={isSubmitting}
-                        >
-                          {isSubmitting
-                            ? "Submitting..."
-                            : "Submit Registration"}
-                        </button>
-                      </form>
-                    </div>
+                      </>
+                    )}
                   </>
                 )}
               </div>
