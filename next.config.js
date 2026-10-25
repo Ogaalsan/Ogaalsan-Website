@@ -76,6 +76,16 @@ const nextConfig = {
         destination: '/resources/reports',
         permanent: true,
       },
+      {
+        source: '/events',
+        destination: '/training',
+        permanent: false,
+      },
+      {
+        source: '/events/:slug',
+        destination: '/training',
+        permanent: false,
+      },
     ];
   },
 }

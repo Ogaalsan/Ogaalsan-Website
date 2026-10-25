@@ -4,7 +4,7 @@ import { fetchTrainings } from "@/lib/trainings";
 
 export default function TrainingList({ trainings }) {
   return (
-    <Layout headTitle="Open Programs">
+    <Layout headTitle="Training & Workshops">
       <section className="ogaalsan-page">
         <div className="container">
           <div className="ogaalsan-page-intro">
@@ -13,13 +13,14 @@ export default function TrainingList({ trainings }) {
               <span aria-hidden="true">/</span>
               <Link href="/courses">Learn</Link>
               <span aria-hidden="true">/</span>
-              <span>Open Programs</span>
+              <span>Training & Workshops</span>
             </nav>
             <span className="ogaalsan-page-intro__eyebrow">Learn</span>
-            <h1 className="ogaalsan-page-intro__title">Open Programs</h1>
+            <h1 className="ogaalsan-page-intro__title">Training & Workshops</h1>
             <p className="ogaalsan-page-intro__desc">
-              Time-bound programs you can register for — online or in-person.
-              For self-paced courses with lessons and progress tracking, see{" "}
+              Browse upcoming trainings and workshops, then register for the one
+              you want — online or in-person. For self-paced courses with
+              lessons and progress tracking, see{" "}
               <Link href="/courses">Online Courses</Link>.
             </p>
           </div>
@@ -27,7 +28,10 @@ export default function TrainingList({ trainings }) {
           {trainings.length === 0 ? (
             <div className="row justify-content-center">
               <div className="col-lg-8 text-center">
-                <p>No trainings are available right now. Please check back soon.</p>
+                <p>
+                  No trainings or workshops are available right now. Please
+                  check back soon.
+                </p>
               </div>
             </div>
           ) : (

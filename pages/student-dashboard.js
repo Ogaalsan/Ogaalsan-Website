@@ -125,7 +125,7 @@ export default function StudentDashboard() {
     { id: "courses", label: "My Courses", icon: "fas fa-book-open" },
     { id: "certificates", label: "My Certificates", icon: "fas fa-award" },
     { id: "quizzes", label: "Quiz Attempts", icon: "fas fa-clipboard-check" },
-    { id: "events", label: "Events & Workshops", icon: "fas fa-calendar-alt" },
+    { id: "events", label: "Training & Workshops", icon: "fas fa-chalkboard-teacher" },
     { id: "settings", label: "Settings", icon: "fas fa-cog" },
   ];
 
@@ -664,15 +664,15 @@ export default function StudentDashboard() {
             {activeTab === "events" && (
               <div className="portal-section-card text-center py-5">
                 <div className="portal-empty-icon">
-                  <i className="fas fa-calendar-alt" />
+                  <i className="fas fa-chalkboard-teacher" />
                 </div>
-                <h3 className="portal-empty-title">Events &amp; Workshops</h3>
+                <h3 className="portal-empty-title">Training &amp; Workshops</h3>
                 <p className="portal-empty-desc">
-                  Join upcoming live webinars and capacity building sessions
-                  organized by OgaalSan.
+                  Browse upcoming trainings and workshops, then register for the
+                  program you want.
                 </p>
-                <Link href="/events" className="portal-action-btn">
-                  Browse Events
+                <Link href="/training" className="portal-action-btn">
+                  Browse Training &amp; Workshops
                 </Link>
               </div>
             )}

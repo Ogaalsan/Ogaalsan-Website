@@ -1740,7 +1740,7 @@ html[data-theme="dark"] .course-detail__cta--whatsapp {
 }
 
 .learn-portal__lesson-item.is-done i {
-  color: #16a34a;
+  color: #3fa9f5;
 }
 
 .learn-portal__lesson-item.is-locked {
@@ -1796,7 +1796,7 @@ html[data-theme="dark"] .course-detail__cta--whatsapp {
 }
 
 .learn-portal__quiz-link .fa-check-circle {
-  color: #16a34a;
+  color: #3fa9f5;
 }
 
 .learn-portal__quiz-link small {
@@ -1945,7 +1945,7 @@ html[data-theme="dark"] .learn-portal__quiz-link--lesson {
 }
 
 .learn-quiz-panel__header .is-pass {
-  color: #16a34a;
+  color: #3fa9f5;
 }
 
 .learn-quiz-panel__header .is-fail {
@@ -1962,7 +1962,7 @@ html[data-theme="dark"] .learn-portal__quiz-link--lesson {
 }
 
 .learn-quiz-panel__result.is-pass strong {
-  color: #16a34a;
+  color: #3fa9f5;
 }
 
 .learn-quiz-panel__result.is-fail strong {
@@ -2192,11 +2192,11 @@ html[data-theme="dark"] .learn-quiz-panel__option.is-selected {
 }
 
 .learn-portal__complete-btn.is-done {
-  background: #16a34a;
+  background: #22428f;
 }
 
 .learn-portal__complete-btn.is-done:hover:not(:disabled) {
-  background: #15803d;
+  background: #3fa9f5;
 }
 
 .learn-portal__notes h3 {

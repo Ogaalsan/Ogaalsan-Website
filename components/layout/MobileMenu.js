@@ -91,7 +91,7 @@ export default function MobileMenu() {
             <Link href="/courses">Online Courses</Link>
           </li>
           <li>
-            <Link href="/training">Open Programs</Link>
+            <Link href="/training">Training & Workshops</Link>
           </li>
           <li>
             <Link href="/resources/course-resources">Course Resources</Link>

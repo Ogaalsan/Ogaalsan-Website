@@ -101,13 +101,13 @@ export default function TrainingDetail({ training }) {
 
   if (!training) {
     return (
-      <Layout headTitle="Open Programs">
+      <Layout headTitle="Training & Workshops">
         <section className="ogaalsan-page">
           <div className="container text-center">
             <h3>Program not found</h3>
             <p>The program you are looking for is not available.</p>
             <Link href="/training" className="btn btn-three mt-20">
-              Back to Open Programs
+              Back to Training & Workshops
             </Link>
           </div>
         </section>
@@ -122,7 +122,7 @@ export default function TrainingDetail({ training }) {
           <nav className="ogaalsan-page-intro__crumbs" aria-label="Breadcrumb">
             <Link href="/">Home</Link>
             <span aria-hidden="true">/</span>
-            <Link href="/training">Open Programs</Link>
+            <Link href="/training">Training & Workshops</Link>
             <span aria-hidden="true">/</span>
             <span>{training.title}</span>
           </nav>
@@ -166,10 +166,10 @@ export default function TrainingDetail({ training }) {
 
             <div className="col-lg-6">
               <div className="inner-contact-info">
-                <h2 className="title">Register for this training</h2>
+                <h2 className="title">Register for this workshop</h2>
                 <p>
                   Fill in your details and choose whether you want to attend
-                  online or offline.
+                  online or in person.
                 </p>
 
                 {authLoading ? (
