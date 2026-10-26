@@ -1645,6 +1645,10 @@ html[data-theme="dark"] .course-detail__cta--whatsapp {
   padding: 16px;
 }
 
+.learn-portal__content-head {
+  display: none;
+}
+
 .learn-portal__progress-card {
   padding: 14px;
   margin-bottom: 16px;
@@ -1660,6 +1664,14 @@ html[data-theme="dark"] .course-detail__cta--whatsapp {
   color: #334770;
 }
 
+.learn-portal__progress-hint {
+  display: none;
+  margin: 6px 0 0;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: #8b9db5;
+}
+
 .learn-portal__progress-track {
   height: 8px;
   border-radius: 999px;
@@ -1671,17 +1683,19 @@ html[data-theme="dark"] .course-detail__cta--whatsapp {
 .learn-portal__progress-track span {
   display: block;
   height: 100%;
-  background: #3fa9f5;
+  background: #22428f;
 }
 
 .learn-portal__back-link {
+  display: inline-block;
+  margin-top: 10px;
   font-size: 0.8rem;
   font-weight: 600;
   color: #3fa9f5 !important;
   text-decoration: none !important;
 }
 
-.learn-portal__curriculum h2,
+.learn-portal__curriculum-heading,
 .learn-portal__sidebar-block h3 {
   margin: 0 0 10px;
   font-size: 0.85rem;
@@ -1712,44 +1726,113 @@ html[data-theme="dark"] .course-detail__cta--whatsapp {
   cursor: pointer;
 }
 
-.learn-portal__lesson-list {
-  list-style: none;
-  margin: 6px 0 0;
-  padding: 0;
+.learn-portal__chapter-toggle-main {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 10px;
+  min-width: 0;
 }
 
-.learn-portal__lesson-item {
+.learn-portal__chapter-toggle-main > i {
+  margin-top: 2px;
+  color: #3fa9f5;
+  flex-shrink: 0;
+}
+
+.learn-portal__lesson-list {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.learn-portal__lesson-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+}
+
+/* Flat curriculum rows — lessons + quizzes share the same look */
+.learn-portal__row {
   width: 100%;
   display: flex;
   align-items: flex-start;
-  gap: 10px;
-  padding: 10px 12px;
+  gap: 12px;
+  margin: 0;
+  padding: 12px 14px;
   border: 0;
-  border-radius: 4px;
+  border-radius: 10px;
   background: transparent;
-  color: #334770;
-  font-size: 0.85rem;
+  color: #334770 !important;
   text-align: left;
+  text-decoration: none !important;
+  font: inherit;
   cursor: pointer;
 }
 
-.learn-portal__lesson-item:hover,
-.learn-portal__lesson-item.is-active {
-  background: rgba(63, 169, 245, 0.1);
-  color: #22428f;
-}
-
-.learn-portal__lesson-item.is-done i {
-  color: #3fa9f5;
-}
-
-.learn-portal__lesson-item.is-locked {
-  opacity: 0.65;
-}
-
-.learn-portal__lesson-item i {
+.learn-portal__row > i {
   margin-top: 2px;
+  flex-shrink: 0;
+  width: 1.1rem;
+  text-align: center;
+  color: #94a3b8;
+  font-size: 1rem;
+}
+
+.learn-portal__row.is-done > i,
+.learn-portal__row.is-active > i {
   color: #3fa9f5;
+}
+
+.learn-portal__row.is-active {
+  background: #f1f5f9;
+  color: #152033 !important;
+}
+
+.learn-portal__row:hover {
+  background: #f8fafc;
+}
+
+.learn-portal__row.is-locked {
+  opacity: 0.6;
+}
+
+.learn-portal__row-body {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+  flex: 1;
+}
+
+.learn-portal__row-body strong {
+  font-size: 0.9rem;
+  font-weight: 700;
+  line-height: 1.35;
+  color: inherit;
+}
+
+.learn-portal__row-body small {
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.4;
+  color: #8b9db5;
+}
+
+.learn-portal__row--quiz .learn-portal__row-body strong {
+  text-transform: none;
+}
+
+/* Quiz sits under its lesson as a flat sub-row (same chrome, slight indent) */
+.learn-portal__row--sub {
+  padding-left: 28px;
+}
+
+.learn-portal__row--sub > i {
+  font-size: 0.95rem;
 }
 
 .learn-portal__sidebar-block {
@@ -1758,17 +1841,14 @@ html[data-theme="dark"] .course-detail__cta--whatsapp {
   border-top: 1px solid #eef2f7;
 }
 
-.learn-portal__lesson-group {
-  display: flex;
-  flex-direction: column;
-}
-
+/* Keep old quiz-link usable if referenced elsewhere */
 .learn-portal__quiz-link {
   display: flex;
   gap: 10px;
   width: 100%;
-  padding: 10px 4px;
+  padding: 10px 12px;
   border: 0;
+  border-radius: 10px;
   background: transparent;
   color: #334770 !important;
   text-align: left;
@@ -1778,20 +1858,13 @@ html[data-theme="dark"] .course-detail__cta--whatsapp {
   cursor: pointer;
 }
 
-.learn-portal__quiz-link--lesson {
-  margin: 0 0 4px 12px;
-  padding: 8px 10px;
-  border-radius: 4px;
-  background: #f7fafc;
-}
-
-.learn-portal__quiz-link--lesson:hover,
+.learn-portal__quiz-link:hover,
 .learn-portal__quiz-link.is-active {
-  background: rgba(63, 169, 245, 0.1);
+  background: #f1f5f9;
 }
 
 .learn-portal__quiz-link i {
-  color: #3fa9f5;
+  color: #94a3b8;
   margin-top: 2px;
 }
 
@@ -1803,10 +1876,6 @@ html[data-theme="dark"] .course-detail__cta--whatsapp {
   display: block;
   margin-top: 2px;
   color: #8b9db5;
-}
-
-html[data-theme="dark"] .learn-portal__quiz-link--lesson {
-  background: #121a2a;
 }
 
 .learn-portal__main {
@@ -2283,27 +2352,110 @@ html[data-theme="dark"] .learn-quiz-panel__option.is-selected {
     display: none;
   }
 
+  /* Video first, course list always below — scroll, no open button */
   .learn-portal__shell {
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
+    grid-template-columns: none;
+    min-height: 0;
+  }
+
+  .learn-portal__main {
+    order: 1;
+    padding-bottom: 8px;
   }
 
   .learn-portal__sidebar {
-    position: fixed;
-    top: 64px;
-    left: 0;
-    bottom: 0;
-    width: min(320px, 88vw);
-    z-index: 50;
-    transform: translateX(-105%);
-    transition: transform 0.2s ease;
+    order: 2;
+    position: static;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+    transform: none;
+    border-right: 0;
+    border-top: 1px solid #e6eef6;
+    padding: 20px 14px 32px;
+    background: #fff;
   }
 
-  .learn-portal__shell.is-sidebar-open .learn-portal__sidebar {
-    transform: translateX(0);
+  .learn-portal__content-head {
+    display: block;
+    margin-bottom: 14px;
   }
 
-  .learn-portal__main-toolbar {
-    display: flex;
+  .learn-portal__content-title {
+    margin: 0;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #3fa9f5;
+  }
+
+  .learn-portal__progress-card {
+    margin-bottom: 18px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+  }
+
+  .learn-portal__progress-track {
+    height: 10px;
+    margin-bottom: 10px;
+  }
+
+  .learn-portal__progress-label {
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #152033;
+  }
+
+  .learn-portal__progress-hint {
+    display: block;
+  }
+
+  .learn-portal__back-link {
+    display: none;
+  }
+
+  .learn-portal__curriculum-heading {
+    display: none;
+  }
+
+  .learn-portal__chapter + .learn-portal__chapter {
+    margin-top: 12px;
+  }
+
+  .learn-portal__chapter-toggle {
+    padding: 14px;
+    border: 0;
+    border-radius: 12px;
+    background: #f3f5f8;
+    color: #152033;
+    font-size: 0.95rem;
+  }
+
+  .learn-portal__lesson-list {
+    gap: 2px;
+    margin-top: 10px;
+  }
+
+  .learn-portal__row {
+    padding: 14px 12px;
+    border-radius: 12px;
+  }
+
+  .learn-portal__row.is-active {
+    background: #eef2f7;
+  }
+
+  .learn-portal__row-body strong {
+    font-size: 0.92rem;
+  }
+
+  .learn-portal__main-toolbar,
+  .learn-portal__sidebar-toggle,
+  .learn-portal__sidebar-backdrop {
+    display: none !important;
   }
 
   .learn-portal__player-frame,
@@ -2315,14 +2467,12 @@ html[data-theme="dark"] .learn-quiz-panel__option.is-selected {
     min-height: 320px;
     max-height: none;
   }
+}
 
-  .learn-portal__sidebar-backdrop {
-    display: block;
-    position: fixed;
-    inset: 64px 0 0;
-    z-index: 45;
-    border: 0;
-    background: rgba(15, 28, 48, 0.4);
+@media (max-width: 575px) {
+  .learn-portal__player-frame,
+  .learn-portal__player-empty {
+    height: min(56vw, 280px);
   }
 }
 
@@ -2343,7 +2493,8 @@ html[data-theme="dark"] .learn-portal__sidebar-toggle {
 
 html[data-theme="dark"] .learn-portal__brand-label,
 html[data-theme="dark"] .learn-portal__course-title,
-html[data-theme="dark"] .learn-portal__curriculum h2,
+html[data-theme="dark"] .learn-portal__curriculum-heading,
+html[data-theme="dark"] .learn-portal__content-title,
 html[data-theme="dark"] .learn-portal__lesson-head h2,
 html[data-theme="dark"] .learn-portal__chapter-toggle,
 html[data-theme="dark"] .learn-portal__instructor strong {
@@ -2351,17 +2502,36 @@ html[data-theme="dark"] .learn-portal__instructor strong {
 }
 
 html[data-theme="dark"] .learn-portal__progress-label,
-html[data-theme="dark"] .learn-portal__lesson-item,
+html[data-theme="dark"] .learn-portal__row,
 html[data-theme="dark"] .learn-portal__notes p,
 html[data-theme="dark"] .learn-portal__muted,
 html[data-theme="dark"] .learn-portal__lesson-head p {
   color: #a8b4c8;
 }
 
-html[data-theme="dark"] .learn-portal__lesson-item.is-active,
-html[data-theme="dark"] .learn-portal__lesson-item:hover {
+html[data-theme="dark"] .learn-portal__row.is-active,
+html[data-theme="dark"] .learn-portal__row:hover {
   background: rgba(63, 169, 245, 0.12);
-  color: #7ec8f8;
+  color: #e8eef8 !important;
+}
+
+html[data-theme="dark"] .learn-portal__row-body small {
+  color: #8b9db5;
+}
+
+@media (max-width: 991px) {
+  html[data-theme="dark"] .learn-portal__sidebar {
+    background: #0d1421;
+    border-top-color: #2a3a55;
+  }
+
+  html[data-theme="dark"] .learn-portal__chapter-toggle {
+    background: #152033;
+  }
+
+  html[data-theme="dark"] .learn-portal__content-title {
+    color: #3fa9f5;
+  }
 }
 
 html[data-theme="dark"] .learn-portal__tabs {

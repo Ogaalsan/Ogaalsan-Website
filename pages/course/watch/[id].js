@@ -45,8 +45,6 @@ export default function CourseWatch() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [savingProgress, setSavingProgress] = useState(false);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-
   const activeQuizId = ready && quizQuery ? String(quizQuery) : null;
 
   const returnPath =
@@ -134,7 +132,6 @@ export default function CourseWatch() {
 
   const selectLesson = (index) => {
     setActiveLessonIndex(index);
-    setSidebarOpen(false);
     setActiveTab("summary");
     const lesson = lessons[index];
     if (lesson?.id && ready) {
@@ -155,7 +152,6 @@ export default function CourseWatch() {
       router.push(`/course/${course?.slug || course?.id}/register`);
       return;
     }
-    setSidebarOpen(false);
     const lessonId = activeLesson?.id;
     const query = { id: identifier, quiz: quiz.id };
     if (lessonId) query.lesson = lessonId;
@@ -328,22 +324,29 @@ export default function CourseWatch() {
         </div>
       )}
 
-      <div className={`learn-portal__shell${sidebarOpen ? " is-sidebar-open" : ""}`}>
+      <div className="learn-portal__shell">
         <aside className="learn-portal__sidebar">
+          <div className="learn-portal__content-head">
+            <h2 className="learn-portal__content-title">Course Content</h2>
+          </div>
+
           <div className="learn-portal__progress-card">
-            <div className="learn-portal__progress-label">
-              {percent}% Completed ({completed}/{total} items)
-            </div>
             <div className="learn-portal__progress-track">
               <span style={{ width: `${percent}%` }} />
             </div>
+            <div className="learn-portal__progress-label">
+              {percent}% Completed ({completed}/{total} items)
+            </div>
+            <p className="learn-portal__progress-hint">
+              Finish all lessons and quizzes to unlock your certificate.
+            </p>
             <Link href="/my-courses" className="learn-portal__back-link">
               ← My Courses
             </Link>
           </div>
 
           <div className="learn-portal__curriculum">
-            <h2>Course content</h2>
+            <h2 className="learn-portal__curriculum-heading">Course content</h2>
             {chapters.map((chapter) => {
               const isOpen = openChapters.includes(chapter.title);
               const chapterQuizzes = quizzes.filter(
@@ -362,7 +365,10 @@ export default function CourseWatch() {
                     onClick={() => toggleChapter(chapter.title)}
                     aria-expanded={isOpen}
                   >
-                    <span>{chapter.title}</span>
+                    <span className="learn-portal__chapter-toggle-main">
+                      <i className="fas fa-book" aria-hidden="true" />
+                      <span>{chapter.title}</span>
+                    </span>
                     <i
                       className={`fas fa-chevron-${isOpen ? "up" : "down"}`}
                       aria-hidden="true"
@@ -374,7 +380,8 @@ export default function CourseWatch() {
                         const index = lessons.findIndex(
                           (item) => item.id === lesson.id
                         );
-                        const isActive = activeLessonIndex === index;
+                        const isActive =
+                          !activeQuizId && activeLessonIndex === index;
                         const locked = !lesson.is_unlocked;
                         const lessonQuizzesForItem = quizzes.filter(
                           (quiz) =>
@@ -388,7 +395,7 @@ export default function CourseWatch() {
                           >
                             <button
                               type="button"
-                              className={`learn-portal__lesson-item${
+                              className={`learn-portal__row${
                                 isActive ? " is-active" : ""
                               }${locked ? " is-locked" : ""}${
                                 lesson.is_completed ? " is-done" : ""
@@ -407,36 +414,54 @@ export default function CourseWatch() {
                                 }
                                 aria-hidden="true"
                               />
-                              <span>
-                                {index + 1}. {lesson.title}
+                              <span className="learn-portal__row-body">
+                                <strong>
+                                  LESSON {index + 1}: {lesson.title}
+                                </strong>
+                                <small>
+                                  {lesson.content
+                                    ? `${String(lesson.content).slice(0, 72)}${
+                                        String(lesson.content).length > 72
+                                          ? "…"
+                                          : ""
+                                      }`
+                                    : lesson.video_url
+                                      ? "Video lesson"
+                                      : "Reading materials"}
+                                </small>
                               </span>
                             </button>
                             {lessonQuizzesForItem.map((quiz) => (
                               <button
                                 key={quiz.id}
                                 type="button"
-                                className={`learn-portal__quiz-link learn-portal__quiz-link--lesson${
+                                className={`learn-portal__row learn-portal__row--quiz learn-portal__row--sub${
                                   String(activeQuizId) === String(quiz.id)
                                     ? " is-active"
                                     : ""
-                                }`}
+                                }${quiz.passed ? " is-done" : ""}`}
                                 onClick={() => openQuiz(quiz)}
                               >
                                 <i
                                   className={
                                     quiz.passed
                                       ? "fas fa-check-circle"
-                                      : "fas fa-clipboard-list"
+                                      : "far fa-circle"
                                   }
                                   aria-hidden="true"
                                 />
-                                <span>
-                                  {quiz.title}
+                                <span className="learn-portal__row-body">
+                                  <strong>{quiz.title}</strong>
                                   <small>
-                                    Lesson quiz · Pass {quiz.passingScore}%
-                                    {quiz.bestScore != null
-                                      ? ` · Best ${quiz.bestScore}%`
+                                    Quiz
+                                    {quiz.questionCount
+                                      ? ` · ${quiz.questionCount} questions`
                                       : ""}
+                                    {quiz.passed
+                                      ? " · Passed"
+                                      : quiz.bestScore != null
+                                        ? ` · Best ${quiz.bestScore}%`
+                                        : ` · Pass ${quiz.passingScore}%`}
                                   </small>
                                 </span>
                               </button>
@@ -448,25 +473,31 @@ export default function CourseWatch() {
                         <li key={quiz.id}>
                           <button
                             type="button"
-                            className={`learn-portal__quiz-link${
+                            className={`learn-portal__row learn-portal__row--quiz${
                               String(activeQuizId) === String(quiz.id)
                                 ? " is-active"
                                 : ""
-                            }`}
+                            }${quiz.passed ? " is-done" : ""}`}
                             onClick={() => openQuiz(quiz)}
                           >
                             <i
                               className={
                                 quiz.passed
                                   ? "fas fa-check-circle"
-                                  : "fas fa-clipboard-list"
+                                  : "far fa-circle"
                               }
                               aria-hidden="true"
                             />
-                            <span>
-                              {quiz.title}
+                            <span className="learn-portal__row-body">
+                              <strong>{quiz.title}</strong>
                               <small>
-                                Section quiz · Pass {quiz.passingScore}%
+                                Section quiz
+                                {quiz.questionCount
+                                  ? ` · ${quiz.questionCount} questions`
+                                  : ""}
+                                {quiz.passed
+                                  ? " · Passed"
+                                  : ` · Pass ${quiz.passingScore}%`}
                               </small>
                             </span>
                           </button>
@@ -485,28 +516,33 @@ export default function CourseWatch() {
                   <button
                     key={quiz.id}
                     type="button"
-                    className={`learn-portal__quiz-link${
+                    className={`learn-portal__row learn-portal__row--quiz${
                       String(activeQuizId) === String(quiz.id)
                         ? " is-active"
                         : ""
-                    }`}
+                    }${quiz.passed ? " is-done" : ""}`}
                     onClick={() => openQuiz(quiz)}
                   >
                     <i
                       className={
                         quiz.passed
                           ? "fas fa-check-circle"
-                          : "fas fa-flag-checkered"
+                          : "far fa-circle"
                       }
                       aria-hidden="true"
                     />
-                    <span>
-                      {quiz.title}
+                    <span className="learn-portal__row-body">
+                      <strong>{quiz.title}</strong>
                       <small>
-                        Pass {quiz.passingScore}%
-                        {quiz.bestScore != null
-                          ? ` · Best ${quiz.bestScore}%`
+                        Final quiz
+                        {quiz.questionCount
+                          ? ` · ${quiz.questionCount} questions`
                           : ""}
+                        {quiz.passed
+                          ? " · Passed"
+                          : quiz.bestScore != null
+                            ? ` · Best ${quiz.bestScore}%`
+                            : ` · Pass ${quiz.passingScore}%`}
                       </small>
                     </span>
                   </button>
@@ -517,17 +553,6 @@ export default function CourseWatch() {
         </aside>
 
         <main className="learn-portal__main">
-          <div className="learn-portal__main-toolbar">
-            <button
-              type="button"
-              className="learn-portal__sidebar-toggle"
-              onClick={() => setSidebarOpen((open) => !open)}
-            >
-              <i className="fas fa-bars" aria-hidden="true" />
-              Content
-            </button>
-          </div>
-
           <div
             className={`learn-portal__player${
               activeQuizId ? " learn-portal__player--quiz" : ""
@@ -717,15 +742,6 @@ export default function CourseWatch() {
           ) : null}
         </main>
       </div>
-
-      {sidebarOpen && (
-        <button
-          type="button"
-          className="learn-portal__sidebar-backdrop"
-          aria-label="Close course content"
-          onClick={() => setSidebarOpen(false)}
-        />
-      )}
     </LearnLayout>
   );
 }
