@@ -1748,6 +1748,12 @@ html[data-theme="dark"] .course-detail__cta--whatsapp {
   gap: 4px;
 }
 
+.learn-portal__empty-section {
+  padding: 12px 14px;
+  font-size: 0.82rem;
+  color: #8b9db5;
+}
+
 .learn-portal__lesson-group {
   display: flex;
   flex-direction: column;

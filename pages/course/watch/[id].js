@@ -13,20 +13,27 @@ import {
 } from "@/lib/learner";
 import { resolveMediaUrl } from "@/lib/media";
 
-function groupLessonsByChapter(lessons) {
+function buildChapters(sections, lessons) {
+  if (Array.isArray(sections) && sections.length > 0) {
+    return sections.map((section) => ({
+      id: section.id,
+      title: section.title || "Course Content",
+      lessons: section.lessons || [],
+    }));
+  }
+
+  // Fallback when sections are missing: group by lesson chapter titles
   const groups = [];
   const map = new Map();
-
-  lessons.forEach((lesson) => {
+  (lessons || []).forEach((lesson) => {
     const key = lesson.chapterTitle || "Course Content";
     if (!map.has(key)) {
-      const group = { title: key, lessons: [] };
+      const group = { id: null, title: key, lessons: [] };
       map.set(key, group);
       groups.push(group);
     }
     map.get(key).lessons.push(lesson);
   });
-
   return groups;
 }
 
@@ -82,8 +89,13 @@ export default function CourseWatch() {
           index = firstUnlocked >= 0 ? firstUnlocked : 0;
         }
         setActiveLessonIndex(index);
-        const chapters = groupLessonsByChapter(list).map((g) => g.title);
-        setOpenChapters(chapters);
+        const sectionTitles = (result.course.sections || []).map(
+          (section) => section.title
+        );
+        const chapterTitles = sectionTitles.length
+          ? sectionTitles
+          : buildChapters([], list).map((g) => g.title);
+        setOpenChapters(chapterTitles);
       })
       .catch((err) => {
         if (active) {
@@ -106,7 +118,10 @@ export default function CourseWatch() {
 
   const lessons = useMemo(() => course?.lessons || [], [course]);
   const quizzes = useMemo(() => course?.quizzes || [], [course]);
-  const chapters = useMemo(() => groupLessonsByChapter(lessons), [lessons]);
+  const chapters = useMemo(
+    () => buildChapters(course?.sections, lessons),
+    [course?.sections, lessons]
+  );
   const activeLesson = lessons[activeLessonIndex] || lessons[0];
   const activeVideo = extractYouTubeId(activeLesson?.video_url);
   const lessonQuizzes = useMemo(
@@ -352,13 +367,18 @@ export default function CourseWatch() {
               const chapterQuizzes = quizzes.filter(
                 (quiz) =>
                   quiz.type === "section" &&
-                  chapter.lessons.some(
-                    (lesson) =>
-                      Number(quiz.syllabusId) === Number(lesson.syllabusId)
-                  )
+                  (chapter.id != null
+                    ? Number(quiz.syllabusId) === Number(chapter.id)
+                    : chapter.lessons.some(
+                        (lesson) =>
+                          Number(quiz.syllabusId) === Number(lesson.syllabusId)
+                      ))
               );
               return (
-                <div key={chapter.title} className="learn-portal__chapter">
+                <div
+                  key={chapter.id || chapter.title}
+                  className="learn-portal__chapter"
+                >
                   <button
                     type="button"
                     className="learn-portal__chapter-toggle"
@@ -376,6 +396,12 @@ export default function CourseWatch() {
                   </button>
                   {isOpen && (
                     <ul className="learn-portal__lesson-list">
+                      {chapter.lessons.length === 0 &&
+                        chapterQuizzes.length === 0 && (
+                          <li className="learn-portal__empty-section">
+                            No lessons in this section yet.
+                          </li>
+                        )}
                       {chapter.lessons.map((lesson) => {
                         const index = lessons.findIndex(
                           (item) => item.id === lesson.id
