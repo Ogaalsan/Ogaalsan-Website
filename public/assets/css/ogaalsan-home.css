@@ -1024,12 +1024,18 @@ html[data-theme="dark"] .ogaalsan-header.header-style-two.ogaalsan-header--over-
   line-height: 1.75;
 }
 
-.ogaalsan-choose .skill-wrap {
+.ogaalsan-choose .skill-wrap,
+.ogaalsan-choose .skill-wrap--choose {
   margin-left: 0;
   padding: 40px 36px;
   border-radius: 16px;
   background: #ffffff;
   box-shadow: 0 10px 36px rgba(34, 66, 143, 0.16);
+  /* Never leave this card invisible (AOS used to keep opacity:0 on mobile) */
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
 }
 
 .ogaalsan-choose .skill-wrap > p {
@@ -1049,16 +1055,24 @@ html[data-theme="dark"] .ogaalsan-header.header-style-two.ogaalsan-header--over-
 @media (max-width: 991px) {
   .ogaalsan-choose .choose-content {
     max-width: 100%;
-    margin-bottom: 40px;
+    margin-bottom: 28px;
+    text-align: center;
   }
 
-  .ogaalsan-choose .skill-wrap {
-    padding: 32px 24px;
+  .ogaalsan-choose .skill-wrap,
+  .ogaalsan-choose .skill-wrap--choose {
+    padding: 28px 20px;
+    margin-left: 0 !important;
+    width: 100%;
   }
 
   .ogaalsan-choose .choose-shape img {
     max-width: 280px;
     opacity: 0.3;
+  }
+
+  .ogaalsan-choose .progress-item .title {
+    font-size: 0.95rem;
   }
 }
 
