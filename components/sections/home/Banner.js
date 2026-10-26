@@ -11,33 +11,15 @@ export default function Banner() {
         <div className="row align-items-center ogaalsan-hero__row">
           <div className="col-lg-6">
             <div className="ogaalsan-hero__copy">
-              <p
-                className="ogaalsan-hero__brand"
-                data-aos="fade-up"
-                data-aos-delay={80}
-              >
-                OgaalSan
-              </p>
-              <h1
-                className="ogaalsan-hero__title"
-                data-aos="fade-up"
-                data-aos-delay={160}
-              >
+              <p className="ogaalsan-hero__brand">OgaalSan</p>
+              <h1 className="ogaalsan-hero__title">
                 Transforming ideas into sustainable solutions
               </h1>
-              <p
-                className="ogaalsan-hero__lead"
-                data-aos="fade-up"
-                data-aos-delay={240}
-              >
+              <p className="ogaalsan-hero__lead">
                 ICT, training, and business development for organisations
                 across Somalia and East Africa.
               </p>
-              <div
-                className="ogaalsan-hero__actions"
-                data-aos="fade-up"
-                data-aos-delay={320}
-              >
+              <div className="ogaalsan-hero__actions">
                 <Link
                   href="/services"
                   className="ogaalsan-btn ogaalsan-btn--primary ogaalsan-hero__btn"
@@ -54,11 +36,7 @@ export default function Banner() {
             </div>
           </div>
           <div className="col-lg-6">
-            <div
-              className="ogaalsan-hero__media"
-              data-aos="fade-left"
-              data-aos-delay={220}
-            >
+            <div className="ogaalsan-hero__media">
               <Image
                 src="/assets/img/ogalsan/hero-4.png"
                 alt="OgaalSan digital and consulting solutions"

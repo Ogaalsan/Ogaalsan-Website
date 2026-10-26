@@ -59,11 +59,7 @@ export default function Services({ services = [], loading = false }) {
                     width={400}
                     height={350}
                     loading="lazy"
-                    style={{
-                      width: "100%",
-                      height: "350px",
-                      objectFit: "cover",
-                    }}
+                    className="services-thumb-two__img"
                   />
                 </div>
                 <div className="services-content-two">

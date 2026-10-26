@@ -13,20 +13,14 @@ function MyApp({ Component, pageProps }) {
     }, 200)
 
     if (typeof window !== "undefined") {
-      const initAOS = () => {
-        AOS.init({
-          duration: 800,
-          once: true,
-          offset: 100,
-          disable: "mobile",
-        })
-      }
-
-      if ("requestIdleCallback" in window) {
-        requestIdleCallback(initAOS, { timeout: 2000 })
-      } else {
-        setTimeout(initAOS, 100)
-      }
+      // Init immediately so [data-aos] elements are not left at opacity:0
+      AOS.init({
+        duration: 800,
+        once: true,
+        offset: 40,
+        disable: () => window.matchMedia("(max-width: 767.98px)").matches,
+      })
+      AOS.refresh()
     }
 
     return () => clearTimeout(timer)

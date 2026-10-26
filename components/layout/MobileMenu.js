@@ -18,7 +18,7 @@ function isLearnActive(pathname) {
   );
 }
 
-export default function MobileMenu() {
+export default function MobileMenu({ onNavigate }) {
   const router = useRouter();
   const pathname = router.pathname;
   const [isActive, setIsActive] = useState({
@@ -34,20 +34,30 @@ export default function MobileMenu() {
     }
   };
 
+  const closeMenu = () => {
+    if (typeof onNavigate === "function") onNavigate();
+  };
+
   return (
     <ul className="navigation">
       <li className={navActive(pathname, "/") ? "active" : ""}>
-        <Link href="/">Home</Link>
+        <Link href="/" onClick={closeMenu}>
+          Home
+        </Link>
       </li>
       <li className={navActive(pathname, "/about") ? "active" : ""}>
-        <Link href="/about">About</Link>
+        <Link href="/about" onClick={closeMenu}>
+          About
+        </Link>
       </li>
       <li
         className={`menu-item-has-children${
           navActive(pathname, "/services") ? " active" : ""
         }`}
       >
-        <Link href="/services">Services</Link>
+        <Link href="/services" onClick={closeMenu}>
+          Services
+        </Link>
         <ul
           className="sub-menu"
           style={{ display: isActive.key === 1 ? "block" : "none" }}
@@ -56,15 +66,19 @@ export default function MobileMenu() {
             <span>For organisations</span>
           </li>
           <li>
-            <Link href="/services/ict">ICT Solutions</Link>
+            <Link href="/services/ict" onClick={closeMenu}>
+              ICT Solutions
+            </Link>
           </li>
           <li>
-            <Link href="/services/business-development">
+            <Link href="/services/business-development" onClick={closeMenu}>
               Business Development
             </Link>
           </li>
           <li>
-            <Link href="/services/training">Capacity Building</Link>
+            <Link href="/services/training" onClick={closeMenu}>
+              Capacity Building
+            </Link>
           </li>
         </ul>
         <div
@@ -79,7 +93,9 @@ export default function MobileMenu() {
           isLearnActive(pathname) ? " active" : ""
         }`}
       >
-        <Link href="/courses">Learn</Link>
+        <Link href="/courses" onClick={closeMenu}>
+          Learn
+        </Link>
         <ul
           className="sub-menu"
           style={{ display: isActive.key === 2 ? "block" : "none" }}
@@ -88,16 +104,24 @@ export default function MobileMenu() {
             <span>For learners</span>
           </li>
           <li>
-            <Link href="/courses">Online Courses</Link>
+            <Link href="/courses" onClick={closeMenu}>
+              Online Courses
+            </Link>
           </li>
           <li>
-            <Link href="/training">Training & Workshops</Link>
+            <Link href="/training" onClick={closeMenu}>
+              Training & Workshops
+            </Link>
           </li>
           <li>
-            <Link href="/resources/course-resources">Course Resources</Link>
+            <Link href="/resources/course-resources" onClick={closeMenu}>
+              Course Resources
+            </Link>
           </li>
           <li>
-            <Link href="/my-courses">My Learning</Link>
+            <Link href="/my-courses" onClick={closeMenu}>
+              My Learning
+            </Link>
           </li>
         </ul>
         <div
@@ -108,13 +132,19 @@ export default function MobileMenu() {
         </div>
       </li>
       <li className={navActive(pathname, "/blog") ? "active" : ""}>
-        <Link href="/blog">Blog</Link>
+        <Link href="/blog" onClick={closeMenu}>
+          Blog
+        </Link>
       </li>
       <li className={navActive(pathname, "/resources/reports") ? "active" : ""}>
-        <Link href="/resources/reports">Reports</Link>
+        <Link href="/resources/reports" onClick={closeMenu}>
+          Reports
+        </Link>
       </li>
       <li className={navActive(pathname, "/contact") ? "active" : ""}>
-        <Link href="/contact">Contact Us</Link>
+        <Link href="/contact" onClick={closeMenu}>
+          Contact Us
+        </Link>
       </li>
     </ul>
   );

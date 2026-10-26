@@ -638,6 +638,8 @@ html[data-theme="dark"] .ogaalsan-header.header-style-two.ogaalsan-header--over-
 
 .ogaalsan-hero__copy {
   max-width: 40rem;
+  position: relative;
+  z-index: 2;
 }
 
 .ogaalsan-hero__brand {
@@ -698,6 +700,7 @@ html[data-theme="dark"] .ogaalsan-header.header-style-two.ogaalsan-header--over-
 
 .ogaalsan-hero__media {
   position: relative;
+  z-index: 2;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2510,7 +2513,7 @@ html[data-theme="dark"] .services-area-two .services-item-two:hover .services-co
   filter: brightness(0) invert(1);
 }
 
-/* Features row — keep tops level, titles equal height */
+/* Features row — keep tops level, titles equal height (desktop) */
 .features-area-two .features-item-wrap .row {
   align-items: flex-start;
 }
@@ -2518,7 +2521,7 @@ html[data-theme="dark"] .services-area-two .services-item-two:hover .services-co
 .features-area-two .features-item-two {
   align-items: flex-start;
   width: 100%;
-  margin-bottom: 0;
+  margin-bottom: 30px;
 }
 
 .features-area-two .features-icon-two {
@@ -2531,9 +2534,18 @@ html[data-theme="dark"] .services-area-two .services-item-two:hover .services-co
 }
 
 .features-area-two .features-content-two .title {
-  min-height: 2.6em;
   margin-bottom: 10px;
   line-height: 1.3;
+}
+
+@media (min-width: 992px) {
+  .features-area-two .features-item-two {
+    margin-bottom: 0;
+  }
+
+  .features-area-two .features-content-two .title {
+    min-height: 2.6em;
+  }
 }
 
 .features-area-two .features-content-two p {
@@ -2649,8 +2661,7 @@ html[data-theme="dark"] .services-area-two .services-item-two:hover .services-co
   border-radius: 0;
 }
 
-/* Glow is child 1, so the About img is nth-child(2) and inherits the
-   theme's secondary-photo styles (8px border + absolute). Kill those. */
+/* Theme styles target nth-child photos — keep illustration clean. */
 .about-img-seven-wrap--illustration img,
 .about-img-seven-wrap--illustration img:nth-child(1),
 .about-img-seven-wrap--illustration img:nth-child(2),
@@ -2773,10 +2784,43 @@ html[data-theme="dark"] .ogaalsan-about-pillars .list-wrap li .content p {
     max-width: 560px;
   }
 
-  .ogaalsan-about-visual__badge.experience-wrap {
+  .ogaalsan-about-visual,
+  .about-img-seven-wrap--illustration {
+    min-height: 0;
+    padding: 8px 0 56px;
+    overflow: visible !important;
+  }
+
+  /* Theme hides experience-wrap + img:nth-child(2) under 767 — keep ours visible */
+  .about-img-seven-wrap--illustration .ogaalsan-about-visual__img,
+  .about-img-seven-wrap--illustration img.ogaalsan-about-visual__img,
+  .about-img-seven-wrap--illustration img:nth-child(1) {
+    display: block !important;
+    width: 100% !important;
+    max-width: 420px !important;
+    height: auto !important;
+    margin: 0 auto;
+  }
+
+  .about-img-seven-wrap--illustration .ogaalsan-about-visual__badge.experience-wrap {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     right: 50%;
+    left: auto;
     transform: translateX(50%);
-    bottom: -8px;
+    bottom: 4px;
+    min-height: auto !important;
+    max-width: 140px;
+    padding: 14px 12px;
+    z-index: 3;
+  }
+
+  .about-img-seven-wrap--illustration .ogaalsan-about-visual__badge.experience-wrap .title {
+    font-size: 36px;
+    line-height: 1;
+    margin-bottom: 4px;
   }
 }
 
@@ -2796,6 +2840,158 @@ html[data-theme="dark"] .ogaalsan-about-pillars .list-wrap li .content p {
     font-size: 34px;
     right: 12px;
     top: 12px;
+  }
+}
+
+/* —— Home page mobile polish —— */
+.services-area-two .services-thumb-two__img {
+  width: 100%;
+  height: 350px;
+  object-fit: cover;
+}
+
+@media (max-width: 991.98px) {
+  .features-area-two.pt-80 {
+    padding-top: 56px !important;
+  }
+
+  .about-area-seven.pt-120,
+  .overview-area.pt-120,
+  .ogaalsan-choose.pt-120,
+  .brand-area-two.ogaalsan-focus.pt-120,
+  .ogaalsan-home-courses.pt-100 {
+    padding-top: 72px !important;
+  }
+
+  .about-area-seven.pb-120,
+  .overview-area.pb-120,
+  .ogaalsan-choose.pb-120,
+  .brand-area-two.ogaalsan-focus.pb-120,
+  .ogaalsan-home-courses.pb-100 {
+    padding-bottom: 72px !important;
+  }
+
+  .section-title-two .title {
+    font-size: clamp(1.45rem, 4.5vw, 1.85rem) !important;
+    line-height: 1.25 !important;
+  }
+
+  .services-area-two .services-thumb-two__img,
+  .services-area-two .services-thumb-two img {
+    height: 280px !important;
+  }
+
+  .services-area-two .services-content-two {
+    left: 18px;
+    right: 18px;
+    bottom: 18px;
+  }
+
+  .services-area-two .services-content-two .title {
+    font-size: 1.15rem;
+  }
+
+  .cta-area .cta-inner-wrap {
+    padding: 36px 22px !important;
+  }
+
+  .cta-area .cta-info-wrap .content a {
+    font-size: clamp(1.25rem, 5vw, 1.6rem) !important;
+    word-break: break-word;
+  }
+
+  .cta-area .cta-content .title {
+    font-size: clamp(1.2rem, 4.5vw, 1.5rem) !important;
+    line-height: 1.3 !important;
+  }
+
+  .cta-area .cta-btn {
+    text-align: center !important;
+    margin-top: 8px;
+  }
+
+  .ogaalsan-home-courses .text-md-end {
+    text-align: center !important;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .features-area-two .features-item-two {
+    margin-bottom: 36px;
+    padding: 0 4px;
+  }
+
+  .features-area-two .features-item-wrap .row > [class*="col-"]:last-child .features-item-two {
+    margin-bottom: 0;
+  }
+
+  .features-area-two .features-icon-two {
+    width: 68px;
+    height: 68px;
+    font-size: 32px;
+    margin: 0 auto 16px;
+  }
+
+  .features-area-two .features-content-two .title {
+    min-height: 0;
+    font-size: 1.1rem;
+  }
+
+  .ogaalsan-header.header-style-two .custom-container,
+  .ogaalsan-hero .container,
+  .features-area-two .container,
+  .about-area-seven .container,
+  .services-area-two .container,
+  .overview-area .container,
+  .ogaalsan-choose .container,
+  .project-area-two .container,
+  .ogaalsan-focus .container,
+  .cta-area .container,
+  .ogaalsan-home-courses .container,
+  .blog-area-two .container {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .content-bottom .list-wrap li {
+    min-width: 0 !important;
+  }
+
+  .services-area-two .services-thumb-two__img,
+  .services-area-two .services-thumb-two img {
+    height: 240px !important;
+  }
+
+  .project-area-two .project-item-two {
+    margin-bottom: 24px;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .ogaalsan-hero__actions {
+    max-width: 100%;
+  }
+
+  .services-area-two .col-sm-8 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  .ogaalsan-focus {
+    margin-top: 24px;
+  }
+
+  .ogaalsan-focus__card {
+    min-height: 110px;
+    padding: 22px 16px;
+  }
+
+  .ogaalsan-focus__card h4 {
+    font-size: 1.05rem;
+  }
+
+  .footer-top-two {
+    padding-top: 56px !important;
   }
 }
 

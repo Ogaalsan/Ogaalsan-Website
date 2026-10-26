@@ -1,5 +1,6 @@
 
 import { useEffect, useState } from "react"
+import { useRouter } from "next/router"
 import BackToTop from '../elements/BackToTop'
 import WhatsAppWidget from '../common/WhatsAppWidget'
 import DataBg from "../elements/DataBg"
@@ -9,16 +10,37 @@ import Header1 from "./header/Header1"
 import SearchPopup from "./SearchPopup"
 
 export default function Layout({ headTitle, children }) {
+    const router = useRouter()
     const [scroll, setScroll] = useState(0)
     const [isMobileMenu, setMobileMenu] = useState(false)
-    const handleMobileMenu = () => {
-        setMobileMenu(!isMobileMenu)
-        !isMobileMenu ? document.body.classList.add("mobile-menu-visible") : document.body.classList.remove("mobile-menu-visible");
+
+    const closeMobileMenu = () => {
+        setMobileMenu(false)
+        document.body.classList.remove("mobile-menu-visible")
     }
+
+    const handleMobileMenu = () => {
+        setMobileMenu((open) => {
+            const next = !open
+            if (next) {
+                document.body.classList.add("mobile-menu-visible")
+            } else {
+                document.body.classList.remove("mobile-menu-visible")
+            }
+            return next
+        })
+    }
+
     const [isSearch, setSearch] = useState(false)
     const handleSearch = () => setSearch(!isSearch)
     const [isOffcanvus, setOffcanvus] = useState(false)
     const handleOffcanvus = () => setOffcanvus(!isOffcanvus)
+
+    useEffect(() => {
+        const onRoute = () => closeMobileMenu()
+        router.events.on("routeChangeStart", onRoute)
+        return () => router.events.off("routeChangeStart", onRoute)
+    }, [router.events])
 
     useEffect(() => {
         const loadWOW = async () => {
@@ -71,6 +93,7 @@ export default function Layout({ headTitle, children }) {
                 scroll={scroll}
                 isMobileMenu={isMobileMenu}
                 handleMobileMenu={handleMobileMenu}
+                closeMobileMenu={closeMobileMenu}
                 isSearch={isSearch}
                 handleSearch={handleSearch}
                 isOffcanvus={isOffcanvus}

@@ -15,9 +15,11 @@ export default function Header1({
   scroll,
   isMobileMenu,
   handleMobileMenu,
+  closeMobileMenu,
   isSearch,
   handleSearch,
 }) {
+  const dismissMobileMenu = closeMobileMenu || handleMobileMenu;
   const router = useRouter();
   const pathname = router.pathname;
   const isHome = pathname === "/";
@@ -246,7 +248,7 @@ export default function Header1({
                     <i className="fas fa-times" />
                   </div>
                   <div className="nav-logo">
-                    <Link href="/" onClick={handleMobileMenu}>
+                    <Link href="/" onClick={dismissMobileMenu}>
                       <img
                         src="/assets/img/logo/logo-ogalsan.png"
                         alt="OgaalSan Consultancy Logo"
@@ -315,7 +317,7 @@ export default function Header1({
                     )}
                   </div>
                   <div className="menu-outer">
-                    <MobileMenu />
+                    <MobileMenu onNavigate={dismissMobileMenu} />
                   </div>
                   <div className="social-links">
                     <ul className="clearfix list-wrap">
