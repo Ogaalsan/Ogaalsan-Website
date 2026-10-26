@@ -9,15 +9,46 @@ import {
   submitTrainingRegistration,
 } from "@/lib/trainings";
 
+const LOCATION_OPTIONS = [
+  "Mogadishu, Somalia",
+  "Hargeisa, Somaliland",
+  "Garowe, Puntland",
+  "Kismayo, Somalia",
+  "Baidoa, Somalia",
+  "Nairobi, Kenya",
+  "Addis Ababa, Ethiopia",
+  "Djibouti",
+  "Other",
+];
+
+const BACKGROUND_OPTIONS = [
+  "High school / Secondary",
+  "Diploma / Certificate",
+  "Bachelor's degree",
+  "Master's degree or higher",
+  "Professional / Working",
+  "Other",
+];
+
+const SKILL_OPTIONS = [
+  "ICT / Computers",
+  "Digital tools",
+  "Languages",
+  "Office / Admin",
+  "Management",
+  "None yet / Beginner",
+];
+
 function buildFormFromUser(user) {
   return {
     name: user?.name || "",
     location: "",
+    locationOther: "",
     background: "",
     email: user?.email || "",
     phone: user?.whatsapp_phone || user?.phone || "",
     organization: "",
-    skills: "",
+    skills: [],
     trainingMode: "online",
   };
 }
@@ -46,12 +77,34 @@ export default function TrainingDetail({ training }) {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handleSkillToggle = (skill) => {
+    setFormData((prev) => {
+      const selected = prev.skills.includes(skill)
+        ? prev.skills.filter((item) => item !== skill)
+        : [...prev.skills, skill];
+      return { ...prev, skills: selected };
+    });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!isAuthenticated) {
       router.push(
         `/auth/sign-in?redirect=${encodeURIComponent(returnPath)}`
       );
+      return;
+    }
+
+    const locationValue =
+      formData.location === "Other"
+        ? formData.locationOther.trim()
+        : formData.location;
+
+    if (!locationValue) {
+      setSubmitStatus({
+        type: "error",
+        message: "Please select or enter your location.",
+      });
       return;
     }
 
@@ -65,9 +118,9 @@ export default function TrainingDetail({ training }) {
         email: formData.email,
         phone: formData.phone,
         organization: formData.organization || null,
-        location: formData.location,
+        location: locationValue,
         background: formData.background,
-        skills: formData.skills,
+        skills: formData.skills.length ? formData.skills.join(", ") : null,
         training_mode: formData.trainingMode,
         training_slug: training?.slug || null,
         training_title: training?.title || "General Training",
@@ -238,93 +291,147 @@ export default function TrainingDetail({ training }) {
                           </div>
                         ) : null}
 
-                        <div className="contact-form contact-form-inner">
+                        <div className="contact-form contact-form-inner training-register-form">
                           <form onSubmit={handleSubmit}>
                             <div className="form-grp">
+                              <label className="training-form-label" htmlFor="name">
+                                Full name *
+                              </label>
                               <input
+                                id="name"
                                 type="text"
                                 name="name"
-                                placeholder="Full name *"
+                                placeholder="Your full name"
                                 value={formData.name}
                                 onChange={handleChange}
                                 required
                               />
                             </div>
                             <div className="form-grp">
+                              <label className="training-form-label" htmlFor="email">
+                                Email *
+                              </label>
                               <input
+                                id="email"
                                 type="email"
                                 name="email"
-                                placeholder="E-mail *"
+                                placeholder="you@example.com"
                                 value={formData.email}
                                 onChange={handleChange}
                                 required
                               />
                             </div>
                             <div className="form-grp">
+                              <label className="training-form-label" htmlFor="phone">
+                                Phone number *
+                              </label>
                               <input
+                                id="phone"
                                 type="tel"
                                 name="phone"
-                                placeholder="Phone number *"
+                                placeholder="+252 ..."
                                 value={formData.phone}
                                 onChange={handleChange}
                                 required
                               />
                             </div>
                             <div className="form-grp">
+                              <label
+                                className="training-form-label"
+                                htmlFor="organization"
+                              >
+                                Organization
+                                <span className="training-form-optional">
+                                  Optional
+                                </span>
+                              </label>
                               <input
+                                id="organization"
                                 type="text"
                                 name="organization"
-                                placeholder="Organization (optional)"
+                                placeholder="Company or institution"
                                 value={formData.organization}
                                 onChange={handleChange}
                               />
                             </div>
                             <div className="form-grp">
-                              <input
-                                type="text"
+                              <label
+                                className="training-form-label"
+                                htmlFor="location"
+                              >
+                                Location *
+                              </label>
+                              <select
+                                id="location"
                                 name="location"
-                                placeholder="Location (Country & City) *"
                                 value={formData.location}
                                 onChange={handleChange}
                                 required
-                              />
+                              >
+                                <option value="">Select location</option>
+                                {LOCATION_OPTIONS.map((option) => (
+                                  <option key={option} value={option}>
+                                    {option}
+                                  </option>
+                                ))}
+                              </select>
                             </div>
+                            {formData.location === "Other" ? (
+                              <div className="form-grp">
+                                <label
+                                  className="training-form-label"
+                                  htmlFor="locationOther"
+                                >
+                                  Your city / country *
+                                </label>
+                                <input
+                                  id="locationOther"
+                                  type="text"
+                                  name="locationOther"
+                                  placeholder="Enter your city and country"
+                                  value={formData.locationOther}
+                                  onChange={handleChange}
+                                  required
+                                />
+                              </div>
+                            ) : null}
                             <div className="form-grp">
-                              <input
-                                type="text"
+                              <label
+                                className="training-form-label"
+                                htmlFor="background"
+                              >
+                                Background / education *
+                              </label>
+                              <select
+                                id="background"
                                 name="background"
-                                placeholder="Background / Education Level *"
                                 value={formData.background}
                                 onChange={handleChange}
                                 required
-                              />
+                              >
+                                <option value="">Select background</option>
+                                {BACKGROUND_OPTIONS.map((option) => (
+                                  <option key={option} value={option}>
+                                    {option}
+                                  </option>
+                                ))}
+                              </select>
                             </div>
                             <div className="form-grp">
-                              <label
-                                style={{
-                                  display: "block",
-                                  marginBottom: "10px",
-                                  fontWeight: 600,
-                                  color: "#22428F",
-                                }}
-                              >
+                              <span className="training-form-label">
                                 How would you like to attend? *
-                              </label>
+                              </span>
                               <div
-                                style={{
-                                  display: "flex",
-                                  gap: "24px",
-                                  flexWrap: "wrap",
-                                }}
+                                className="training-attend-options"
+                                role="radiogroup"
+                                aria-label="Attendance mode"
                               >
                                 <label
-                                  style={{
-                                    display: "flex",
-                                    alignItems: "center",
-                                    gap: "8px",
-                                    cursor: "pointer",
-                                    fontWeight: 500,
-                                  }}
+                                  className={`training-choice${
+                                    formData.trainingMode === "online"
+                                      ? " is-selected"
+                                      : ""
+                                  }`}
                                 >
                                   <input
                                     type="radio"
@@ -333,16 +440,18 @@ export default function TrainingDetail({ training }) {
                                     checked={formData.trainingMode === "online"}
                                     onChange={handleChange}
                                   />
-                                  Online
+                                  <i
+                                    className="fas fa-laptop"
+                                    aria-hidden="true"
+                                  />
+                                  <span>Online</span>
                                 </label>
                                 <label
-                                  style={{
-                                    display: "flex",
-                                    alignItems: "center",
-                                    gap: "8px",
-                                    cursor: "pointer",
-                                    fontWeight: 500,
-                                  }}
+                                  className={`training-choice${
+                                    formData.trainingMode === "offline"
+                                      ? " is-selected"
+                                      : ""
+                                  }`}
                                 >
                                   <input
                                     type="radio"
@@ -353,18 +462,44 @@ export default function TrainingDetail({ training }) {
                                     }
                                     onChange={handleChange}
                                   />
-                                  Offline (In-person)
+                                  <i
+                                    className="fas fa-map-marker-alt"
+                                    aria-hidden="true"
+                                  />
+                                  <span>Offline (In-person)</span>
                                 </label>
                               </div>
                             </div>
                             <div className="form-grp">
-                              <textarea
-                                name="skills"
-                                placeholder="Skills (ICT, digital, languages, etc.) *"
-                                value={formData.skills}
-                                onChange={handleChange}
-                                required
-                              />
+                              <span className="training-form-label">
+                                Skills
+                                <span className="training-form-optional">
+                                  Optional
+                                </span>
+                              </span>
+                              <div className="training-skill-options">
+                                {SKILL_OPTIONS.map((skill) => {
+                                  const selected =
+                                    formData.skills.includes(skill);
+                                  return (
+                                    <label
+                                      key={skill}
+                                      className={`training-choice training-choice--chip${
+                                        selected ? " is-selected" : ""
+                                      }`}
+                                    >
+                                      <input
+                                        type="checkbox"
+                                        checked={selected}
+                                        onChange={() =>
+                                          handleSkillToggle(skill)
+                                        }
+                                      />
+                                      <span>{skill}</span>
+                                    </label>
+                                  );
+                                })}
+                              </div>
                             </div>
                             <button
                               type="submit"
