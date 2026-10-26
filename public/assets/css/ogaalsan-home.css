@@ -2186,18 +2186,107 @@ html[data-theme="dark"] .ogaalsan-contact__field textarea {
   z-index: 1;
 }
 
+.footer-top-two .fw-logo img {
+  max-height: 48px;
+  width: auto;
+  max-width: min(220px, 100%);
+  height: auto;
+  object-fit: contain;
+}
+
+.footer-top-two .footer-content > p,
+.footer-top-two .footer-newsletter p {
+  width: 100%;
+  max-width: 100%;
+}
+
+.footer-top-two .footer-info .list-wrap li .content a,
+.footer-top-two .footer-info .list-wrap li .content p {
+  word-break: break-word;
+}
+
 @media (max-width: 991px) {
   .footer-brand-watermark {
     font-size: 12vw;
     opacity: 0.07;
   }
+
+  .footer-top-two {
+    padding: 72px 0 24px;
+  }
+
+  .footer-top-two .footer-widget {
+    margin-bottom: 32px;
+  }
+
+  .footer-bottom-two {
+    padding: 20px 0;
+  }
+}
+
+@media (max-width: 767.98px) {
+  /* Newsletter: stack so Subscribe never clips the input */
+  .footer-top-two .footer-newsletter form {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    position: relative;
+  }
+
+  .footer-top-two .footer-newsletter form input {
+    width: 100%;
+    padding: 12px 18px;
+    border-radius: 10px;
+    height: 48px;
+  }
+
+  .footer-top-two .footer-newsletter form button {
+    position: static;
+    width: 100%;
+    height: 48px;
+    border-radius: 10px;
+    padding: 12px 18px;
+  }
+
+  .footer-social.footer-social-two .list-wrap {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .copyright-text-two p {
+    font-size: 13px;
+    padding: 0 8px;
+    line-height: 1.5;
+  }
 }
 
 @media (max-width: 575px) {
   .footer-brand-watermark {
-    font-size: 11vw;
+    font-size: 10vw;
     letter-spacing: -0.04em;
     padding: 0 8px;
+  }
+
+  .footer-top-two {
+    padding: 56px 0 16px !important;
+  }
+
+  .footer-top-two .fw-logo {
+    margin-bottom: 20px;
+  }
+
+  .footer-top-two .fw-logo img {
+    max-height: 40px;
+  }
+
+  .footer-widget .fw-title {
+    font-size: 1.05rem;
+  }
+
+  .footer-top-two .row > [class*="col-6"] .footer-widget {
+    padding-right: 6px;
   }
 }
 

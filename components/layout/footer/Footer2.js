@@ -31,7 +31,7 @@ export default function Footer2() {
                                 <div className="col-lg-4 col-md-7">
                                     <div className="footer-widget">
                                         <div className="fw-logo">
-                                            <Link href="/"><img src="/assets/img/logo/ogaalsan version 4-03.png" alt="OgaalSan Consultancy Logo" /></Link>
+                                            <Link href="/"><img src="/assets/img/logo/logo-ogalsan.png" alt="OgaalSan Consultancy Logo" /></Link>
                                         </div>
                                         <div className="footer-content">
                                             <p>OgaalSan Consultancy provides ICT solutions, training & capacity building, business development, and digital marketing services to help organizations grow and innovate.</p>
@@ -72,7 +72,7 @@ export default function Footer2() {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="col-lg-2 col-md-5 col-sm-6">
+                                <div className="col-6 col-lg-2 col-md-5">
                                     <div className="footer-widget">
                                         <h4 className="fw-title">Services</h4>
                                         <div className="footer-link">
@@ -85,7 +85,7 @@ export default function Footer2() {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="col-lg-2 col-md-5 col-sm-6">
+                                <div className="col-6 col-lg-2 col-md-5">
                                     <div className="footer-widget">
                                         <h4 className="fw-title">Quick Links</h4>
                                         <div className="footer-link">
