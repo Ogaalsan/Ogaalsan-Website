@@ -1588,6 +1588,7 @@ html[data-theme="dark"] .course-detail__cta--whatsapp {
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  max-width: 180px;
   padding: 8px 12px;
   border-radius: 999px;
   background: #3fa9f5;
@@ -1595,6 +1596,26 @@ html[data-theme="dark"] .course-detail__cta--whatsapp {
   text-decoration: none !important;
   font-size: 0.85rem;
   font-weight: 600;
+}
+
+.learn-portal__user-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.learn-portal__sign-out {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 4px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.learn-portal__sign-out i {
+  display: none;
 }
 
 .learn-portal__body {
@@ -2351,10 +2372,71 @@ html[data-theme="dark"] .learn-quiz-panel__option.is-selected {
 
 @media (max-width: 991px) {
   .learn-portal__topbar {
-    grid-template-columns: 1fr auto;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 8px;
+    padding: 8px 12px;
+    min-height: 56px;
   }
 
   .learn-portal__course-title {
+    display: none;
+  }
+
+  .learn-portal__brand {
+    gap: 8px;
+  }
+
+  .learn-portal__logo img {
+    width: 32px;
+    height: 32px;
+  }
+
+  .learn-portal__brand-label {
+    font-size: 0.85rem;
+  }
+
+  .learn-portal__brand-sub {
+    display: none;
+  }
+
+  .learn-portal__actions {
+    gap: 4px;
+    flex-shrink: 0;
+  }
+
+  .learn-portal__theme-hint {
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0;
+  }
+
+  .learn-portal__user-btn {
+    max-width: none;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    justify-content: center;
+    border-radius: 50%;
+  }
+
+  .learn-portal__user-name {
+    display: none;
+  }
+
+  .learn-portal__sign-out {
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    justify-content: center;
+    border-radius: 4px;
+  }
+
+  .learn-portal__sign-out i {
+    display: inline-block;
+    font-size: 0.95rem;
+  }
+
+  .learn-portal__sign-out span {
     display: none;
   }
 

@@ -54,16 +54,23 @@ export default function LearnLayout({
             >
               <i className={isDark ? "far fa-sun" : "far fa-moon"} aria-hidden="true" />
             </button>
-            <Link href="/student-dashboard" className="learn-portal__user-btn">
+            <Link
+              href="/student-dashboard"
+              className="learn-portal__user-btn"
+              title={displayName}
+              aria-label={`Account: ${displayName}`}
+            >
               <i className="fas fa-user" aria-hidden="true" />
-              <span>{displayName}</span>
+              <span className="learn-portal__user-name">{displayName}</span>
             </Link>
             <button
               type="button"
-              className="learn-portal__text-btn"
+              className="learn-portal__text-btn learn-portal__sign-out"
               onClick={handleLogout}
+              aria-label="Sign out"
             >
-              Sign Out
+              <i className="fas fa-sign-out-alt" aria-hidden="true" />
+              <span>Sign Out</span>
             </button>
           </div>
         </header>
