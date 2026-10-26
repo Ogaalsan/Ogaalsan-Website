@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import MobileMenu from "../MobileMenu";
 import ThemeToggle from "@/components/common/ThemeToggle";
 import { useAuth } from "@/context/AuthContext";
@@ -21,8 +22,22 @@ export default function Header1({
   const pathname = router.pathname;
   const isHome = pathname === "/";
   const [mobileQuery, setMobileQuery] = useState("");
+  const [portalReady, setPortalReady] = useState(false);
   const { user, isAuthenticated, logout } = useAuth();
   const overHero = isHome && !scroll;
+
+  useEffect(() => {
+    setPortalReady(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isMobileMenu) return undefined;
+    const onKeyDown = (event) => {
+      if (event.key === "Escape") handleMobileMenu();
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [isMobileMenu, handleMobileMenu]);
 
   const handleLogout = async () => {
     await logout();
@@ -213,133 +228,149 @@ export default function Header1({
                     </div>
                   </nav>
                 </div>
-                <div className="mobile-menu">
-                  <nav className="menu-box">
-                    <div className="close-btn" onClick={handleMobileMenu}>
-                      <i className="fas fa-times" />
-                    </div>
-                    <div className="nav-logo">
-                      <Link href="/">
-                        <img
-                          src="/assets/img/logo/logo-ogalsan.png"
-                          alt="OgaalSan Consultancy Logo"
-                        />
-                      </Link>
-                    </div>
-                    <div className="mobile-search">
-                      <form onSubmit={handleMobileSearch}>
-                        <input
-                          type="search"
-                          placeholder="Search here..."
-                          value={mobileQuery}
-                          onChange={(event) => setMobileQuery(event.target.value)}
-                          aria-label="Search"
-                        />
-                        <button type="submit" aria-label="Submit search">
-                          <i className="flaticon-search" />
-                        </button>
-                      </form>
-                    </div>
-                    <div className="mobile-menu-auth p-3 text-center my-2 style-mobile-auth">
-                      {isAuthenticated ? (
-                        <div className="d-flex flex-column gap-2 align-items-center">
-                          <span className="text-white font-weight-bold">
-                            Hi, {user?.name?.split(" ")[0] || "Learner"}
-                          </span>
-                          <div className="d-flex gap-2">
-                            <Link
-                              href="/student-dashboard"
-                              className="btn btn-sm btn-two"
-                              onClick={handleMobileMenu}
-                            >
-                              Dashboard
-                            </Link>
-                            <button
-                              type="button"
-                              className="btn btn-sm btn-outline-light"
-                              onClick={() => {
-                                handleLogout();
-                                handleMobileMenu();
-                              }}
-                            >
-                              Sign Out
-                            </button>
-                          </div>
-                        </div>
-                      ) : (
-                        <div className="d-flex gap-2 justify-content-center">
-                          <Link
-                            href="/auth/sign-in"
-                            className="btn btn-sm"
-                            onClick={handleMobileMenu}
-                          >
-                            Sign In
-                          </Link>
-                          <Link
-                            href="/auth/sign-up"
-                            className="btn btn-sm btn-two"
-                            onClick={handleMobileMenu}
-                          >
-                            Sign Up
-                          </Link>
-                        </div>
-                      )}
-                    </div>
-                    <div className="menu-outer">
-                      <MobileMenu />
-                    </div>
-                    <div className="social-links">
-                      <ul className="clearfix list-wrap">
-                        <li>
-                          <Link
-                            href="https://www.facebook.com/profile.php?id=61552529542233"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            <i className="fab fa-facebook-f" />
-                          </Link>
-                        </li>
-                        <li>
-                          <Link
-                            href="https://x.com/OgaalsanC"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            <span
-                              style={{ fontWeight: "bold", fontSize: "18px" }}
-                            >
-                              X
-                            </span>
-                          </Link>
-                        </li>
-                        <li>
-                          <Link
-                            href="https://www.instagram.com/ogaalsan.consultancy/"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            <i className="fab fa-instagram" />
-                          </Link>
-                        </li>
-                        <li>
-                          <Link
-                            href="https://www.tiktok.com/@ogaalsanconsultancy"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            <i className="fab fa-tiktok" />
-                          </Link>
-                        </li>
-                      </ul>
-                    </div>
-                  </nav>
-                </div>
-                <div className="menu-backdrop" onClick={handleMobileMenu} />
               </div>
             </div>
           </div>
         </div>
       </header>
+
+      {portalReady
+        ? createPortal(
+            <>
+              <div
+                className={`mobile-menu${isMobileMenu ? " is-open" : ""}`}
+                aria-hidden={!isMobileMenu}
+              >
+                <nav className="menu-box" aria-label="Mobile navigation">
+                  <div className="close-btn" onClick={handleMobileMenu}>
+                    <i className="fas fa-times" />
+                  </div>
+                  <div className="nav-logo">
+                    <Link href="/" onClick={handleMobileMenu}>
+                      <img
+                        src="/assets/img/logo/logo-ogalsan.png"
+                        alt="OgaalSan Consultancy Logo"
+                      />
+                    </Link>
+                  </div>
+                  <div className="mobile-search">
+                    <form onSubmit={handleMobileSearch}>
+                      <input
+                        type="search"
+                        placeholder="Search here..."
+                        value={mobileQuery}
+                        onChange={(event) =>
+                          setMobileQuery(event.target.value)
+                        }
+                        aria-label="Search"
+                      />
+                      <button type="submit" aria-label="Submit search">
+                        <i className="flaticon-search" />
+                      </button>
+                    </form>
+                  </div>
+                  <div className="mobile-menu-auth p-3 text-center my-2 style-mobile-auth">
+                    {isAuthenticated ? (
+                      <div className="d-flex flex-column gap-2 align-items-center">
+                        <span className="text-white font-weight-bold">
+                          Hi, {user?.name?.split(" ")[0] || "Learner"}
+                        </span>
+                        <div className="d-flex gap-2">
+                          <Link
+                            href="/student-dashboard"
+                            className="btn btn-sm btn-two"
+                            onClick={handleMobileMenu}
+                          >
+                            Dashboard
+                          </Link>
+                          <button
+                            type="button"
+                            className="btn btn-sm btn-outline-light"
+                            onClick={() => {
+                              handleLogout();
+                              handleMobileMenu();
+                            }}
+                          >
+                            Sign Out
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="d-flex gap-2 justify-content-center">
+                        <Link
+                          href="/auth/sign-in"
+                          className="btn btn-sm"
+                          onClick={handleMobileMenu}
+                        >
+                          Sign In
+                        </Link>
+                        <Link
+                          href="/auth/sign-up"
+                          className="btn btn-sm btn-two"
+                          onClick={handleMobileMenu}
+                        >
+                          Sign Up
+                        </Link>
+                      </div>
+                    )}
+                  </div>
+                  <div className="menu-outer">
+                    <MobileMenu />
+                  </div>
+                  <div className="social-links">
+                    <ul className="clearfix list-wrap">
+                      <li>
+                        <Link
+                          href="https://www.facebook.com/profile.php?id=61552529542233"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <i className="fab fa-facebook-f" />
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          href="https://x.com/OgaalsanC"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <span
+                            style={{ fontWeight: "bold", fontSize: "18px" }}
+                          >
+                            X
+                          </span>
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          href="https://www.instagram.com/ogaalsan.consultancy/"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <i className="fab fa-instagram" />
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          href="https://www.tiktok.com/@ogaalsanconsultancy"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <i className="fab fa-tiktok" />
+                        </Link>
+                      </li>
+                    </ul>
+                  </div>
+                </nav>
+              </div>
+              <div
+                className={`menu-backdrop${isMobileMenu ? " is-open" : ""}`}
+                onClick={handleMobileMenu}
+              />
+            </>,
+            document.body
+          )
+        : null}
     </>
   );
 }

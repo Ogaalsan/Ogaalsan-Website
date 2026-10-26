@@ -433,9 +433,44 @@ html[data-theme="dark"] .ogaalsan-header.header-style-two .navbar-wrap > ul > li
 /* Solid / sticky bar */
 .ogaalsan-header.header-style-two.sticky-menu {
   background: rgba(255, 255, 255, 0.96);
-  backdrop-filter: blur(10px);
+  /* Do not use backdrop-filter here — it traps position:fixed mobile menu */
   box-shadow: 0 1px 0 rgba(34, 66, 143, 0.08);
   animation: none;
+}
+
+/* Mobile drawer lives on document.body (portal) — keep it fully off-canvas until open */
+.mobile-menu {
+  position: fixed !important;
+  top: 0 !important;
+  right: 0 !important;
+  width: min(320px, 100vw) !important;
+  max-width: 100% !important;
+  height: 100% !important;
+  padding-right: 0 !important;
+  z-index: 10050 !important;
+  visibility: hidden;
+  pointer-events: none;
+  -webkit-transform: translate3d(110%, 0, 0) !important;
+  transform: translate3d(110%, 0, 0) !important;
+  transition: transform 0.3s ease, visibility 0.3s ease !important;
+}
+
+.mobile-menu.is-open,
+.mobile-menu-visible .mobile-menu {
+  visibility: visible;
+  pointer-events: auto;
+  -webkit-transform: translate3d(0, 0, 0) !important;
+  transform: translate3d(0, 0, 0) !important;
+}
+
+.menu-backdrop {
+  z-index: 10040 !important;
+}
+
+.menu-backdrop.is-open,
+.mobile-menu-visible .menu-backdrop {
+  opacity: 1;
+  visibility: visible;
 }
 
 .ogaalsan-header.header-style-two.sticky-menu .menu-area {

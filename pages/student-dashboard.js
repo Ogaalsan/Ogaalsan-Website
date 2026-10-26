@@ -10,6 +10,7 @@ import {
   fetchMyCertificates,
   openCertificateDownload,
 } from "@/lib/learner";
+import { changePassword } from "@/lib/auth";
 import { useClientFetch } from "@/hooks/useClientFetch";
 import ContentLoader from "@/components/common/ContentLoader";
 import ThemeToggle from "@/components/common/ThemeToggle";
@@ -27,6 +28,13 @@ export default function StudentDashboard() {
   const [activeTab, setActiveTab] = useState("dashboard");
   const [searchQuery, setSearchQuery] = useState("");
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [passwordForm, setPasswordForm] = useState({
+    current_password: "",
+    new_password: "",
+    new_password_confirmation: "",
+  });
+  const [passwordSaving, setPasswordSaving] = useState(false);
+  const [passwordStatus, setPasswordStatus] = useState(null);
 
   useEffect(() => {
     if (authLoading) return;
@@ -680,7 +688,7 @@ export default function StudentDashboard() {
             {activeTab === "settings" && (
               <div className="portal-section-card p-4">
                 <h3 className="portal-section-title mb-4">Account Settings</h3>
-                <div className="row g-3">
+                <div className="row g-3 mb-4">
                   <div className="col-md-6">
                     <label className="form-label text-sm fw-bold">
                       Full Name
@@ -703,6 +711,165 @@ export default function StudentDashboard() {
                       readOnly
                     />
                   </div>
+                </div>
+
+                <div className="portal-settings-password">
+                  <h4 className="portal-settings-password__title">
+                    Change password
+                  </h4>
+                  <p className="portal-settings-password__desc">
+                    Use a strong password of at least 8 characters.
+                  </p>
+
+                  {passwordStatus ? (
+                    <div
+                      className={`portal-settings-alert${
+                        passwordStatus.type === "success"
+                          ? " is-success"
+                          : " is-error"
+                      }`}
+                      role="status"
+                    >
+                      {passwordStatus.message}
+                    </div>
+                  ) : null}
+
+                  <form
+                    className="row g-3"
+                    onSubmit={async (event) => {
+                      event.preventDefault();
+                      setPasswordStatus(null);
+
+                      if (
+                        passwordForm.new_password !==
+                        passwordForm.new_password_confirmation
+                      ) {
+                        setPasswordStatus({
+                          type: "error",
+                          message: "New password and confirmation do not match.",
+                        });
+                        return;
+                      }
+
+                      if (passwordForm.new_password.length < 8) {
+                        setPasswordStatus({
+                          type: "error",
+                          message: "New password must be at least 8 characters.",
+                        });
+                        return;
+                      }
+
+                      setPasswordSaving(true);
+                      try {
+                        const result = await changePassword(passwordForm);
+                        setPasswordStatus({
+                          type: "success",
+                          message:
+                            result.message ||
+                            "Password changed successfully.",
+                        });
+                        setPasswordForm({
+                          current_password: "",
+                          new_password: "",
+                          new_password_confirmation: "",
+                        });
+                      } catch (err) {
+                        const fieldError =
+                          err.errors?.current_password?.[0] ||
+                          err.errors?.new_password?.[0] ||
+                          err.errors?.new_password_confirmation?.[0];
+                        setPasswordStatus({
+                          type: "error",
+                          message:
+                            fieldError ||
+                            err.message ||
+                            "Unable to change password.",
+                        });
+                      } finally {
+                        setPasswordSaving(false);
+                      }
+                    }}
+                  >
+                    <div className="col-md-12">
+                      <label
+                        className="form-label text-sm fw-bold"
+                        htmlFor="current_password"
+                      >
+                        Current password
+                      </label>
+                      <input
+                        id="current_password"
+                        type="password"
+                        className="form-control"
+                        autoComplete="current-password"
+                        value={passwordForm.current_password}
+                        onChange={(event) =>
+                          setPasswordForm((prev) => ({
+                            ...prev,
+                            current_password: event.target.value,
+                          }))
+                        }
+                        required
+                      />
+                    </div>
+                    <div className="col-md-6">
+                      <label
+                        className="form-label text-sm fw-bold"
+                        htmlFor="new_password"
+                      >
+                        New password
+                      </label>
+                      <input
+                        id="new_password"
+                        type="password"
+                        className="form-control"
+                        autoComplete="new-password"
+                        value={passwordForm.new_password}
+                        onChange={(event) =>
+                          setPasswordForm((prev) => ({
+                            ...prev,
+                            new_password: event.target.value,
+                          }))
+                        }
+                        required
+                        minLength={8}
+                      />
+                    </div>
+                    <div className="col-md-6">
+                      <label
+                        className="form-label text-sm fw-bold"
+                        htmlFor="new_password_confirmation"
+                      >
+                        Confirm new password
+                      </label>
+                      <input
+                        id="new_password_confirmation"
+                        type="password"
+                        className="form-control"
+                        autoComplete="new-password"
+                        value={passwordForm.new_password_confirmation}
+                        onChange={(event) =>
+                          setPasswordForm((prev) => ({
+                            ...prev,
+                            new_password_confirmation: event.target.value,
+                          }))
+                        }
+                        required
+                        minLength={8}
+                      />
+                    </div>
+                    <div className="col-12">
+                      <button
+                        type="submit"
+                        className="portal-action-btn"
+                        disabled={passwordSaving}
+                      >
+                        {passwordSaving
+                          ? "Updating..."
+                          : "Update password"}
+                      </button>
+                    </div>
+                  </form>
                 </div>
               </div>
             )}
@@ -1222,6 +1389,57 @@ export default function StudentDashboard() {
         .portal-action-btn:hover {
           background: #22428f;
           color: #ffffff;
+        }
+
+        .portal-action-btn:disabled {
+          opacity: 0.7;
+          cursor: not-allowed;
+        }
+
+        .portal-settings-password {
+          margin-top: 8px;
+          padding-top: 24px;
+          border-top: 1px solid #e2e8f0;
+        }
+
+        .portal-settings-password__title {
+          margin: 0 0 6px;
+          font-size: 1.05rem;
+          font-weight: 700;
+          color: #22428f;
+        }
+
+        .portal-settings-password__desc {
+          margin: 0 0 16px;
+          color: #64748b;
+          font-size: 0.9rem;
+        }
+
+        .portal-settings-alert {
+          margin-bottom: 16px;
+          padding: 12px 14px;
+          border-radius: 8px;
+          font-size: 0.9rem;
+        }
+
+        .portal-settings-alert.is-success {
+          background: rgba(63, 169, 245, 0.12);
+          border: 1px solid rgba(63, 169, 245, 0.35);
+          color: #22428f;
+        }
+
+        .portal-settings-alert.is-error {
+          background: rgba(220, 38, 38, 0.08);
+          border: 1px solid rgba(220, 38, 38, 0.25);
+          color: #b91c1c;
+        }
+
+        html[data-theme="dark"] .portal-settings-password {
+          border-top-color: #2a3a55;
+        }
+
+        html[data-theme="dark"] .portal-settings-password__title {
+          color: #e8eef8;
         }
 
         .portal-courses-grid {

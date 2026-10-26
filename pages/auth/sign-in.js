@@ -1,12 +1,13 @@
 import Layout from "@/components/layout/Layout";
 import AuthCard, { AuthFooterLink } from "@/components/auth/AuthCard";
+import GoogleContinueButton from "@/components/auth/GoogleContinueButton";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 export default function SignIn() {
   const router = useRouter();
-  const { login, isAuthenticated, loading: authLoading } = useAuth();
+  const { login, loginGoogle, isAuthenticated, loading: authLoading } = useAuth();
   const [form, setForm] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -49,6 +50,23 @@ export default function SignIn() {
     }
   };
 
+  const handleGoogleCredential = useCallback(
+    async (idToken) => {
+      setError("");
+      setSubmitting(true);
+      try {
+        await loginGoogle(idToken);
+        router.push(redirectTo);
+      } catch (err) {
+        setError(err.message || "Unable to continue with Google.");
+        throw err;
+      } finally {
+        setSubmitting(false);
+      }
+    },
+    [loginGoogle, redirectTo, router]
+  );
+
   return (
     <Layout>
       <AuthCard
@@ -69,6 +87,13 @@ export default function SignIn() {
         {error ? (
           <div className="auth-alert auth-alert--error">{error}</div>
         ) : null}
+        <GoogleContinueButton
+          onCredential={handleGoogleCredential}
+          disabled={submitting || authLoading}
+        />
+        <div className="auth-divider" role="separator">
+          <span>or</span>
+        </div>
         <form className="auth-form" onSubmit={handleSubmit}>
           <div className="auth-field">
             <label htmlFor="sign-in-email">Email address</label>

@@ -137,6 +137,81 @@
   background: #fff;
 }
 
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 4px 0 18px;
+  color: #8b9db5;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #e6eef6;
+}
+
+.auth-google {
+  position: relative;
+  margin-bottom: 4px;
+}
+
+.auth-google__hidden {
+  position: absolute;
+  inset: 0;
+  opacity: 0.001;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.auth-google__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 46px;
+  padding: 10px 14px;
+  border: 1px solid #d5dde8;
+  border-radius: 4px;
+  background: #fff;
+  color: #152033;
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.auth-google__btn img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+.auth-google__btn:hover:not(:disabled) {
+  border-color: #3fa9f5;
+  background: #f8fbff;
+}
+
+.auth-google__btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.auth-google__error {
+  margin: 8px 0 0;
+  font-size: 0.8125rem;
+  color: #c0392b;
+  text-align: center;
+}
+
 .auth-form {
   display: flex;
   flex-direction: column;
@@ -271,6 +346,26 @@ html[data-theme="dark"] .auth-footer-link,
 html[data-theme="dark"] .auth-layout__brand,
 html[data-theme="dark"] .auth-back-link a {
   color: #8b9bb3;
+}
+
+html[data-theme="dark"] .auth-divider {
+  color: #8b9bb3;
+}
+
+html[data-theme="dark"] .auth-divider::before,
+html[data-theme="dark"] .auth-divider::after {
+  background: #2a3a55;
+}
+
+html[data-theme="dark"] .auth-google__btn {
+  background: #0f1828;
+  border-color: #4a5f7d;
+  color: #f0f5ff;
+}
+
+html[data-theme="dark"] .auth-google__btn:hover:not(:disabled) {
+  border-color: #3fa9f5;
+  background: #121a2a;
 }
 
 html[data-theme="dark"] .auth-field label {

@@ -12,6 +12,7 @@ import {
   getStoredToken,
   getStoredUser,
   loginUser,
+  loginWithGoogle,
   logoutUser,
   registerUser,
   resendVerification,
@@ -67,6 +68,12 @@ export function AuthProvider({ children }) {
     return loggedInUser;
   }, []);
 
+  const loginGoogle = useCallback(async (idToken) => {
+    const { user: loggedInUser } = await loginWithGoogle(idToken);
+    setUser(loggedInUser);
+    return loggedInUser;
+  }, []);
+
   const register = useCallback(async (data) => {
     const { user: registeredUser } = await registerUser(data);
     setUser(registeredUser);
@@ -93,12 +100,13 @@ export function AuthProvider({ children }) {
       loading,
       isAuthenticated: Boolean(user),
       login,
+      loginGoogle,
       register,
       verify,
       resendCode,
       logout,
     }),
-    [user, loading, login, register, verify, resendCode, logout]
+    [user, loading, login, loginGoogle, register, verify, resendCode, logout]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
