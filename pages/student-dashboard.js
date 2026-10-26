@@ -179,7 +179,7 @@ export default function StudentDashboard() {
           <div className="portal-sidebar-brand">
             <Link href="/" className="portal-brand-link">
               <img
-                src="/assets/img/logo/logo-ogalsan.png"
+                src="/assets/img/logo/ogaalsan version 4-03.png"
                 alt="OgaalSan"
                 className="portal-brand-logo"
               />
@@ -188,6 +188,14 @@ export default function StudentDashboard() {
                 <span className="portal-subtitle">OgaalSan Academy</span>
               </div>
             </Link>
+            <button
+              type="button"
+              className="portal-sidebar-close d-lg-none"
+              onClick={() => setSidebarOpen(false)}
+              aria-label="Close menu"
+            >
+              <i className="fas fa-times" aria-hidden="true" />
+            </button>
           </div>
 
           <div className="portal-nav-section">
@@ -936,21 +944,27 @@ export default function StudentDashboard() {
         }
 
         .portal-sidebar-brand {
-          padding: 24px 20px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 10px;
+          padding: 20px 16px;
           border-bottom: 1px solid #f1f5f9;
         }
 
         .portal-brand-link {
           display: flex;
           align-items: center;
-          gap: 12px;
+          gap: 10px;
+          min-width: 0;
+          flex: 1;
           text-decoration: none;
         }
 
         .portal-brand-logo {
+          display: block;
+          width: 36px;
           height: 36px;
-          width: auto;
-          max-width: 140px;
           object-fit: contain;
           flex-shrink: 0;
         }
@@ -958,18 +972,39 @@ export default function StudentDashboard() {
         .portal-brand-text {
           display: flex;
           flex-direction: column;
+          min-width: 0;
+          line-height: 1.2;
         }
 
         .portal-title {
           font-size: 15px;
           font-weight: 700;
           color: #22428f;
-          line-height: 1.2;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
         }
 
         .portal-subtitle {
           font-size: 11px;
           color: #64748b;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        .portal-sidebar-close {
+          display: none;
+          width: 34px;
+          height: 34px;
+          flex-shrink: 0;
+          align-items: center;
+          justify-content: center;
+          border: 1px solid #e2e8f0;
+          border-radius: 8px;
+          background: #fff;
+          color: #475569;
+          cursor: pointer;
         }
 
         .portal-nav-section {
@@ -1606,18 +1641,29 @@ export default function StudentDashboard() {
         @media (max-width: 991.98px) {
           .portal-sidebar {
             width: min(300px, 86vw);
+            max-width: 100%;
             box-shadow: 12px 0 40px rgba(15, 23, 42, 0.18);
           }
 
+          .portal-sidebar-close {
+            display: inline-flex;
+          }
+
           .portal-topbar {
+            width: 100%;
             height: 60px;
-            padding: 0 14px;
-            gap: 10px;
+            padding: 0 12px;
+            gap: 8px;
+            box-sizing: border-box;
+          }
+
+          .portal-topbar > .d-flex {
+            min-width: 0;
           }
 
           .portal-breadcrumbs {
             font-size: 12px;
-            max-width: 42vw;
+            max-width: min(46vw, 180px);
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
@@ -1633,7 +1679,11 @@ export default function StudentDashboard() {
           }
 
           .portal-link-btn {
-            padding: 8px 10px;
+            width: 36px;
+            height: 36px;
+            padding: 0;
+            justify-content: center;
+            flex-shrink: 0;
           }
 
           .portal-content-container {
@@ -1715,10 +1765,27 @@ export default function StudentDashboard() {
         @media (max-width: 575.98px) {
           .student-portal-wrapper {
             overflow-x: hidden;
+            width: 100%;
+            max-width: 100vw;
+          }
+
+          .portal-main {
+            width: 100%;
+            max-width: 100%;
+            overflow-x: hidden;
           }
 
           .portal-topbar {
             padding: 0 10px;
+          }
+
+          .portal-brand-logo {
+            width: 32px;
+            height: 32px;
+          }
+
+          .portal-title {
+            font-size: 14px;
           }
 
           .portal-welcome-icon {
