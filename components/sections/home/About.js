@@ -15,16 +15,10 @@ export default function About() {
                 width={700}
                 height={700}
                 className="ogaalsan-about-visual__img"
-                data-aos="fade-right"
-                data-aos-delay={0}
                 loading="lazy"
               />
               <div className="ogaalsan-about-visual__glow" aria-hidden="true" />
-              <div
-                className="experience-wrap ogaalsan-about-visual__badge"
-                data-aos="fade-up"
-                data-aos-delay={200}
-              >
+              <div className="experience-wrap ogaalsan-about-visual__badge">
                 <h2 className="title">3</h2>
                 <p>Core Service Areas</p>
               </div>

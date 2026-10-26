@@ -17,22 +17,17 @@ export default function About() {
               <div className="row align-items-center justify-content-center">
                 <div className="col-lg-6 col-md-9 order-0 order-lg-2">
                   <div className="about-img-seven-wrap about-img-seven-wrap--illustration ogaalsan-about-visual">
-                    <div className="ogaalsan-about-visual__glow" aria-hidden="true" />
+                    {/* Image first — theme CSS hides img:nth-child(2) on mobile */}
                     <Image
                       src="/assets/img/images/about.png"
                       alt="About OgaalSan Consultancy"
                       width={760}
                       height={760}
                       className="ogaalsan-about-visual__img"
-                      data-aos="fade-right"
-                      data-aos-delay={0}
-                      loading="lazy"
+                      priority
                     />
-                    <div
-                      className="experience-wrap ogaalsan-about-visual__badge"
-                      data-aos="fade-up"
-                      data-aos-delay={200}
-                    >
+                    <div className="ogaalsan-about-visual__glow" aria-hidden="true" />
+                    <div className="experience-wrap ogaalsan-about-visual__badge">
                       <h2 className="title">3</h2>
                       <p>Core Service Areas</p>
                     </div>

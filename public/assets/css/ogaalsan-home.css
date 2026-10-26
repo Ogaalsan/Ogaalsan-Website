@@ -2636,7 +2636,10 @@ html[data-theme="dark"] .services-area-two .services-item-two:hover .services-co
   max-width: 700px;
   height: auto !important;
   object-fit: contain;
-  display: block;
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
   margin: 0 auto;
   background: transparent !important;
   box-shadow: none !important;
@@ -2661,7 +2664,7 @@ html[data-theme="dark"] .services-area-two .services-item-two:hover .services-co
   border-radius: 0;
 }
 
-/* Theme styles target nth-child photos — keep illustration clean. */
+/* Theme styles target nth-child photos — keep illustration clean + always visible. */
 .about-img-seven-wrap--illustration img,
 .about-img-seven-wrap--illustration img:nth-child(1),
 .about-img-seven-wrap--illustration img:nth-child(2),
@@ -2677,6 +2680,10 @@ html[data-theme="dark"] .services-area-two .services-item-two:hover .services-co
   box-shadow: none !important;
   background: transparent !important;
   object-fit: contain !important;
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
   z-index: 1;
 }
 
