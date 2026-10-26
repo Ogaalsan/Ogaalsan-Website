@@ -45,6 +45,19 @@ export default function StudentDashboard() {
     }
   }, [authLoading, isAuthenticated, router]);
 
+  useEffect(() => {
+    if (!sidebarOpen) return undefined;
+    document.body.classList.add("portal-sidebar-lock");
+    const onKeyDown = (event) => {
+      if (event.key === "Escape") setSidebarOpen(false);
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.body.classList.remove("portal-sidebar-lock");
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [sidebarOpen]);
+
   const { data, loading, error } = useClientFetch(
     () => fetchMyCourses(),
     [user?.id],
@@ -166,7 +179,7 @@ export default function StudentDashboard() {
           <div className="portal-sidebar-brand">
             <Link href="/" className="portal-brand-link">
               <img
-                src="/assets/img/logo/ogaalsan version 4-03.png"
+                src="/assets/img/logo/logo-ogalsan.png"
                 alt="OgaalSan"
                 className="portal-brand-logo"
               />
@@ -935,8 +948,9 @@ export default function StudentDashboard() {
         }
 
         .portal-brand-logo {
-          height: 40px;
-          width: 40px;
+          height: 36px;
+          width: auto;
+          max-width: 140px;
           object-fit: contain;
           flex-shrink: 0;
         }
@@ -1586,6 +1600,156 @@ export default function StudentDashboard() {
         .portal-continue-btn:hover {
           background: #3fa9f5;
           color: #ffffff;
+        }
+
+        /* —— Dashboard responsive —— */
+        @media (max-width: 991.98px) {
+          .portal-sidebar {
+            width: min(300px, 86vw);
+            box-shadow: 12px 0 40px rgba(15, 23, 42, 0.18);
+          }
+
+          .portal-topbar {
+            height: 60px;
+            padding: 0 14px;
+            gap: 10px;
+          }
+
+          .portal-breadcrumbs {
+            font-size: 12px;
+            max-width: 42vw;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+          }
+
+          .portal-breadcrumbs .separator,
+          .portal-breadcrumbs a {
+            display: none;
+          }
+
+          .portal-link-btn span {
+            display: none;
+          }
+
+          .portal-link-btn {
+            padding: 8px 10px;
+          }
+
+          .portal-content-container {
+            padding: 16px 14px 28px;
+          }
+
+          .portal-welcome-banner {
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 18px 16px;
+            gap: 14px;
+          }
+
+          .portal-welcome-title {
+            font-size: 1.45rem;
+          }
+
+          .portal-banner-btn {
+            width: 100%;
+            justify-content: center;
+          }
+
+          .portal-stats-grid {
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin-bottom: 18px;
+          }
+
+          .portal-stat-card {
+            padding: 14px 16px;
+          }
+
+          .portal-section-card {
+            padding: 18px 14px;
+            border-radius: 12px;
+          }
+
+          .portal-section-header {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 12px;
+            margin-bottom: 18px;
+          }
+
+          .portal-search-box {
+            min-width: 0;
+            width: 100%;
+          }
+
+          .portal-courses-grid {
+            grid-template-columns: 1fr;
+            gap: 16px;
+          }
+
+          .portal-course-thumb {
+            height: 168px;
+          }
+
+          .portal-empty-state {
+            padding: 40px 12px;
+          }
+
+          .table-responsive {
+            margin: 0 -4px;
+          }
+
+          .table-responsive .table {
+            min-width: 640px;
+            font-size: 13px;
+          }
+        }
+
+        @media (min-width: 576px) and (max-width: 991.98px) {
+          .portal-stats-grid {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+          }
+        }
+
+        @media (max-width: 575.98px) {
+          .student-portal-wrapper {
+            overflow-x: hidden;
+          }
+
+          .portal-topbar {
+            padding: 0 10px;
+          }
+
+          .portal-welcome-icon {
+            width: 44px;
+            height: 44px;
+            font-size: 20px;
+          }
+
+          .portal-welcome-title {
+            font-size: 1.3rem;
+          }
+
+          .portal-stat-value {
+            font-size: 1.25rem;
+          }
+
+          .portal-section-title {
+            font-size: 1.1rem;
+          }
+
+          .portal-user-email {
+            max-width: 120px;
+          }
+
+          .portal-settings-password .row > [class*="col-"] {
+            margin-bottom: 4px;
+          }
+        }
+
+        body.portal-sidebar-lock {
+          overflow: hidden;
         }
 
         /* Dark Mode Support */
