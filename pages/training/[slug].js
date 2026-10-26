@@ -41,15 +41,6 @@ export default function TrainingDetail({ training }) {
     }
   }, [user, prefilled]);
 
-  useEffect(() => {
-    if (authLoading) return;
-    if (!isAuthenticated) {
-      router.replace(
-        `/auth/sign-in?redirect=${encodeURIComponent(returnPath)}`
-      );
-    }
-  }, [authLoading, isAuthenticated, returnPath, router]);
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -215,7 +206,30 @@ export default function TrainingDetail({ training }) {
                     {authLoading ? (
                       <ContentLoader message="Checking your account..." />
                     ) : !isAuthenticated ? (
-                      <ContentLoader message="Redirecting to sign in..." />
+                      <div className="training-register-gate">
+                        <p>
+                          Sign in to register for this training or workshop.
+                          Your account details will be filled in automatically.
+                        </p>
+                        <div className="training-register-gate__actions">
+                          <Link
+                            href={`/auth/sign-in?redirect=${encodeURIComponent(
+                              returnPath
+                            )}`}
+                            className="btn btn-three"
+                          >
+                            Sign in to register
+                          </Link>
+                          <Link
+                            href={`/auth/sign-up?redirect=${encodeURIComponent(
+                              returnPath
+                            )}`}
+                            className="btn"
+                          >
+                            Create account
+                          </Link>
+                        </div>
+                      </div>
                     ) : (
                       <>
                         {submitStatus?.type === "error" ? (

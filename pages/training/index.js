@@ -38,21 +38,26 @@ export default function TrainingList({ trainings }) {
             <div className="row">
               {trainings.map((training) => (
                 <div className="col-lg-4 col-md-6" key={training.slug}>
-                  <div className="training-card">
-                    <div className="training-card__thumb">
-                      <img
-                        src={training.image}
-                        alt={training.title}
-                        style={{
-                          width: "100%",
-                          height: "220px",
-                          objectFit: "cover",
-                        }}
-                      />
-                      <span className="training-card__level">
-                        {training.level}
-                      </span>
-                    </div>
+                  <article className="training-card">
+                    <Link
+                      href={`/training/${training.slug}`}
+                      className="training-card__media"
+                    >
+                      <div className="training-card__thumb">
+                        <img
+                          src={training.image}
+                          alt={training.title}
+                          style={{
+                            width: "100%",
+                            height: "220px",
+                            objectFit: "cover",
+                          }}
+                        />
+                        <span className="training-card__level">
+                          {training.level}
+                        </span>
+                      </div>
+                    </Link>
                     <div className="training-card__body">
                       <div className="training-card__meta">
                         <span>
@@ -62,7 +67,11 @@ export default function TrainingList({ trainings }) {
                           <i className="fas fa-laptop" /> Online / Offline
                         </span>
                       </div>
-                      <h4 className="training-card__title">{training.title}</h4>
+                      <h4 className="training-card__title">
+                        <Link href={`/training/${training.slug}`}>
+                          {training.title}
+                        </Link>
+                      </h4>
                       <p className="training-card__summary">
                         {training.summary}
                       </p>
@@ -70,10 +79,10 @@ export default function TrainingList({ trainings }) {
                         href={`/training/${training.slug}`}
                         className="btn btn-three"
                       >
-                        Register Now
+                        View details
                       </Link>
                     </div>
-                  </div>
+                  </article>
                 </div>
               ))}
             </div>

@@ -238,10 +238,49 @@ html[data-theme="dark"] .resource-card__desc {
   color: #3fa9f5;
 }
 
+.training-card__media {
+  display: block;
+  text-decoration: none !important;
+  color: inherit !important;
+}
+
 .training-card__title {
   margin-bottom: 12px;
   font-size: 20px;
   color: var(--tg-heading-font-color, #22428f);
+}
+
+.training-card__title a {
+  color: inherit !important;
+  text-decoration: none !important;
+}
+
+.training-card__title a:hover {
+  color: #3fa9f5 !important;
+}
+
+.training-register-gate {
+  margin-top: 8px;
+  padding: 20px 18px;
+  border: 1px solid #e6eef6;
+  border-radius: 4px;
+  background: #f8faff;
+}
+
+.training-register-gate p {
+  margin: 0 0 16px;
+  color: #334770;
+  line-height: 1.55;
+}
+
+.training-register-gate__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.training-register-gate__actions .btn {
+  margin: 0;
 }
 
 .training-card__summary {
