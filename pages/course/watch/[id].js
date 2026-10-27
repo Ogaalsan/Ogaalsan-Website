@@ -89,13 +89,12 @@ export default function CourseWatch() {
           index = firstUnlocked >= 0 ? firstUnlocked : 0;
         }
         setActiveLessonIndex(index);
-        const sectionTitles = (result.course.sections || []).map(
-          (section) => section.title
-        );
-        const chapterTitles = sectionTitles.length
-          ? sectionTitles
-          : buildChapters([], list).map((g) => g.title);
-        setOpenChapters(chapterTitles);
+        // Only open the section that contains the current lesson
+        const activeChapter =
+          list[index]?.chapterTitle ||
+          result.course.sections?.[0]?.title ||
+          null;
+        setOpenChapters(activeChapter ? [activeChapter] : []);
       })
       .catch((err) => {
         if (active) {
